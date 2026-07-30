@@ -2,57 +2,312 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>UniVital - Questions</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniVital - Daily Vitals Assessment</title>
+    
+    <!-- Google Fonts & Bootstrap 5 -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        body { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); font-family: 'Poppins', sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .cute-card { background: rgba(255, 255, 255, 0.95); border-radius: 25px; padding: 40px; width: 100%; max-width: 500px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .btn-cute { background-color: #6c5ce7; color: white; font-family: 'Fredoka', cursive; border-radius: 50px; padding: 10px; border: none; width: 100%; }
+        :root {
+            --primary-emerald: #10b981;
+            --dark-navy: #0f172a;
+            --soft-bg: #f8fafc;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            padding: 40px 15px;
+            color: #334155;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .section-header i {
+            font-size: 1.5rem;
+            color: var(--primary-emerald);
+        }
+
+        .section-header h4 {
+            font-family: 'Fredoka', cursive;
+            margin: 0;
+            color: var(--dark-navy);
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #475569;
+        }
+
+        /* Custom Counter Controls */
+        .counter-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: #1e293b;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .counter-btn:hover {
+            background: var(--primary-emerald);
+            color: white;
+            border-color: var(--primary-emerald);
+        }
+
+        .counter-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            width: 50px;
+            text-align: center;
+        }
+
+        /* Tag Selectors */
+        .tag-checkbox {
+            display: none;
+        }
+
+        .tag-label {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1.5px solid #cbd5e1;
+            background: #f8fafc;
+            color: #64748b;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .tag-checkbox:checked + .tag-label {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--primary-emerald);
+            color: #065f46;
+            font-weight: 600;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-emerald);
+            color: white;
+            font-weight: 600;
+            padding: 14px 40px;
+            border-radius: 30px;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-submit:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
-    <div class="cute-card">
-        <h2 style="font-family:'Fredoka', cursive; color:#6c5ce7;">📝 Daily Bio-Log</h2>
-        <p>Welcome, <strong id="studentDisplayName" class="text-primary">Student</strong>!</p>
-        
-        <form>
-            <div class="mb-3">
-                <label class="fw-bold">💧 Water Intake (Liters)</label>
-                <input type="number" id="water" class="form-control rounded-3" value="1.5" step="0.5">
-            </div>
-            <div class="mb-3">
-                <label class="fw-bold">☕ Late Night Caffeine?</label>
-                <select id="caffeine" class="form-select rounded-3">
-                    <option value="no">No / Before 5 PM</option>
-                    <option value="yes">Yes, after 5 PM</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label class="fw-bold">🍎 Meal Quality</label>
-                <select id="meal" class="form-select rounded-3">
-                    <option value="healthy">Healthy Foods (Low GI)</option>
-                    <option value="unhealthy">Fast Food / Sugary Snacks (High GI)</option>
-                </select>
+
+    <div class="container">
+        <div class="question-card">
+            
+            <!-- Page Header -->
+            <div class="text-center mb-5">
+                <span class="badge bg-success mb-2">DAILY PHYSIOLOGICAL TRACKER</span>
+                <h2 class="fw-bold" style="font-family: 'Fredoka', cursive; color: #0f172a;">UniVital Daily Vitals Assessment</h2>
+                <p class="text-muted small">Input today's hydration, caffeine, meal composition, and sleep data to compute your daily health score.</p>
             </div>
 
-            <!-- SAVES HABITS & CONNECTS PAGE 3 TO PAGE 4 -->
-            <button type="button" class="btn-cute" onclick="processHabits()">Analyze My Day 🔬</button>
-        </form>
+            <form action="4-result.html" method="GET">
+                
+                <!-- SECTION 1: HYDRATION -->
+                <div class="mb-5">
+                    <div class="section-header">
+                        <i class="fa-solid fa-droplet text-info"></i>
+                        <h4>1. Hydration & Fluid Balance</h4>
+                    </div>
+
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-6">
+                            <label class="form-label">Water Intaken (Standard 250ml Glasses):</label>
+                            <div class="d-flex align-items-center gap-2 mt-1">
+                                <button type="button" class="counter-btn" onclick="adjustCounter('waterCount', -1)">-</button>
+                                <span id="waterCount" class="counter-value">0</span>
+                                <button type="button" class="counter-btn" onclick="adjustCounter('waterCount', 1)">+</button>
+                                <span class="text-muted ms-2 small">(~<span id="waterLiters">0.0</span> Liters)</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Primary Intake Timing:</label>
+                            <select class="form-select rounded-3">
+                                <option selected>Spread evenly throughout daytime</option>
+                                <option>Mostly during morning / study hours</option>
+                                <option>Heavy intake right before bed (< 2 hrs)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: CAFFEINE INTAKE -->
+                <div class="mb-5">
+                    <div class="section-header">
+                        <i class="fa-solid fa-mug-hot text-warning"></i>
+                        <h4>2. Caffeine & Adenosine Blocking</h4>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Coffee / Tea / Energy Drink Cups:</label>
+                            <div class="d-flex align-items-center gap-2 mt-1">
+                                <button type="button" class="counter-btn" onclick="adjustCounter('caffeineCount', -1)">-</button>
+                                <span id="caffeineCount" class="counter-value">0</span>
+                                <button type="button" class="counter-btn" onclick="adjustCounter('caffeineCount', 1)">+</button>
+                                <span class="text-muted ms-2 small">(~<span id="caffeineMg">0</span> mg caffeine)</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Latest Consumption Cutoff Time:</label>
+                            <select class="form-select rounded-3">
+                                <option selected>No caffeine consumed today</option>
+                                <option>Before 12:00 PM (Optimal)</option>
+                                <option>12:00 PM – 4:00 PM (Moderate impact)</option>
+                                <option>After 6:00 PM (High sleep disruption risk)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 3: MEAL COMPOSITION -->
+                <div class="mb-5">
+                    <div class="section-header">
+                        <i class="fa-solid fa-utensils text-success"></i>
+                        <h4>3. Meal Composition & Timings</h4>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Breakfast Choice:</label>
+                            <select class="form-select rounded-3">
+                                <option>Skipped Breakfast</option>
+                                <option selected>High Protein (Eggs, Oats, Yoghurt)</option>
+                                <option>High Carb / Sugary Pastry</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Lunch Composition:</label>
+                            <select class="form-select rounded-3">
+                                <option selected>Balanced (Rice/Grains + Protein + Veggies)</option>
+                                <option>Heavy Fast Food / Processed</option>
+                                <option>Light Salad / Soup</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Dinner Timing:</label>
+                            <select class="form-select rounded-3">
+                                <option selected>2-3 hours before sleep (Ideal)</option>
+                                <option>Heavy late-night meal right before bed</option>
+                                <option>Skipped Dinner</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label class="form-label d-block mb-2">Dominant Macronutrients Today (Select all that apply):</label>
+                    <div class="d-flex flex-wrap gap-2">
+                        <input type="checkbox" id="tagProtein" class="tag-checkbox">
+                        <label for="tagProtein" class="tag-label">🥩 High Protein (Tryptophan rich)</label>
+
+                        <input type="checkbox" id="tagCarbs" class="tag-checkbox">
+                        <label for="tagCarbs" class="tag-label">🍞 Complex Carbohydrates</label>
+
+                        <input type="checkbox" id="tagFat" class="tag-checkbox">
+                        <label for="tagFat" class="tag-label">🍟 High Fat / Fried Foods</label>
+
+                        <input type="checkbox" id="tagSpicy" class="tag-checkbox">
+                        <label for="tagSpicy" class="tag-label">🌶️ Spicy / Acidic (Reflux risk)</label>
+                    </div>
+                </div>
+
+                <!-- SECTION 4: SLEEP RECOVERY -->
+                <div class="mb-5">
+                    <div class="section-header">
+                        <i class="fa-solid fa-moon text-primary"></i>
+                        <h4>4. Sleep Duration & Recovery</h4>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Hours Slept Last Night:</label>
+                            <input type="number" class="form-control rounded-3" placeholder="e.g., 7.5" step="0.5" min="0" max="14" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Morning Alertness Level:</label>
+                            <select class="form-select rounded-3">
+                                <option>Fully Rested & Energized (100%)</option>
+                                <option selected>Moderate Focus (70%)</option>
+                                <option>Groggy / Morning Brain Fog (40%)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBMIT BUTTON -->
+                <div class="text-center pt-3">
+                    <button type="submit" class="btn-submit">Analyze My Vitals ➔</button>
+                </div>
+
+            </form>
+        </div>
     </div>
 
+    <!-- JavaScript Counter Logic -->
     <script>
-        // Load the student's name saved on Page 2
-        document.getElementById('studentDisplayName').innerText = localStorage.getItem('studentName') || "Student";
+        let water = 0;
+        let caffeine = 0;
 
-        function processHabits() {
-            localStorage.setItem('waterVal', document.getElementById('water').value);
-            localStorage.setItem('caffeineVal', document.getElementById('caffeine').value);
-            localStorage.setItem('mealVal', document.getElementById('meal').value);
-            
-            // Redirect to Page 4
-            window.location.href = "4-result.html";
+        function adjustCounter(id, delta) {
+            if (id === 'waterCount') {
+                water = Math.max(0, water + delta);
+                document.getElementById('waterCount').innerText = water;
+                document.getElementById('waterLiters').innerText = (water * 0.25).toFixed(2);
+            } else if (id === 'caffeineCount') {
+                caffeine = Math.max(0, caffeine + delta);
+                document.getElementById('caffeineCount').innerText = caffeine;
+                document.getElementById('caffeineMg').innerText = caffeine * 95; // Avg 95mg per cup
+            }
         }
     </script>
+
 </body>
 </html>
