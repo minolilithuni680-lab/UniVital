@@ -15,7 +15,6 @@
         :root {
             --primary-emerald: #10b981;
             --dark-navy: #0f172a;
-            --soft-bg: #f8fafc;
         }
 
         body {
@@ -145,8 +144,22 @@
                 <p class="text-muted small">Input today's hydration, caffeine, meal composition, and sleep data to compute your daily health score.</p>
             </div>
 
-            <form action="4-result.html" method="GET">
+            <form id="vitalsForm">
                 
+                <!-- DAY SELECTOR -->
+                <div class="mb-5 p-3 rounded-4" style="background-color: #f0fdf4; border: 1px solid #bbf7d0;">
+                    <label class="form-label fw-bold text-success mb-1">Select Logging Day for Weekly Chart:</label>
+                    <select id="daySelect" class="form-select rounded-3 fw-bold text-success" required>
+                        <option value="Mon">Monday</option>
+                        <option value="Tue">Tuesday</option>
+                        <option value="Wed">Wednesday</option>
+                        <option value="Thu">Thursday</option>
+                        <option value="Fri">Friday</option>
+                        <option value="Sat">Saturday</option>
+                        <option value="Sun">Sunday</option>
+                    </select>
+                </div>
+
                 <!-- SECTION 1: HYDRATION -->
                 <div class="mb-5">
                     <div class="section-header">
@@ -161,16 +174,16 @@
                                 <button type="button" class="counter-btn" onclick="adjustCounter('waterCount', -1)">-</button>
                                 <span id="waterCount" class="counter-value">0</span>
                                 <button type="button" class="counter-btn" onclick="adjustCounter('waterCount', 1)">+</button>
-                                <span class="text-muted ms-2 small">(~<span id="waterLiters">0.0</span> Liters)</span>
+                                <span class="text-muted ms-2 small">(~<span id="waterLiters">0.00</span> Liters)</span>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label">Primary Intake Timing:</label>
-                            <select class="form-select rounded-3">
+                            <select id="waterTiming" class="form-select rounded-3">
                                 <option selected>Spread evenly throughout daytime</option>
                                 <option>Mostly during morning / study hours</option>
-                                <option>Heavy intake right before bed (< 2 hrs)</option>
+                                <option>Heavy intake right before bed (&lt; 2 hrs)</option>
                             </select>
                         </div>
                     </div>
@@ -196,7 +209,7 @@
 
                         <div class="col-md-6">
                             <label class="form-label">Latest Consumption Cutoff Time:</label>
-                            <select class="form-select rounded-3">
+                            <select id="caffeineTiming" class="form-select rounded-3">
                                 <option selected>No caffeine consumed today</option>
                                 <option>Before 12:00 PM (Optimal)</option>
                                 <option>12:00 PM – 4:00 PM (Moderate impact)</option>
@@ -216,7 +229,7 @@
                     <div class="row g-3 mb-3">
                         <div class="col-md-4">
                             <label class="form-label">Breakfast Choice:</label>
-                            <select class="form-select rounded-3">
+                            <select id="breakfastChoice" class="form-select rounded-3">
                                 <option>Skipped Breakfast</option>
                                 <option selected>High Protein (Eggs, Oats, Yoghurt)</option>
                                 <option>High Carb / Sugary Pastry</option>
@@ -225,7 +238,7 @@
 
                         <div class="col-md-4">
                             <label class="form-label">Lunch Composition:</label>
-                            <select class="form-select rounded-3">
+                            <select id="lunchChoice" class="form-select rounded-3">
                                 <option selected>Balanced (Rice/Grains + Protein + Veggies)</option>
                                 <option>Heavy Fast Food / Processed</option>
                                 <option>Light Salad / Soup</option>
@@ -234,7 +247,7 @@
 
                         <div class="col-md-4">
                             <label class="form-label">Dinner Timing:</label>
-                            <select class="form-select rounded-3">
+                            <select id="dinnerTiming" class="form-select rounded-3">
                                 <option selected>2-3 hours before sleep (Ideal)</option>
                                 <option>Heavy late-night meal right before bed</option>
                                 <option>Skipped Dinner</option>
@@ -268,14 +281,14 @@
                     <div class="row g-4">
                         <div class="col-md-6">
                             <label class="form-label">Hours Slept Last Night:</label>
-                            <input type="number" class="form-control rounded-3" placeholder="e.g., 7.5" step="0.5" min="0" max="14" required>
+                            <input type="number" id="sleepInput" class="form-control rounded-3" placeholder="e.g., 7.5" step="0.5" min="0" max="14" required>
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label">Morning Alertness Level:</label>
-                            <select class="form-select rounded-3">
-                                <option>Fully Rested & Energized (100%)</option>
-                                <option selected>Moderate Focus (70%)</option>
+                            <select id="alertnessInput" class="form-select rounded-3">
+                                <option selected>Fully Rested &amp; Energized (100%)</option>
+                                <option>Moderate Focus (70%)</option>
                                 <option>Groggy / Morning Brain Fog (40%)</option>
                             </select>
                         </div>
@@ -291,7 +304,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Counter Logic -->
+    <!-- JavaScript Counter and LocalStorage Logic -->
     <script>
         let water = 0;
         let caffeine = 0;
@@ -304,9 +317,58 @@
             } else if (id === 'caffeineCount') {
                 caffeine = Math.max(0, caffeine + delta);
                 document.getElementById('caffeineCount').innerText = caffeine;
-                document.getElementById('caffeineMg').innerText = caffeine * 95; // Avg 95mg per cup
+                document.getElementById('caffeineMg').innerText = caffeine * 95;
             }
         }
+
+        // SAVE ALL DATA TO LOCAL STORAGE
+        document.getElementById('vitalsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const selectedDay = document.getElementById('daySelect').value;
+            const sleepHours = parseFloat(document.getElementById('sleepInput').value) || 0;
+
+            // Collect all rich input values
+            const currentEntry = {
+                water: parseFloat((water * 0.25).toFixed(2)),
+                waterTiming: document.getElementById('waterTiming').value,
+                caffeine: caffeine * 95,
+                caffeineTiming: document.getElementById('caffeineTiming').value,
+                breakfast: document.getElementById('breakfastChoice').value,
+                lunch: document.getElementById('lunchChoice').value,
+                dinnerTiming: document.getElementById('dinnerTiming').value,
+                tags: {
+                    highProtein: document.getElementById('tagProtein').checked,
+                    complexCarbs: document.getElementById('tagCarbs').checked,
+                    highFat: document.getElementById('tagFat').checked,
+                    spicy: document.getElementById('tagSpicy').checked
+                },
+                sleep: sleepHours,
+                alertness: document.getElementById('alertnessInput').value
+            };
+
+            // Retrieve existing storage structure or create blank
+            let storedData = JSON.parse(localStorage.getItem('uniVitalData')) || {
+                Mon: { water: 0, caffeine: 0, sleep: 0 },
+                Tue: { water: 0, caffeine: 0, sleep: 0 },
+                Wed: { water: 0, caffeine: 0, sleep: 0 },
+                Thu: { water: 0, caffeine: 0, sleep: 0 },
+                Fri: { water: 0, caffeine: 0, sleep: 0 },
+                Sat: { water: 0, caffeine: 0, sleep: 0 },
+                Sun: { water: 0, caffeine: 0, sleep: 0 }
+            };
+
+            // Update chosen day with full object
+            storedData[selectedDay] = currentEntry;
+
+            // Store active session entry for immediate 4-result.html display
+            localStorage.setItem('latestEntry', JSON.stringify(currentEntry));
+            // Store weekly entry for 5-chart.html visualization
+            localStorage.setItem('uniVitalData', JSON.stringify(storedData));
+
+            // Navigate to results page
+            window.location.href = '4-result.html';
+        });
     </script>
 
 </body>
