@@ -3,131 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniVital - Welcome</title>
-    
-    <!-- Google Fonts for Cute & Modern Typography -->
+    <title>UniVital - Welcome to Biological Optimization</title>
+
+    <!-- Google Fonts & Bootstrap 5 -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Full background with a healthy lifestyle theme & soft dark overlay for readability */
+        :root {
+            --primary-emerald: #10b981;
+            --dark-navy: #0f172a;
+            --accent-cyan: #06b6d4;
+            --soft-bg: #f8fafc;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(rgba(255, 240, 245, 0.75), rgba(220, 245, 240, 0.85)),
-                        url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
-            background-size: cover;
-            min-height: 100vh;
+            background-color: var(--soft-bg);
+            color: #334155;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Hero Header Section */
+        .hero-section {
+            background: linear-gradient(135deg, #090d16 0%, #0f172a 100%);
+            color: #ffffff;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 500px;
+            background: rgba(16, 185, 129, 0.15);
+            filter: blur(120px);
+            border-radius: 50%;
+        }
+
+        .hero-title {
+            font-family: 'Fredoka', cursive;
+            font-size: 3.5rem;
+            color: var(--primary-emerald);
+            margin-bottom: 15px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.12);
+            border-color: var(--primary-emerald);
+        }
+
+        .icon-box {
+            width: 65px;
+            height: 65px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0;
-            padding: 20px;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
         }
 
-        /* Glassmorphism cute card container */
-        .cute-card {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 40px 30px;
-            max-width: 550px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-            border: 4px solid #ffffff;
-        }
+        .bg-caffeine { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+        .bg-nutrition { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .bg-hydration { background: rgba(6, 182, 212, 0.15); color: #06b6d4; }
 
-        /* Bold, colourful title with gradient effect */
-        .brand-title {
+        .card-title {
             font-family: 'Fredoka', cursive;
-            font-size: 3.2rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, #ff6b81, #6c5ce7, #00b894);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
-            margin-bottom: 5px;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: #1e293b;
         }
 
-        .subtitle {
-            font-family: 'Fredoka', cursive;
-            color: #74b9ff;
-            font-size: 1.3rem;
-        }
-
-        /* Cute illustration in the middle */
-        .middle-image {
-            width: 180px;
-            height: auto;
-            border-radius: 20px;
-            filter: drop-shadow(0 8px 15px rgba(108, 92, 231, 0.2));
-            transition: transform 0.3s ease;
-        }
-
-        .middle-image:hover {
-            transform: scale(1.08) rotate(-3deg);
-        }
-
-        /* Cute description box at the bottom */
-        .app-description {
-            background-color: #f7f1fe;
-            border-left: 5px solid #6c5ce7;
-            border-radius: 15px;
-            padding: 15px;
-            font-size: 0.95rem;
-            color: #4a4a4a;
-            line-height: 1.6;
-        }
-
-        /* Cute pulsing action button */
-        .btn-cute {
-            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+        /* Action Buttons */
+        .btn-custom-primary {
+            background-color: var(--primary-emerald);
             color: white;
-            font-family: 'Fredoka', cursive;
-            font-size: 1.25rem;
-            border-radius: 50px;
-            padding: 12px 40px;
+            font-weight: 600;
+            padding: 14px 36px;
+            border-radius: 30px;
+            border: none;
             text-decoration: none;
             display: inline-block;
-            border: none;
-            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.35);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-custom-primary:hover {
+            background-color: #059669;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-custom-outline {
+            border: 2px solid #cbd5e1;
+            color: #475569;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-block;
             transition: all 0.3s ease;
         }
 
-        .btn-cute:hover {
-            background: linear-gradient(45deg, #5b4bc4, #8c7ae6);
-            color: white;
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 25px rgba(108, 92, 231, 0.5);
+        .btn-custom-outline:hover {
+            border-color: var(--primary-emerald);
+            color: var(--primary-emerald);
         }
     </style>
 </head>
 <body>
 
-    <div class="cute-card">
-        <!-- 1. Bold & Colourful Page Title -->
-        <h1 class="brand-title">🌱 UniVital</h1>
-        <p class="subtitle mb-3">Your Smart Academic Health Companion ✨</p>
+    <!-- Hero Header -->
+    <header class="hero-section">
+        <div class="container position-relative">
+            <h1 class="hero-title"><i class="fa-solid fa-dna me-2"></i>UniVital</h1>
+            <p class="hero-subtitle">Optimize your academic focus, sleep hygiene, and daily biological energy with evidence-based health tracking.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="2-login.html" class="btn-custom-primary">Get Started / Sign In ➔</a>
+                <a href="#science" class="btn-custom-outline text-white border-secondary">Learn The Science</a>
+            </div>
+        </div>
+    </header>
 
-        <!-- 2. Cute Picture in the Middle of the Page -->
-        <div class="my-3">
-            <img src="https://cdni.iconscout.com/illustration/premium/thumb/healthy-lifestyle-illustration-download-in-svg-png-gif-file-formats--sports-fitness-diet-exercise-pack-people-illustrations-3798539.png?f=webp&w=300" 
-                 alt="Healthy Lifestyle Illustration" 
-                 class="middle-image">
+    <!-- Main Content Section -->
+    <section id="science" class="container my-5 py-4">
+        <div class="text-center mb-5">
+            <span class="badge bg-success mb-2">EVIDENCE-BASED PHYSIOLOGY</span>
+            <h2 class="fw-bold" style="font-family: 'Fredoka', cursive;">How Daily Habits Impact Your Brain & Sleep</h2>
+            <p class="text-muted">Data insights powered by recent research from the Sleep Foundation.</p>
         </div>
 
-        <!-- 3. Cute & Informative 3-Line Application Explanation -->
-        <div class="app-description my-4 text-start">
-            🌸 <strong>Stay Energized:</strong> Track daily caffeine, water, and meal choices effortlessly.<br>
-            🧠 <strong>Study Smarter:</strong> Understand how your habits affect sleep cycles and brain power.<br>
-            📊 <strong>Thrive Daily:</strong> Get instant scientific bio-reports to keep your mind and body happy!
+        <div class="row g-4">
+            
+            <!-- Card 1: Caffeine -->
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="icon-box bg-caffeine">
+                        <i class="fa-solid fa-mug-hot"></i>
+                    </div>
+                    <h3 class="card-title">Caffeine & Adenosine</h3>
+                    <p class="text-muted small">
+                        Caffeine doesn't eliminate tiredness—it blocks <strong>adenosine receptors</strong> in your brain. 
+                        Consuming coffee within 6 hours of bedtime reduces deep slow-wave sleep and disrupts nighttime clearance of neural waste.
+                    </p>
+                    <ul class="list-unstyled small text-secondary mt-3">
+                        <li><i class="fa-solid fa-check text-success me-2"></i>Stop caffeine intake 6 hours before bed</li>
+                        <li><i class="fa-solid fa-check text-success me-2"></i>Prevents afternoon fatigue crashes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Card 2: Food & Nutrition -->
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="icon-box bg-nutrition">
+                        <i class="fa-solid fa-bowl-food"></i>
+                    </div>
+                    <h3 class="card-title">Nutrition & Metabolism</h3>
+                    <p class="text-muted small">
+                        Foods rich in <strong>tryptophan</strong> (oats, seeds, poultry) encourage melatonin synthesis. 
+                        Avoid heavy, high-fat, or spicy meals 2 hours before bed to prevent elevated core body temperature and nocturnal acid reflux.
+                    </p>
+                    <ul class="list-unstyled small text-secondary mt-3">
+                        <li><i class="fa-solid fa-check text-success me-2"></i>Opt for high-fiber, balanced evening meals</li>
+                        <li><i class="fa-solid fa-check text-success me-2"></i>Enhances uninterrupted sleep continuity</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Card 3: Hydration -->
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="icon-box bg-hydration">
+                        <i class="fa-solid fa-glass-water"></i>
+                    </div>
+                    <h3 class="card-title">Hydration & Vasopressin</h3>
+                    <p class="text-muted small">
+                        During deep sleep, the brain releases <strong>vasopressin</strong> to retain water. Dehydration during sleep causes muscle cramps and morning headaches. Taper fluid intake 2 hours before bed to minimize awakenings.
+                    </p>
+                    <ul class="list-unstyled small text-secondary mt-3">
+                        <li><i class="fa-solid fa-check text-success me-2"></i>Drink 2 Liters of water evenly throughout the day</li>
+                        <li><i class="fa-solid fa-check text-success me-2"></i>Saves your bladder for restful sleep</li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Navigation Link to Page 2 -->
-        <a href="2-login.html" class="btn-cute">Get Started ➔</a>
-    </div>
+        <!-- Call to Action Footer Box -->
+        <div class="text-center mt-5 p-5 bg-white rounded-4 border shadow-sm">
+            <h3 class="fw-bold mb-2" style="font-family: 'Fredoka', cursive;">Ready to analyze your daily vitals?</h3>
+            <p class="text-muted mb-4">Track your hydration, coffee intake, and sleep quality with UniVital.</p>
+            <a href="2-login.html" class="btn-custom-primary">Launch Sign In Panel ➔</a>
+        </div>
+    </section>
 
 </body>
 </html>
