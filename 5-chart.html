@@ -3,296 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniVital - Daily Physiological Analysis</title>
+    <title>UniVital - Real-Time Weekly Analytics</title>
 
     <!-- Google Fonts & Bootstrap 5 -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome Icons -->
+    <!-- FontAwesome Icons & Chart.js -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
             --primary-emerald: #10b981;
             --dark-navy: #0f172a;
-            --accent-blue: #0ea5e9;
-            --accent-amber: #f59e0b;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
             min-height: 100vh;
-            padding: 40px 15px;
+            padding-bottom: 50px;
             color: #334155;
         }
 
-        .result-card {
+        .navbar-custom {
             background: #ffffff;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e2e8f0;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        /* Health Score Banner */
-        .score-banner {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            border-radius: 20px;
-            padding: 30px;
-            color: #ffffff;
-            text-align: center;
-        }
-
-        .score-circle {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: rgba(16, 185, 129, 0.15);
-            border: 4px solid var(--primary-emerald);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px auto;
+        .navbar-brand {
             font-family: 'Fredoka', cursive;
-            font-size: 2.2rem;
-            color: #34d399;
+            color: var(--dark-navy) !important;
+            font-size: 1.5rem;
         }
 
-        /* Metric Cards */
-        .metric-card {
-            background: #f8fafc;
-            border-radius: 16px;
-            padding: 20px;
+        .nav-link {
+            font-weight: 500;
+            color: #64748b !important;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-emerald) !important;
+            font-weight: 600;
+        }
+
+        .dashboard-container { max-width: 1100px; margin: 0 auto; }
+
+        .chart-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
             border: 1px solid #e2e8f0;
             height: 100%;
         }
 
-        .progress {
-            height: 10px;
-            border-radius: 10px;
-            background-color: #e2e8f0;
+        .report-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 20px;
+            padding: 30px;
+            color: #ffffff;
         }
 
-        /* Action Item Pills */
-        .action-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            background: #ffffff;
-            border-left: 4px solid var(--primary-emerald);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            margin-bottom: 10px;
-        }
-
-        .btn-custom {
+        .btn-download {
             background-color: var(--primary-emerald);
-            color: white;
-            font-weight: 600;
-            padding: 12px 30px;
-            border-radius: 30px;
-            border: none;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
+            color: white; font-weight: 600;
+            border-radius: 25px; padding: 10px 24px; border: none;
+            transition: all 0.2s;
         }
 
-        .btn-custom:hover {
+        .btn-download:hover {
             background-color: #059669;
-            color: white;
             transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="result-card">
+    <!-- TOP NAVIGATION NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-custom mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="1-welcome.html"><i class="fa-solid fa-heart-pulse text-success me-2"></i>UniVital</a>
+            <div class="d-flex gap-3">
+                <a href="1-welcome.html" class="nav-link"><i class="fa-solid fa-house me-1"></i> Home</a>
+                <a href="3-questions.html" class="nav-link"><i class="fa-solid fa-clipboard-question me-1"></i> Assessment</a>
+                <a href="4-result.html" class="nav-link"><i class="fa-solid fa-chart-line me-1"></i> Result</a>
+                <a href="5-chart.html" class="nav-link active"><i class="fa-solid fa-chart-pie me-1"></i> Analytics Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <span class="badge bg-success mb-1">LIVE DATA ANALYTICS</span>
+                <h2 class="fw-bold m-0" style="font-family: 'Fredoka', cursive; color: #0f172a;">Your Real Weekly Vitals</h2>
+            </div>
+            <div>
+                <button class="btn btn-outline-danger btn-sm rounded-pill me-2" onclick="resetData()"><i class="fa-solid fa-trash me-1"></i> Reset Week</button>
+                <a href="3-questions.html" class="btn btn-success btn-sm rounded-pill"><i class="fa-solid fa-plus me-1"></i> Log Vitals</a>
+            </div>
+        </div>
+
+        <!-- WEEKLY DYNAMIC REPORT BANNER -->
+        <div class="report-banner mb-5">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <span class="badge bg-emerald text-white px-3 py-1 rounded-pill mb-2" style="background-color: #10b981;">REAL-TIME SUMMARY</span>
+                    <h3 class="fw-bold" style="font-family: 'Fredoka', cursive;" id="reportGrade">Weekly Grade: Computing...</h3>
+                    <p class="text-light opacity-75 small mb-0" id="reportDetails">
+                        Log your daily vitals to build your personal physiological report.
+                    </p>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <button class="btn-download" onclick="downloadWeeklyReport()">
+                        <i class="fa-solid fa-file-arrow-down me-2"></i>Download Weekly Report
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHARTS GRID -->
+        <div class="row g-4">
             
-            <!-- Header -->
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <span class="badge bg-success mb-1">PHYSIOLOGICAL ANALYSIS</span>
-                    <h2 class="fw-bold m-0" style="font-family: 'Fredoka', cursive; color: #0f172a;">Your UniVital Daily Insights</h2>
+            <!-- WATER CHART -->
+            <div class="col-md-6">
+                <div class="chart-card">
+                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-droplet text-info me-2"></i>Water Intake (Liters)</h5>
+                    <canvas id="hydrationChart" height="200"></canvas>
                 </div>
-                <a href="3-questions.html" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="fa-solid fa-rotate-left me-1"></i> Retake Vitals</a>
             </div>
 
-            <!-- Score Banner -->
-            <div class="score-banner mb-5">
-                <div class="score-circle" id="overallScore">--%</div>
-                <h3 class="fw-bold" style="font-family: 'Fredoka', cursive;" id="scoreHeading">Calculating Status...</h3>
-                <p class="text-light opacity-75 small max-w-lg mx-auto m-0" id="scoreSummary">
-                    Submit your daily assessment to generate real physiological recommendations.
-                </p>
+            <!-- CAFFEINE CHART -->
+            <div class="col-md-6">
+                <div class="chart-card">
+                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-mug-hot text-warning me-2"></i>Caffeine Intake (mg)</h5>
+                    <canvas id="caffeineChart" height="200"></canvas>
+                </div>
             </div>
 
-            <!-- Detailed Breakdown Grid -->
-            <h4 class="fw-bold mb-3" style="font-family: 'Fredoka', cursive; color: #0f172a;">Core Vitals Breakdown</h4>
-            
-            <div class="row g-3 mb-5">
-                
-                <!-- Hydration Bar -->
-                <div class="col-md-6">
-                    <div class="metric-card">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-semibold"><i class="fa-solid fa-droplet text-info me-2"></i>Hydration Level</span>
-                            <span class="badge bg-info-subtle text-info fw-bold" id="waterText">0.0 / 2.5 L</span>
-                        </div>
-                        <div class="progress mb-2">
-                            <div class="progress-bar bg-info" id="waterBar" style="width: 0%"></div>
-                        </div>
-                        <p class="text-muted small m-0" id="waterAdvice">Sufficient hydration supports brain cell volume and cognitive clarity.</p>
-                    </div>
+            <!-- SLEEP CHART -->
+            <div class="col-md-6">
+                <div class="chart-card">
+                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-moon text-primary me-2"></i>Sleep Duration (Hours)</h5>
+                    <canvas id="sleepChart" height="200"></canvas>
                 </div>
-
-                <!-- Caffeine Status -->
-                <div class="col-md-6">
-                    <div class="metric-card">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-semibold"><i class="fa-solid fa-mug-hot text-warning me-2"></i>Adenosine / Caffeine</span>
-                            <span class="badge bg-warning-subtle text-warning-emphasis fw-bold" id="caffeineText">0 mg</span>
-                        </div>
-                        <div class="progress mb-2">
-                            <div class="progress-bar bg-warning" id="caffeineBar" style="width: 0%"></div>
-                        </div>
-                        <p class="text-muted small m-0" id="caffeineAdvice">Observing a caffeine cutoff prevents sleep latency delays.</p>
-                    </div>
-                </div>
-
-                <!-- Sleep Architecture -->
-                <div class="col-md-6">
-                    <div class="metric-card">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-semibold"><i class="fa-solid fa-moon text-primary me-2"></i>Sleep Recovery</span>
-                            <span class="badge bg-primary-subtle text-primary fw-bold" id="sleepText">0.0 Hours</span>
-                        </div>
-                        <div class="progress mb-2">
-                            <div class="progress-bar bg-primary" id="sleepBar" style="width: 0%"></div>
-                        </div>
-                        <p class="text-muted small m-0" id="sleepAdvice">Aim for 7–9 hours of sleep to consolidate study memory.</p>
-                    </div>
-                </div>
-
-                <!-- Nutrition & Fuel -->
-                <div class="col-md-6">
-                    <div class="metric-card">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-semibold"><i class="fa-solid fa-utensils text-success me-2"></i>Nutrient Profile</span>
-                            <span class="badge bg-success-subtle text-success fw-bold" id="nutritionText">Balanced</span>
-                        </div>
-                        <div class="progress mb-2">
-                            <div class="progress-bar bg-success" id="nutritionBar" style="width: 75%"></div>
-                        </div>
-                        <p class="text-muted small m-0" id="nutritionAdvice">Diet composition directly influences steady glucose supply for study focus.</p>
-                    </div>
-                </div>
-
             </div>
 
-            <!-- Action Plan Section -->
-            <h4 class="fw-bold mb-3" style="font-family: 'Fredoka', cursive; color: #0f172a;">Personalized Action Items</h4>
-            <div class="mb-5" id="actionItemsContainer">
-                <!-- Dynamically Inserted Items -->
-            </div>
-
-            <!-- Navigation Buttons -->
-            <div class="text-center">
-                <a href="5-chart.html" class="btn-custom">View Analytics & History ➔</a>
+            <!-- WEEKLY COMPLETION PROGRESS -->
+            <div class="col-md-6">
+                <div class="chart-card text-center d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="fw-bold mb-2"><i class="fa-solid fa-calendar-check text-success me-2"></i>Week Days Logged</h5>
+                    <h1 class="display-3 fw-bold text-success m-0" id="daysLoggedCount">0/7</h1>
+                    <p class="text-muted small mt-2">Days completed with real entries</p>
+                </div>
             </div>
 
         </div>
+
     </div>
 
-    <!-- DYNAMIC DATA LOADING SCRIPT -->
     <script>
-        const latestEntry = JSON.parse(localStorage.getItem('latestEntry'));
+        const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-        if (latestEntry) {
-            // 1. Water Calculations (Target 2.5L)
-            const waterLiters = latestEntry.water || 0;
-            const waterPercent = Math.min(100, Math.round((waterLiters / 2.5) * 100));
-            document.getElementById('waterText').innerText = `${waterLiters.toFixed(2)} / 2.5 Liters`;
-            document.getElementById('waterBar').style.width = `${waterPercent}%`;
+        const defaultData = {
+            Mon: { water: 0, caffeine: 0, sleep: 0 },
+            Tue: { water: 0, caffeine: 0, sleep: 0 },
+            Wed: { water: 0, caffeine: 0, sleep: 0 },
+            Thu: { water: 0, caffeine: 0, sleep: 0 },
+            Fri: { water: 0, caffeine: 0, sleep: 0 },
+            Sat: { water: 0, caffeine: 0, sleep: 0 },
+            Sun: { water: 0, caffeine: 0, sleep: 0 }
+        };
 
-            // 2. Caffeine Calculations (Max recommended 300mg)
-            const caffeineMg = latestEntry.caffeine || 0;
-            const caffeinePercent = Math.min(100, Math.round((caffeineMg / 300) * 100));
-            document.getElementById('caffeineText').innerText = `${caffeineMg} mg`;
-            document.getElementById('caffeineBar').style.width = `${caffeinePercent}%`;
+        const storedData = JSON.parse(localStorage.getItem('uniVitalData')) || defaultData;
 
-            // 3. Sleep Calculations (Target 8.0 hrs)
-            const sleepHours = latestEntry.sleep || 0;
-            const sleepPercent = Math.min(100, Math.round((sleepHours / 8.0) * 100));
-            document.getElementById('sleepText').innerText = `${sleepHours} Hours`;
-            document.getElementById('sleepBar').style.width = `${sleepPercent}%`;
+        const waterArray = days.map(day => storedData[day].water);
+        const caffeineArray = days.map(day => storedData[day].caffeine);
+        const sleepArray = days.map(day => storedData[day].sleep);
 
-            // 4. Calculate Overall Physiological Score
-            const overall = Math.round((waterPercent * 0.3) + (sleepPercent * 0.4) + ((100 - (caffeineMg > 300 ? 50 : 0)) * 0.3));
-            document.getElementById('overallScore').innerText = `${overall}%`;
-
-            if (overall >= 80) {
-                document.getElementById('scoreHeading').innerText = "Optimal Physiological Status!";
-                document.getElementById('scoreSummary').innerText = "Your body is primed for learning, memory consolidation, and high mental focus today.";
-            } else if (overall >= 60) {
-                document.getElementById('scoreHeading').innerText = "Moderate Biological Balance";
-                document.getElementById('scoreSummary').innerText = "Good progress! A few small tweaks to sleep and hydration will unlock your full focus.";
-            } else {
-                document.getElementById('scoreHeading').innerText = "High Cognitive Fatigue Risk";
-                document.getElementById('scoreSummary').innerText = "Your vitals show low sleep or hydration. Focus on restorative breaks and hydration today.";
+        let loggedDays = 0;
+        days.forEach(day => {
+            if (storedData[day].water > 0 || storedData[day].caffeine > 0 || storedData[day].sleep > 0) {
+                loggedDays++;
             }
+        });
+        document.getElementById('daysLoggedCount').innerText = `${loggedDays}/7`;
 
-            // 5. Build Dynamic Action Items
-            const container = document.getElementById('actionItemsContainer');
-            container.innerHTML = ''; // clear
+        const avgWater = (waterArray.reduce((a,b) => a+b, 0) / (loggedDays || 1)).toFixed(1);
+        const avgSleep = (sleepArray.reduce((a,b) => a+b, 0) / (loggedDays || 1)).toFixed(1);
 
-            if (waterLiters < 2.0) {
-                container.innerHTML += `
-                    <div class="action-item">
-                        <i class="fa-solid fa-droplet text-info mt-1"></i>
-                        <div>
-                            <strong class="d-block">Hydration Recovery</strong>
-                            <span class="text-muted small">Drink 2 standard glasses of water now to restore mental focus and eliminate sluggishness.</span>
-                        </div>
-                    </div>`;
+        if (loggedDays === 0) {
+            document.getElementById('reportGrade').innerText = "Weekly Grade: Pending Log Entries";
+            document.getElementById('reportDetails').innerText = "You have not entered any data for this week yet. Click 'Log Vitals' to start!";
+        } else {
+            document.getElementById('reportGrade').innerText = `Weekly Grade: ${avgWater >= 2.0 && avgSleep >= 7 ? 'Grade A (Optimal)' : 'Grade B (Good Progress)'}`;
+            document.getElementById('reportDetails').innerText = `Logged ${loggedDays} day(s). Average daily water: ${avgWater}L | Average sleep: ${avgSleep} hrs.`;
+        }
+
+        // Render Chart.js
+        new Chart(document.getElementById('hydrationChart'), {
+            type: 'bar',
+            data: { labels: days, datasets: [{ label: 'Liters', data: waterArray, backgroundColor: '#0ea5e9', borderRadius: 8 }] }
+        });
+
+        new Chart(document.getElementById('caffeineChart'), {
+            type: 'line',
+            data: { labels: days, datasets: [{ label: 'mg', data: caffeineArray, borderColor: '#f59e0b', backgroundColor: 'rgba(245, 158, 11, 0.1)', fill: true, tension: 0.3 }] }
+        });
+
+        new Chart(document.getElementById('sleepChart'), {
+            type: 'bar',
+            data: { labels: days, datasets: [{ label: 'Hours', data: sleepArray, backgroundColor: '#6366f1', borderRadius: 8 }] }
+        });
+
+        function resetData() {
+            if (confirm("Are you sure you want to reset all logged data for this week?")) {
+                localStorage.removeItem('uniVitalData');
+                location.reload();
             }
+        }
 
-            if (caffeineMg > 200 || latestEntry.caffeineTiming.includes("After 6:00 PM")) {
-                container.innerHTML += `
-                    <div class="action-item" style="border-left-color: var(--accent-amber);">
-                        <i class="fa-solid fa-mug-hot text-warning mt-1"></i>
-                        <div>
-                            <strong class="d-block">Caffeine Cutoff Advisory</strong>
-                            <span class="text-muted small">Your caffeine intake is late or high. Avoid additional caffeine past 2:00 PM so adenosine levels reset for sleep.</span>
-                        </div>
-                    </div>`;
-            }
+        function downloadWeeklyReport() {
+            const reportText = `
+=========================================
+UNIVITAL - WEEKLY PHYSIOLOGICAL SUMMARY
+=========================================
+Days Logged: ${loggedDays} / 7
+Average Daily Water: ${avgWater} L
+Average Daily Sleep: ${avgSleep} Hours
+=========================================
+Status: Successfully exported from UniVital.
+=========================================`;
 
-            if (sleepHours < 7) {
-                container.innerHTML += `
-                    <div class="action-item" style="border-left-color: #6366f1;">
-                        <i class="fa-solid fa-moon text-primary mt-1"></i>
-                        <div>
-                            <strong class="d-block">Prioritize Sleep Recovery</strong>
-                            <span class="text-muted small">You slept under 7 hours. Plan a 20-minute afternoon nap or aim to go to sleep 45 minutes earlier tonight.</span>
-                        </div>
-                    </div>`;
-            }
-
-            if (latestEntry.tags && latestEntry.tags.spicy) {
-                container.innerHTML += `
-                    <div class="action-item" style="border-left-color: #ef4444;">
-                        <i class="fa-solid fa-utensils text-danger mt-1"></i>
-                        <div>
-                            <strong class="d-block">Late Night Acid Reflux Risk</strong>
-                            <span class="text-muted small">Spicy or heavy foods can raise body temperature at night. Finish eating at least 3 hours before bed.</span>
-                        </div>
-                    </div>`;
-            }
+            const blob = new Blob([reportText], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'UniVital_Weekly_Report.txt';
+            link.click();
+            alert("SUCCESS! Your UniVital Weekly Report has been generated and downloaded.");
         }
     </script>
 </body>
