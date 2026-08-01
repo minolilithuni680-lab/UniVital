@@ -4,382 +4,250 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniVital - Sign In</title>
-    
-    <!-- Google Fonts & Bootstrap 5 -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%);
+            background-color: #d1e7dd;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
         }
 
-        /* Top Brand Header */
-        .top-brand {
-            position: absolute;
-            top: 25px;
-            left: 40px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .top-brand h2 {
-            font-family: 'Fredoka', cursive;
-            color: #10b981;
-            margin: 0;
-            font-weight: 700;
-        }
-
-        /* Split Screen Card */
         .login-card {
             background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-            width: 100%;
-            max-width: 950px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             overflow: hidden;
+            max-width: 950px;
+            width: 100%;
             display: flex;
             flex-wrap: wrap;
-            border: 1px solid #e2e8f0;
         }
 
-        /* LEFT PANEL: High-Tech Bio Simulation Screen */
         .bio-panel {
-            background: #090d16;
+            background: #0d1b2a;
             color: #ffffff;
-            flex: 1 1 450px;
-            padding: 35px;
+            padding: 35px 30px;
+            flex: 1.2;
+            min-width: 320px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
-            overflow: hidden;
         }
 
-        /* Glow effects for science vibe */
-        .bio-panel::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            left: -50px;
-            width: 200px;
-            height: 200px;
-            background: rgba(16, 185, 129, 0.25);
-            filter: blur(80px);
-            border-radius: 50%;
-        }
-
-        .bio-header {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 12px;
-        }
-
-        .bio-header h5 {
-            font-family: 'Fredoka', cursive;
-            color: #34d399;
-            letter-spacing: 1px;
-            font-size: 1.1rem;
-            margin: 0;
-        }
-
-        /* Simulation Canvas Box */
-        .simulation-screen {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(52, 211, 153, 0.3);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-            position: relative;
-            box-shadow: inset 0 0 15px rgba(16, 185, 129, 0.15);
-        }
-
-        /* Biological Visual Graphic */
-        .bio-graphic {
-            width: 100%;
-            max-width: 220px;
-            height: auto;
-            border-radius: 12px;
-            animation: floatGlow 4s ease-in-out infinite alternate;
-        }
-
-        @keyframes floatGlow {
-            0% { transform: translateY(0px); filter: drop-shadow(0 0 8px rgba(52, 211, 153, 0.4)); }
-            100% { transform: translateY(-8px); filter: drop-shadow(0 0 18px rgba(52, 211, 153, 0.8)); }
-        }
-
-        /* Dynamic Simulation Info Cards */
-        .sim-info {
-            display: none;
-            text-align: left;
-            margin-top: 15px;
-            font-size: 0.85rem;
-            color: #cbd5e1;
-        }
-
-        .sim-info.active {
-            display: block;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Interactive Simulation Mode Buttons */
-        .sim-toggle-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #94a3b8;
-            font-size: 0.75rem;
-            padding: 6px 12px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .sim-toggle-btn.active, .sim-toggle-btn:hover {
-            background: #10b981;
-            color: #ffffff;
-            border-color: #10b981;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
-        }
-
-        /* RIGHT PANEL: Sign In Form */
         .login-panel {
-            flex: 1 1 400px;
-            padding: 45px;
+            padding: 40px 35px;
+            flex: 1;
+            min-width: 300px;
+            background: #f8f9fa;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
         .form-title {
-            font-family: 'Fredoka', cursive;
-            color: #10b981;
-            font-size: 2.2rem;
-            font-weight: 700;
-            text-align: center;
+            color: #198754;
+            font-weight: 800;
             margin-bottom: 25px;
-        }
-
-        .form-label {
-            font-weight: 600;
-            color: #475569;
-            font-size: 0.9rem;
-        }
-
-        .form-control {
-            border-radius: 10px;
-            padding: 12px;
-            border: 1.5px solid #cbd5e1;
-            background-color: #f8fafc;
-            font-size: 0.95rem;
-        }
-
-        .form-control:focus {
-            border-color: #10b981;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
-            background-color: #ffffff;
-        }
-
-        .forgot-link {
-            color: #3b82f6;
-            font-size: 0.85rem;
-            text-decoration: none;
-        }
-
-        .forgot-link:hover {
-            text-decoration: underline;
+            text-align: center;
+            letter-spacing: 1px;
         }
 
         .btn-signin {
-            background-color: #10b981;
+            background-color: #198754;
             color: white;
-            font-weight: 600;
-            border-radius: 10px;
-            padding: 12px;
             border: none;
-            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
             transition: all 0.3s ease;
         }
 
         .btn-signin:hover {
-            background-color: #059669;
-            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.3);
+            background-color: #146c43;
+            color: white;
         }
 
-        /* Secondary Action Section */
         .diagnostic-box {
-            text-align: center;
-            margin-top: 35px;
-            padding-top: 20px;
-            border-top: 1px dashed #e2e8f0;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 25px;
         }
 
         .btn-lis {
-            background-color: #f59e0b;
-            color: white;
-            font-weight: 600;
-            border-radius: 10px;
-            padding: 8px 24px;
-            border: none;
+            background-color: #ffc107;
+            color: #000000;
             text-decoration: none;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 6px;
             display: inline-block;
-            transition: all 0.3s ease;
+            margin-top: 5px;
         }
 
         .btn-lis:hover {
-            background-color: #d97706;
-            color: white;
+            background-color: #e0a800;
+            color: #000000;
+        }
+
+        /* Pill Navigation Styling */
+        .sim-pill {
+            background: rgba(255, 255, 255, 0.1);
+            color: #a0aab2;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sim-pill.active {
+            background: #198754;
+            color: #ffffff;
+            border-color: #198754;
+        }
+
+        .sim-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Left Branding -->
-    <div class="top-brand">
-        <i class="fa-solid fa-dna fa-2x text-emerald" style="color:#10b981;"></i>
-        <h2>UniVital</h2>
-    </div>
-
-    <!-- Login Container -->
-    <div class="login-card">
-        
-        <!-- LEFT PANEL: Interactive Bio Simulation -->
-        <div class="bio-panel">
-            <div>
-                <div class="bio-header d-flex justify-content-between align-items-center">
-                    <h5><i class="fa-solid fa-microscope me-2"></i>BIO-SIMULATION HUB</h5>
-                    <span class="badge bg-success">LIVE</span>
+<div class="login-card">
+    <!-- LEFT PANEL: BIO-SIMULATION HUB -->
+    <div class="bio-panel">
+        <div>
+            <!-- Header -->
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-microscope text-success me-2 fs-5"></i>
+                    <h6 class="m-0 fw-bold text-success text-uppercase" style="letter-spacing: 1px;">Bio-Simulation Hub</h6>
                 </div>
-
-                <!-- Interactive Toggles -->
-                <div class="d-flex gap-2 my-3">
-                    <button class="sim-toggle-btn active" onclick="switchSim('caffeine')">☕ Caffeine Effect</button>
-                    <button class="sim-toggle-btn" onclick="switchSim('sleep')">🌙 Sleep Cycle</button>
-                    <button class="sim-toggle-btn" onclick="switchSim('hydration')">💧 Hydration</button>
-                </div>
-
-                <!-- Display Box -->
-                <div class="simulation-screen">
-                    <img id="simImage" 
-                         src="https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=500&q=80" 
-                         alt="Biological Simulation" 
-                         class="bio-graphic">
-
-                    <!-- Mode 1: Caffeine -->
-                    <div id="caffeine-info" class="sim-info active">
-                        <p class="mb-1 text-emerald fw-bold" style="color:#34d399;">⚡ Adenosine Receptor Blockade</p>
-                        <small>Caffeine binds to A₁/A₂ₐ receptors in brain neural networks, preventing fatigue signals and optimizing focus.</small>
-                    </div>
-
-                    <!-- Mode 2: Sleep -->
-                    <div id="sleep-info" class="sim-info">
-                        <p class="mb-1 text-emerald fw-bold" style="color:#34d399;">😴 REM & Deep Sleep Alignment</p>
-                        <small>Tracks circadian melatonin rhythms to restore cognitive function and rebuild cellular energy reserve overnight.</small>
-                    </div>
-
-                    <!-- Mode 3: Hydration -->
-                    <div id="hydration-info" class="sim-info">
-                        <p class="mb-1 text-emerald fw-bold" style="color:#34d399;">🌊 Cellular Electrolyte Balance</p>
-                        <small>Monitors intracellular fluid levels to prevent brain fog and enhance daily academic performance.</small>
-                    </div>
-                </div>
+                <span class="badge bg-success" style="font-size: 0.65rem;">LIVE</span>
             </div>
 
-            <div class="text-start">
-                <small class="text-muted" style="font-size: 0.75rem;">Powered by <strong>UniVital Biological Engine v2.0</strong></small>
+            <!-- Theory Selector Pills -->
+            <div class="d-flex gap-2 mb-4">
+                <button type="button" class="sim-pill active" onclick="switchSim('caffeine')">
+                    <i class="fa-solid fa-bolt me-1"></i> Caffeine Effect
+                </button>
+                <button type="button" class="sim-pill" onclick="switchSim('sleep')">
+                    <i class="fa-solid fa-moon me-1"></i> Sleep Cycle
+                </button>
+                <button type="button" class="sim-pill" onclick="switchSim('hydration')">
+                    <i class="fa-solid fa-droplet me-1"></i> Hydration
+                </button>
+            </div>
+
+            <!-- Display Card for Selected Theory -->
+            <div class="sim-card text-center">
+                <img id="sim-img" src="https://images.unsplash.com/photo-1559757175-5700dde675bc?w=500&auto=format&fit=crop&q=60" alt="Simulation Image" class="img-fluid rounded mb-3" style="max-height: 140px; object-fit: cover; width: 100%;">
+                
+                <h6 id="sim-title" class="text-white text-start fw-bold mb-2">
+                    <i class="fa-solid fa-bolt text-warning me-1"></i> Adenosine Receptor Blockade
+                </h6>
+                <p id="sim-desc" class="text-secondary small text-start m-0" style="font-size: 0.8rem; line-height: 1.4;">
+                    Caffeine binds to A₁/A₂ₐ receptors in brain neural networks, preventing fatigue signals and optimizing focus.
+                </p>
             </div>
         </div>
 
-        <!-- RIGHT PANEL: Sign In Form -->
-        <div class="login-panel">
-            <h1 class="form-title">SIGN IN</h1>
-
-            <form id="login form" onsubmit="handleLogin(event)">
-                <!-- Name field -->
-                <div class="mb-3 text-start">
-                    <label for="userName" class="form-label">Full Name *</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter your name" required>
-                </div>
-
-                <!-- Email Field -->
-                <div class="mb-3 text-start">
-                    <label for="userEmail" class="form-label">Email Address *</label>
-                    <input type="email" class="form-control" id="userEmail" placeholder="name@example.com" required>
-                </div>
-
-                <!-- Forgot Password Link & Sign In Button -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <a href="#" class="forgot-link"><i class="fa-solid fa-key me-1"></i>Forgot Password?</a>
-                    <button type="submit" class="btn-signin style-btn">Sign In</button>
-                </div>
-            </form>
-
-            <!-- Secondary Action (LIS / Bio Questions Navigation) -->
-            <div class="diagnostic-box">
-                <p class="text-secondary small mb-2">Ready to enter your daily vital status?</p>
-                <a href="3-questions.html" class="btn-lis">Go to Daily Health Vitals ➔</a>
-            </div>
+        <!-- Footer Note -->
+        <div class="text-start mt-4">
+            <small class="text-muted" style="font-size: 0.7rem;">Powered by <strong>UniVital Biological Engine v2.0</strong></small>
         </div>
-
     </div>
 
-    <!-- JavaScript to Handle Biological Simulation Toggles -->
-    <script>
-        function switchSim(mode) {
-            // Update button styling
-            const buttons = document.querySelectorAll('.sim-toggle-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
+    <!-- RIGHT PANEL: SIGN IN FORM -->
+    <div class="login-panel">
+        <h2 class="form-title">SIGN IN</h2>
 
-            // Hide all sim info boxes
-            const infos = document.querySelectorAll('.sim-info');
-            infos.forEach(info => info.classList.remove('active'));
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <!-- Full Name Input -->
+            <div class="mb-3 text-start">
+                <label for="userName" class="form-label fw-bold text-dark small">Full Name *</label>
+                <input type="text" class="form-control" id="userName" placeholder="Enter your full name" required>
+            </div>
 
-            // Toggle selected content
-            if (mode === 'caffeine') {
-                buttons[0].classList.add('active');
-                document.getElementById('caffeine-info').classList.add('active');
-                document.getElementById('simImage').src = "https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=500&q=80";
-            } else if (mode === 'sleep') {
-                buttons[1].classList.add('active');
-                document.getElementById('sleep-info').classList.add('active');
-                document.getElementById('simImage').src = "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=500&q=80";
-            } else if (mode === 'hydration') {
-                buttons[2].classList.add('active');
-                document.getElementById('hydration-info').classList.add('active');
-                document.getElementById('simImage').src = "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=500&q=80";
-            }
-        }
-    </script>
+            <!-- Email Address Input -->
+            <div class="mb-3 text-start">
+                <label for="userEmail" class="form-label fw-bold text-dark small">Email Address *</label>
+                <input type="email" class="form-control" id="userEmail" placeholder="name@example.com" required>
+            </div>
 
+            <!-- Sign In Button -->
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-signin">Sign In</button>
+            </div>
+        </form>
+
+        <!-- Secondary Action -->
+        <div class="diagnostic-box text-center">
+            <p class="text-secondary small mb-1">Ready to enter your daily vital status?</p>
+            <a href="3-questions.html" class="btn-lis">Go to Daily Health Vitals <i class="fa-solid fa-arrow-right ms-1"></i></a>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to Handle Bio-Simulation Toggle and Sign-In -->
 <script>
+    // 1. Toggle between the 3 bio-simulation theories on the left
+    function switchSim(mode) {
+        const pills = document.querySelectorAll('.sim-pill');
+        pills.forEach(p => p.classList.remove('active'));
+
+        const img = document.getElementById('sim-img');
+        const title = document.getElementById('sim-title');
+        const desc = document.getElementById('sim-desc');
+
+        if (mode === 'caffeine') {
+            pills[0].classList.add('active');
+            img.src = "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=500&auto=format&fit=crop&q=60";
+            title.innerHTML = '<i class="fa-solid fa-bolt text-warning me-1"></i> Adenosine Receptor Blockade';
+            desc.innerText = "Caffeine binds to A₁/A₂ₐ receptors in brain neural networks, preventing fatigue signals and optimizing focus.";
+        } else if (mode === 'sleep') {
+            pills[1].classList.add('active');
+            img.src = "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=500&auto=format&fit=crop&q=60";
+            title.innerHTML = '<i class="fa-solid fa-moon text-info me-1"></i> Circadian Sleep Architecture';
+            desc.innerText = "Deep REM sleep regulates cortisol levels, clears metabolic waste from the brain, and facilitates memory consolidation.";
+        } else if (mode === 'hydration') {
+            pills[2].classList.add('active');
+            img.src = "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=500&auto=format&fit=crop&q=60";
+            title.innerHTML = '<i class="fa-solid fa-droplet text-primary me-1"></i> Cellular Electrolyte Balance';
+            desc.innerText = "Optimal hydration maintains plasma volume, enhances nutrient transport to brain cells, and regulates body temperature.";
+}
+    }
+
+    // 2. Handle form submission and save data to LocalStorage
     function handleLogin(event) {
-        event.preventDefault(); // Stop default browser submit
-        
-        // Grab input values
+        event.preventDefault(); 
+
         const name = document.getElementById('userName').value;
         const email = document.getElementById('userEmail').value;
-        
-        // Save using camelCase 'uniVital' (matches your protection script!)
+
+        // Save details with exact key names expected by 3-questions.html
         localStorage.setItem('uniVitalUserName', name);
         localStorage.setItem('uniVitalUserEmail', email);
-        
+
         // Redirect directly to questions page
         window.location.href = "3-questions.html"; 
     }
 </script>
+
 </body>
 </html>

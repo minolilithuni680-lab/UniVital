@@ -152,7 +152,8 @@
             <div class="text-center mb-5">
                 <span class="badge bg-success mb-2">DAILY PHYSIOLOGICAL TRACKER</span>
                 <h2 class="fw-bold" style="font-family: 'Fredoka', cursive; color: #0f172a;">UniVital Daily Vitals Assessment</h2>
-                <p class="text-muted small">Input today's hydration, caffeine, meal composition, and sleep data to compute your daily health score.</p>
+                <p class="text-muted small mb-1">Input today's hydration, caffeine, meal composition, and sleep data to compute your daily health score.</p>
+                <p class="text-muted small mb-0">Welcome, <strong id="studentDisplayName">Student</strong>!</p>
             </div>
 
             <form id="vitalsForm">
@@ -317,6 +318,12 @@
 
     <!-- JavaScript Counter and LocalStorage Logic -->
     <script>
+        const studentName = localStorage.getItem('uniVitalUserName') || localStorage.getItem('studentName') || 'Student';
+        const nameElement = document.getElementById('studentDisplayName');
+        if (nameElement) {
+            nameElement.innerText = studentName;
+        }
+
         let water = 0;
         let caffeine = 0;
 
