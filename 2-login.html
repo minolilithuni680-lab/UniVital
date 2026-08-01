@@ -205,9 +205,9 @@
     </div>
 </div>
 
-<!-- JavaScript to Handle Bio-Simulation Toggle and Sign-In -->
+<!-- JavaScript Section -->
 <script>
-    // 1. Toggle between the 3 bio-simulation theories
+    // 1. Switch between the three theory modes
     function switchSim(mode) {
         const pills = document.querySelectorAll('.sim-pill');
         pills.forEach(p => p.classList.remove('active'));
@@ -234,7 +234,7 @@
         }
     }
 
-    // 2. Handle form submission and save user data to LocalStorage
+    // 2. Handle Login & Save BOTH current user and complete history log
     function handleLogin(event) {
         event.preventDefault(); 
 
@@ -245,11 +245,24 @@
             const name = nameInput.value;
             const email = emailInput.value;
 
-            // Save details to Local Storage
+            // Save active user (for page validation on 3-questions.html)
             localStorage.setItem('uniVitalUserName', name);
             localStorage.setItem('uniVitalUserEmail', email);
 
-            // Redirect to 3-questions.html
+            // Fetch existing history list or start a new array
+            let userHistory = JSON.parse(localStorage.getItem('uniVitalUserHistory')) || [];
+
+            // Add current user details + timestamp
+            userHistory.push({
+                name: name,
+                email: email,
+                timestamp: new Date().toLocaleString()
+            });
+
+            // Save updated history back to Local Storage
+            localStorage.setItem('uniVitalUserHistory', JSON.stringify(userHistory));
+
+            // Redirect smoothly to next page
             window.location.href = "3-questions.html";
         }
     }
