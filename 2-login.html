@@ -69,6 +69,7 @@
             border-radius: 8px;
             font-weight: 700;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .btn-signin:hover {
@@ -190,9 +191,9 @@
                 <input type="email" class="form-control" id="userEmail" placeholder="name@example.com" required>
             </div>
 
-            <!-- Sign In Button -->
+            <!-- Submit Button -->
             <div class="d-grid gap-2 mt-4">
-                <button type="submit" class="btn btn-signin">Sign In</button>
+                <button type="submit" id="btnSubmit" class="btn btn-signin">Sign In</button>
             </div>
         </form>
 
@@ -206,7 +207,7 @@
 
 <!-- JavaScript to Handle Bio-Simulation Toggle and Sign-In -->
 <script>
-    // 1. Toggle between the 3 bio-simulation theories on the left
+    // 1. Toggle between the 3 bio-simulation theories
     function switchSim(mode) {
         const pills = document.querySelectorAll('.sim-pill');
         pills.forEach(p => p.classList.remove('active'));
@@ -230,22 +231,27 @@
             img.src = "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=500&auto=format&fit=crop&q=60";
             title.innerHTML = '<i class="fa-solid fa-droplet text-primary me-1"></i> Cellular Electrolyte Balance';
             desc.innerText = "Optimal hydration maintains plasma volume, enhances nutrient transport to brain cells, and regulates body temperature.";
-}
+        }
     }
 
-    // 2. Handle form submission and save data to LocalStorage
+    // 2. Handle form submission and save user data to LocalStorage
     function handleLogin(event) {
         event.preventDefault(); 
 
-        const name = document.getElementById('userName').value;
-        const email = document.getElementById('userEmail').value;
+        const nameInput = document.getElementById('userName');
+        const emailInput = document.getElementById('userEmail');
 
-        // Save details with exact key names expected by 3-questions.html
-        localStorage.setItem('uniVitalUserName', name);
-        localStorage.setItem('uniVitalUserEmail', email);
+        if (nameInput && emailInput) {
+            const name = nameInput.value;
+            const email = emailInput.value;
 
-        // Redirect directly to questions page
-        window.location.href = "3-questions.html"; 
+            // Save details to Local Storage
+            localStorage.setItem('uniVitalUserName', name);
+            localStorage.setItem('uniVitalUserEmail', email);
+
+            // Redirect to 3-questions.html
+            window.location.href = "3-questions.html";
+        }
     }
 </script>
 
