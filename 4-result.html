@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+    // Check if the user has signed in
+    const currentUser = localStorage.getItem('uniVitalUserEmail');
+    
+    // If no email is stored, kick them back to the login page
+    if (!currentUser) {
+        alert("Please sign in first to access UniVital tools!");
+        window.location.href = "2-login.html"; // Replace with your actual login file name
+    }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniVital - Daily Physiological Analysis</title>

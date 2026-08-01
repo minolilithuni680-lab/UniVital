@@ -308,17 +308,17 @@
         <div class="login-panel">
             <h1 class="form-title">SIGN IN</h1>
 
-            <form action="3-questions.html" method="GET">
+            <form id="login form" onsubmit="handleLogin(event)">
                 <!-- User ID / Email -->
                 <div class="mb-3 text-start">
                     <label for="userId" class="form-label">User ID *</label>
-                    <input type="text" class="form-control" id="userId" placeholder="Enter student / user ID" required>
+                    <input type="text" class="form-control" id="username" placeholder="Enter your name" required>
                 </div>
 
                 <!-- Password -->
                 <div class="mb-3 text-start">
-                    <label for="password" class="form-label">Password *</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                    <label for="userEmail" class="form-label">Email *</label>
+                    <input type="email" class="form-control" id="userEmail" placeholder="name@example.com" required>
                 </div>
 
                 <!-- Forgot Password Link & Sign In Button -->
@@ -365,5 +365,28 @@
         }
     </script>
 
+<script>
+    function handleLogin(event) {
+        // 1. Prevent page from refreshing automatically
+        event.preventDefault(); 
+        
+        // 2. Get values typed in by the user
+        const name = document.getElementById('userName').value;
+        const email = document.getElementById('userEmail').value;
+        
+        // 3. Save user details into browser Local Storage
+        localStorage.setItem('uniVitalUserName', name);
+        localStorage.setItem('uniVitalUserEmail', email);
+        
+        // 4. Show success message
+        alert(`Welcome, ${name}! Your sign-in was successful.`);
+        
+        // 5. Send user to the next page (change to your starting page file name)
+        window.location.href = "3-questions.html"; 
+    }
+</script>
+
+</body>
+</html>
 </body>
 </html>
