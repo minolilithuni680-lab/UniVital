@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniVital - Daily Assessment Start</title>
+
+    <!-- Google Fonts & Bootstrap 5 -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-emerald: #10b981;
+            --dark-emerald: #059669;
+            --teal-accent: #0d9488;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #d8ece1;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Floating Side Mascots */
+        .decor-side {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .decor-left { left: 2%; }
+        .decor-right { right: 2%; }
+
+        .mascot-container {
+            width: 170px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.12));
+            animation: floatSlow 4s ease-in-out infinite alternate;
+        }
+
+        .mascot-container-reverse {
+            width: 160px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            animation: floatSlow 4.5s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatSlow {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-12px) rotate(3deg); }
+        }
+
+        /* Start Card */
+        .start-card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 45px 50px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+            max-width: 800px;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-badge {
+            background-color: #e0e7ff;
+            color: #3730a3;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 12px;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #64748b;
+            font-size: 0.98rem;
+            margin-bottom: 30px;
+        }
+
+        /* Overview Grid */
+        .phase-list {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .phase-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.92rem;
+            color: #334155;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .phase-item:last-child {
+            border-bottom: none;
+        }
+
+        .phase-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: #0d9488;
+            color: white;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        /* Form Customization */
+        .form-label-custom {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            padding: 12px 16px;
+            font-size: 1rem;
+            color: #334155;
+            background-color: #ffffff;
+        }
+
+        .form-control:focus {
+            border-color: #0d9488;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+        }
+
+        /* Buttons */
+        .btn-back {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background-color: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .btn-start {
+            background-color: #0d9488;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 12px 32px;
+            border-radius: 10px;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-start:hover {
+            background-color: #0f766e;
+            color: #ffffff;
+        }
+
+        @media (max-width: 1200px) {
+            .decor-side { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LEFT SIDE: Mascot -->
+    <div class="decor-side decor-left">
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="70" fill="#0d9488" />
+                <path d="M 65 100 Q 100 130 135 100" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+                <circle cx="75" cy="80" r="8" fill="#ffffff"/>
+                <circle cx="125" cy="80" r="8" fill="#ffffff"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE: Mascot -->
+    <div class="decor-side decor-right">
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <rect x="40" y="40" width="120" height="120" rx="25" fill="#f59e0b"/>
+                <circle cx="75" cy="85" r="7" fill="#ffffff"/>
+                <circle cx="125" cy="85" r="7" fill="#ffffff"/>
+                <path d="M 80 120 Q 100 135 120 120" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Main Card -->
+    <div class="start-card">
+        <span class="welcome-badge text-uppercase"><i class="fa-solid fa-heart-pulse me-1"></i> DAILY VITAL CHECK</span>
+        
+        <h1 class="page-title">Ready for Today's Assessment?</h1>
+        <p class="page-subtitle">Track your biological parameters across 5 key areas to optimize your academic focus and stress levels.</p>
+
+        <!-- Start Form -->
+        <form action="3-questions-1.html" method="GET">
+            
+            <!-- Date Selection Input -->
+            <div class="mb-4">
+                <label for="entryDate" class="form-label-custom">
+                    <i class="fa-regular fa-calendar-check me-2 text-teal"></i>Select Assessment Date:
+                </label>
+                <input type="date" class="form-control" id="entryDate" name="entryDate" required>
+            </div>
+
+            <!-- Overview of Phases -->
+            <label class="form-label-custom mb-2"><i class="fa-solid fa-list-check me-2 text-teal"></i>Assessment Breakdown:</label>
+            <div class="phase-list mb-4">
+                <div class="phase-item">
+                    <span class="phase-number">1</span>
+                    <span><strong>Hydration & Electrolytes</strong> — Fluid balance & cognitive performance</span>
+                </div>
+                <div class="phase-item">
+                    <span class="phase-number">2</span>
+                    <span><strong>Nutrition & Blood Sugar</strong> — Glycemic stability & brain fuel</span>
+                </div>
+                <div class="phase-item">
+                    <span class="phase-number">3</span>
+                    <span><strong>Sleep Architecture</strong> — Circadian rhythm & memory consolidation</span>
+                </div>
+                <div class="phase-item">
+                    <span class="phase-number">4</span>
+                    <span><strong>Mental Fatigue & Focus</strong> — Neuro-recovery & stress regulation</span>
+                </div>
+                <div class="phase-item">
+                    <span class="phase-number">5</span>
+                    <span><strong>Activity & Fitness</strong> — Neuroplasticity (BDNF) & cortisol flush</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <a href="2-login.html" class="btn btn-back">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Log Out
+                </a>
+                <button type="submit" class="btn btn-start">
+                    Begin Phase 1 <i class="fa-solid fa-arrow-right ms-2"></i>
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Script to default date input to today -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateInput = document.getElementById('entryDate');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.value = today;
+            dateInput.max = today; // Prevents logging future dates
+        });
+    </script>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
