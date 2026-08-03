@@ -4,106 +4,345 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniVital - Phase 3: Sleep Architecture</title>
+
+    <!-- Google Fonts & Bootstrap 5 -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        body { background-color: #eef7f2; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px 15px; }
-        .card-custom { max-width: 750px; margin: auto; background: #ffffff; border-radius: 16px; padding: 35px; box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
-        .info-box { background-color: #d1e7dd; border-left: 4px solid #198754; padding: 12px 16px; border-radius: 6px; font-size: 0.88rem; margin-bottom: 25px; }
-        .step-badge { font-size: 0.75rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase; }
-        .btn-submit { background-color: #198754; color: white; font-weight: 700; padding: 12px 24px; border-radius: 8px; border: none; }
-        .btn-submit:hover { background-color: #146c43; color: white; }
+        :root {
+            --primary-emerald: #10b981;
+            --dark-emerald: #059669;
+            --indigo-accent: #4338ca;
+            --indigo-bg: #e0e7ff;
+            --indigo-border: #6366f1;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #d8ece1;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Side Cartoon Floating Containers */
+        .decor-side {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .decor-left {
+            left: 2%;
+        }
+
+        .decor-right {
+            right: 2%;
+        }
+
+        /* Floating Animation */
+        .mascot-container {
+            width: 180px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.12));
+            animation: floatSlow 4s ease-in-out infinite alternate;
+        }
+
+        .mascot-container-reverse {
+            width: 170px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            animation: floatSlow 4.5s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatSlow {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-12px) rotate(3deg); }
+        }
+
+        /* Question Form Card */
+        .question-card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 40px 45px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+            max-width: 800px;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Badge Phase */
+        .phase-badge {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .category-title {
+            color: #1d4ed8;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        /* Biological Insight Callout Box */
+        .insight-box {
+            background-color: #dbeafe;
+            border-left: 4px solid #2563eb;
+            border-radius: 8px;
+            padding: 16px 20px;
+            color: #1e40af;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 35px;
+        }
+
+        /* Form Controls */
+        .form-label-custom {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            color: #334155;
+            background-color: #f8fafc;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: #ffffff;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        /* Buttons */
+        .btn-back {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background-color: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .btn-complete {
+            background-color: #0d9488;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 10px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-complete:hover {
+            background-color: #0f766e;
+            color: #ffffff;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 1200px) {
+            .decor-side {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="card-custom">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <span class="badge bg-primary step-badge">Phase 3 of 3</span>
-        <span class="text-muted small"><i class="fa-solid fa-moon text-primary me-1"></i> Circadian Rhythm</span>
+    <!-- LEFT SIDE: Cartoon Sleeping Moon Mascot & Bedtime Pillow Buddy -->
+    <div class="decor-side decor-left">
+        <!-- Crescent Moon with Nightcap sleeping -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Moon Body -->
+                <path d="M 120 20 C 60 20 20 70 20 130 C 20 180 60 205 110 205 C 80 180 70 130 90 80 C 105 50 130 35 150 30 C 140 23 130 20 120 20 Z" fill="#fde047" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Nightcap Hat -->
+                <path d="M 115 22 C 140 10, 160 30, 175 60 C 160 55, 140 45, 128 36 Z" fill="#3b82f6" stroke="#1e293b" stroke-width="3"/>
+                <circle cx="178" cy="62" r="8" fill="#ffffff" stroke="#1e293b" stroke-width="2.5"/> <!-- Pom-pom -->
+                <!-- Sleeping Eyes (Closed W-Shape) -->
+                <path d="M 60 115 Q 67 125 74 115" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <!-- Cheek -->
+                <ellipse cx="58" cy="125" rx="5" ry="3" fill="#fb7185"/>
+                <!-- Zzz Floating -->
+                <text x="140" y="100" font-size="20" font-weight="bold" fill="#6366f1" font-family="sans-serif">Z</text>
+                <text x="158" y="80" font-size="15" font-weight="bold" fill="#818cf8" font-family="sans-serif">z</text>
+                <text x="170" y="65" font-size="12" font-weight="bold" fill="#a5b4fc" font-family="sans-serif">z</text>
+            </svg>
+        </div>
+
+        <!-- Sleeping Pillow Buddy -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg">
+                <!-- Speech Bubble -->
+                <path d="M 105 10 L 180 10 C 188 10, 193 18, 193 25 L 193 42 C 193 50, 188 55, 180 55 L 135 55 L 120 70 L 125 55 L 105 55 C 97 55, 92 50, 92 42 L 92 25 C 92 18, 97 10, 105 10 Z" fill="#ffffff" stroke="#1e293b" stroke-width="3"/>
+                <text x="142" y="35" font-size="11" font-weight="bold" fill="#1d4ed8" text-anchor="middle" font-family="sans-serif">SWEET DREAMS!</text>
+                <!-- Pillow Body -->
+                <rect x="25" y="75" width="140" height="80" rx="20" fill="#e0e7ff" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Cheeks -->
+                <circle cx="65" cy="122" r="5" fill="#fb7185"/>
+                <circle cx="125" cy="122" r="5" fill="#fb7185"/>
+                <!-- Closed Eyes -->
+                <path d="M 70 110 Q 78 118 86 110" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 104 110 Q 112 118 120 110" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <!-- Smile -->
+                <path d="M 92 124 Q 95 129 98 124" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+        </div>
     </div>
 
-    <h3 class="fw-bold text-dark mb-1">Sleep & Rest Quality</h3>
-    <p class="text-muted small mb-4">Assess sleep duration, quality score, and wakefulness consistency.</p>
+    <!-- RIGHT SIDE: Cute Alarm Clock Mascot & Sleepy Star -->
+    <div class="decor-side decor-right">
+        <!-- Cute Alarm Clock Mascot -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Alarm Bells -->
+                <circle cx="50" cy="50" r="22" fill="#ef4444" stroke="#1e293b" stroke-width="4"/>
+                <circle cx="150" cy="50" r="22" fill="#ef4444" stroke="#1e293b" stroke-width="4"/>
+                <!-- Clock Body -->
+                <circle cx="100" cy="115" r="65" fill="#fef2f2" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Feet -->
+                <path d="M 55 170 L 45 190" stroke="#1e293b" stroke-width="5" stroke-linecap="round"/>
+                <path d="M 145 170 L 155 190" stroke="#1e293b" stroke-width="5" stroke-linecap="round"/>
+                <!-- Happy Face -->
+                <circle cx="80" cy="105" r="5" fill="#1e293b"/>
+                <circle cx="120" cy="105" r="5" fill="#1e293b"/>
+                <path d="M 90 125 Q 100 135 110 125" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <!-- Clock Hands -->
+                <line x1="100" y1="115" x2="100" y2="85" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="100" y1="115" x2="120" y2="115" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
+            </svg>
+        </div>
 
-    <div class="info-box text-dark">
-        <i class="fa-solid fa-bed text-success me-1"></i>
-        <strong>Biological Insight:</strong> Consistent sleep-wake cycles align your suprachiasmatic nucleus (SCN) to regulate hormonal secretion (cortisol and melatonin).
+        <!-- Sleepy Little Star Buddy -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Star Shape -->
+                <polygon points="100,20 123,75 182,75 134,110 152,168 100,132 48,168 66,110 18,75 77,75" fill="#fcd34d" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Sleeping Eyes -->
+                <path d="M 80 92 Q 86 98 92 92" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 108 92 Q 114 98 120 92" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <!-- Cute Cheeks -->
+                <circle cx="75" cy="98" r="4" fill="#fb7185"/>
+                <circle cx="125" cy="98" r="4" fill="#fb7185"/>
+                <!-- Small Mouth -->
+                <circle cx="100" cy="104" r="3" fill="#1e293b"/>
+            </svg>
+        </div>
     </div>
 
-    <form id="phase3Form" onsubmit="savePhase3(event)">
-        <!-- Q1: Sleep Duration -->
-        <div class="mb-4">
-            <label for="sleepHours" class="form-label fw-bold text-dark">1. How many total hours of sleep did you get last night?</label>
-            <input type="number" step="0.5" min="0" max="24" class="form-control" id="sleepHours" placeholder="e.g. 7.5" required>
+    <!-- Main Assessment Card -->
+    <div class="question-card">
+        <!-- Header Row -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="phase-badge text-uppercase">PHASE 3 OF 3</span>
+            <span class="category-title"><i class="fa-solid fa-moon me-1"></i> Circadian Rhythm</span>
         </div>
 
-        <!-- Q2: Sleep Quality -->
-        <div class="mb-4">
-            <label for="sleepQuality" class="form-label fw-bold text-dark">2. How would you rate the subjective quality of your sleep?</label>
-            <select class="form-select" id="sleepQuality" required>
-                <option value="" disabled selected>Select rating...</option>
-                <option value="Restful & Deep">Restful & Deep (Awoke energized)</option>
-                <option value="Moderate / Average">Moderate (Felt okay, slightly groggy)</option>
-                <option value="Fragmented / Restless">Fragmented / Restless (Woke up multiple times)</option>
-                <option value="Severely Deprived">Severely Deprived (Exhausted upon waking)</option>
-            </select>
+        <!-- Main Title -->
+        <h1 class="page-title">Sleep &amp; Rest Quality</h1>
+        <p class="page-subtitle">Assess sleep duration, quality score, and wakefulness consistency.</p>
+
+        <!-- Biological Insight Box -->
+        <div class="insight-box d-flex align-items-start">
+            <i class="fa-solid fa-bed me-2 mt-1 fs-6"></i>
+            <div>
+                <strong>Biological Insight:</strong> Consistent sleep-wake cycles align your suprachiasmatic nucleus (SCN) to regulate hormonal secretion (cortisol and melatonin).
+            </div>
         </div>
 
-        <!-- Q3: Evening Screen Time -->
-        <div class="mb-4">
-            <label for="screenTime" class="form-label fw-bold text-dark">3. Did you use electronic screens within 1 hour before sleeping?</label>
-            <select class="form-select" id="screenTime" required>
-                <option value="" disabled selected>Select option...</option>
-                <option value="Yes - Heavy exposure">Yes (Heavy screen exposure right before bed)</option>
-                <option value="Yes - Light exposure / Blue light filter">Yes (Light exposure or blue light filter used)</option>
-                <option value="No screens before bed">No (Avoided screens 1 hour prior)</option>
-            </select>
-        </div>
+        <!-- Question Form -->
+        <form action="summary.html" method="GET">
+            
+            <!-- Question 1 -->
+            <div class="mb-4">
+                <label for="sleepHours" class="form-label-custom">1. How many total hours of sleep did you get last night?</label>
+                <input type="number" step="0.5" class="form-control" id="sleepHours" placeholder="e.g. 7.5" min="0" max="24" required>
+            </div>
 
-        <div class="d-flex justify-content-between mt-4">
-            <a href="3-questions-2.html" class="btn btn-outline-secondary fw-bold">Back</a>
-            <button type="submit" class="btn btn-submit"><i class="fa-solid fa-check-circle me-1"></i> Complete & Save Vitals</button>
-        </div>
-    </form>
-</div>
+            <!-- Question 2 -->
+            <div class="mb-4">
+                <label for="sleepQuality" class="form-label-custom">2. How would you rate the subjective quality of your sleep?</label>
+                <select class="form-select" id="sleepQuality" required>
+                    <option value="" selected disabled>Select rating...</option>
+                    <option value="5">Excellent - Rested & Refreshing</option>
+                    <option value="4">Good - Fairly Rested</option>
+                    <option value="3">Average - Tossed & Turned slightly</option>
+                    <option value="2">Poor - Disrupted / Frequent waking</option>
+                    <option value="1">Very Poor - Exhausted upon waking</option>
+                </select>
+            </div>
 
-<script>
-    function savePhase3(e) {
-        e.preventDefault();
+            <!-- Question 3 -->
+            <div class="mb-4">
+                <label for="screenTime" class="form-label-custom">3. Did you use electronic screens within 1 hour before sleeping?</label>
+                <select class="form-select" id="screenTime" required>
+                    <option value="" selected disabled>Select option...</option>
+                    <option value="no">No - Avoided blue light before bed</option>
+                    <option value="yes_filter">Yes - With Blue Light Filter / Night Mode</option>
+                    <option value="yes_direct">Yes - Direct screen exposure right before sleep</option>
+                </select>
+            </div>
 
-        // 1. Gather Phase 3 Data
-        const phase3Data = {
-            sleepHours: document.getElementById('sleepHours').value,
-            sleepQuality: document.getElementById('sleepQuality').value,
-            screenTime: document.getElementById('screenTime').value
-        };
+            <!-- Navigation Buttons -->
+            <div class="d-flex justify-content-between align-items-center mt-5">
+                <a href="3-questions-2.html" class="btn btn-back">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+                <button type="submit" class="btn btn-complete">
+                    <i class="fa-solid fa-circle-check me-2"></i> Complete &amp; Save Vitals
+                </button>
+            </div>
 
-        // 2. Fetch data from previous phases
-        const phase1Data = JSON.parse(localStorage.getItem('uniVital_Phase1')) || {};
-        const phase2Data = JSON.parse(localStorage.getItem('uniVital_Phase2')) || {};
+        </form>
+    </div>
 
-        // 3. Construct unified master entry
-        const completeVitals = {
-            timestamp: new Date().toLocaleString(),
-            user: localStorage.getItem('uniVitalUserName') || 'Anonymous',
-            email: localStorage.getItem('uniVitalUserEmail') || 'N/A',
-            hydration: phase1Data,
-            caffeine: phase2Data,
-            sleep: phase3Data
-        };
-
-        // 4. Save to master storage array
-        let fullHistory = JSON.parse(localStorage.getItem('uniVitalMasterLogs')) || [];
-        fullHistory.push(completeVitals);
-
-        localStorage.setItem('uniVitalMasterLogs', JSON.stringify(fullHistory));
-        localStorage.setItem('latestVitalsEntry', JSON.stringify(completeVitals));
-
-        // 5. Redirect to results dashboard
-        alert("Daily Health Vitals successfully logged!");
-        window.location.href = "4-dashboard.html"; // Or your main results page
-    }
-</script>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
