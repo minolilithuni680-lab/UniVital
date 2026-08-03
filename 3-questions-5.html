@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniVital - Phase 5: Activity & Fitness</title>
+
+    <!-- Google Fonts & Bootstrap 5 -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-emerald: #10b981;
+            --dark-emerald: #059669;
+            --rose-accent: #e11d48;
+            --rose-bg: #ffe4e6;
+            --rose-border: #f43f5e;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #d8ece1;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Side Cartoon Floating Containers */
+        .decor-side {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .decor-left { left: 2%; }
+        .decor-right { right: 2%; }
+
+        /* Floating Animation */
+        .mascot-container {
+            width: 180px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.12));
+            animation: floatSlow 4s ease-in-out infinite alternate;
+        }
+
+        .mascot-container-reverse {
+            width: 170px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            animation: floatSlow 4.5s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatSlow {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-12px) rotate(3deg); }
+        }
+
+        /* Question Form Card */
+        .question-card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 40px 45px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+            max-width: 800px;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Badge Phase */
+        .phase-badge {
+            background-color: #e11d48;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .category-title {
+            color: #be123c;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        /* Biological Insight Callout Box */
+        .insight-box {
+            background-color: #ffe4e6;
+            border-left: 4px solid #e11d48;
+            border-radius: 8px;
+            padding: 16px 20px;
+            color: #881337;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 35px;
+        }
+
+        /* Form Controls */
+        .form-label-custom {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            color: #334155;
+            background-color: #f8fafc;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: #ffffff;
+            border-color: #e11d48;
+            box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
+        }
+
+        /* Buttons */
+        .btn-back {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background-color: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .btn-complete {
+            background-color: #0d9488;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 10px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-complete:hover {
+            background-color: #0f766e;
+            color: #ffffff;
+        }
+
+        @media (max-width: 1200px) {
+            .decor-side { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LEFT SIDE: Running Shoe & Dumbbell Mascots -->
+    <div class="decor-side decor-left">
+        <!-- Running Sneaker Mascot -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Shoe Body -->
+                <path d="M 25 110 C 25 110, 30 75, 75 75 L 120 75 C 145 75, 175 110, 180 125 C 185 140, 160 145, 130 145 L 35 145 C 25 145, 25 110, 25 110 Z" fill="#f43f5e" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Sole -->
+                <rect x="20" y="145" width="165" height="18" rx="8" fill="#ffffff" stroke="#1e293b" stroke-width="3.5"/>
+                <!-- Laces -->
+                <line x1="75" y1="85" x2="95" y2="85" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="80" y1="95" x2="100" y2="95" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="85" y1="105" x2="105" y2="105" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- Face on Shoe -->
+                <circle cx="125" cy="110" r="4" fill="#ffffff"/>
+                <circle cx="145" cy="110" r="4" fill="#ffffff"/>
+                <path d="M 130 122 Q 135 128 140 122" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <!-- Dumbbell Buddy -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Bar -->
+                <rect x="50" y="82" width="100" height="16" rx="4" fill="#94a3b8" stroke="#1e293b" stroke-width="3.5"/>
+                <!-- Left Weight -->
+                <rect x="25" y="50" width="30" height="80" rx="8" fill="#e11d48" stroke="#1e293b" stroke-width="4"/>
+                <!-- Right Weight -->
+                <rect x="145" y="50" width="30" height="80" rx="8" fill="#e11d48" stroke="#1e293b" stroke-width="4"/>
+                <!-- Face on Bar center -->
+                <circle cx="90" cy="90" r="3.5" fill="#1e293b"/>
+                <circle cx="110" cy="90" r="3.5" fill="#1e293b"/>
+                <path d="M 96 97 Q 100 102 104 97" fill="none" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE: Heart Pulse & Kettlebell Mascots -->
+    <div class="decor-side decor-right">
+        <!-- Cute Kettlebell -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Handle -->
+                <path d="M 65 80 C 65 30, 135 30, 135 80" fill="none" stroke="#1e293b" stroke-width="14" stroke-linecap="round"/>
+                <path d="M 65 80 C 65 30, 135 30, 135 80" fill="none" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>
+                <!-- Body -->
+                <circle cx="100" cy="125" r="55" fill="#334155" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Eyes & Mouth -->
+                <circle cx="82" cy="115" r="5" fill="#ffffff"/>
+                <circle cx="118" cy="115" r="5" fill="#ffffff"/>
+                <path d="M 92 132 Q 100 142 108 132" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <!-- Energetic Star/Pulse Buddy -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Flame / Energy Symbol -->
+                <path d="M 100 20 C 120 60, 160 80, 150 120 C 140 160, 60 160, 50 120 C 40 80, 80 60, 100 20 Z" fill="#fbbf24" stroke="#1e293b" stroke-width="4.5"/>
+                <path d="M 100 60 C 112 85, 135 100, 128 125 C 122 150, 78 150, 72 125 C 65 100, 88 85, 100 60 Z" fill="#f59e0b"/>
+                <!-- Eyes & Wink -->
+                <circle cx="88" cy="105" r="4" fill="#1e293b"/>
+                <path d="M 108 105 L 118 105" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 94 118 Q 100 125 106 118" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Main Assessment Card -->
+    <div class="question-card">
+        <!-- Header Row -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="phase-badge text-uppercase">PHASE 5 OF 5</span>
+            <span class="category-title"><i class="fa-solid fa-person-running me-1"></i> Neuroplasticity &amp; Stress</span>
+        </div>
+
+        <!-- Main Title -->
+        <h1 class="page-title">Activity &amp; Fitness</h1>
+        <p class="page-subtitle">Regular physical activity stimulates BDNF for focus and flushes excess cortisol.</p>
+
+        <!-- Biological Insight Box -->
+        <div class="insight-box d-flex align-items-start">
+            <i class="fa-solid fa-heart-pulse me-2 mt-1 fs-6"></i>
+            <div>
+                <strong>Biological Insight:</strong> Regular aerobic activity stimulates Brain-Derived Neurotrophic Factor (BDNF) for neuroplasticity and flushes excess cortisol out of your nervous system to ease exam stress.
+            </div>
+        </div>
+
+        <!-- Question Form -->
+        <form action="summary.html" method="GET">
+            
+            <!-- Question 1 -->
+            <div class="mb-4">
+                <label for="activeMinutes" class="form-label-custom">1. How many minutes of moderate-to-vigorous physical activity did you do today?</label>
+                <input type="number" class="form-control" id="activeMinutes" placeholder="e.g. 30" min="0" required>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="mb-4">
+                <label for="activityType" class="form-label-custom">2. What type of physical activity did you perform?</label>
+                <select class="form-select" id="activityType" required>
+                    <option value="" selected disabled>Select activity type...</option>
+                    <option value="aerobic">Aerobic Cardio (Walking, Running, Cycling, Swimming)</option>
+                    <option value="strength">Resistance Training / Gym Workouts</option>
+                    <option value="flexibility">Yoga / Stretching / Mobility</option>
+                    <option value="sports">Recreational Sports / Dancing</option>
+                    <option value="sedentary">Mostly Sedentary Today</option>
+                </select>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="mb-4">
+                <label for="sittingTime" class="form-label-custom">3. Approximately how many continuous hours did you spend sitting or studying today?</label>
+                <select class="form-select" id="sittingTime" required>
+                    <option value="" selected disabled>Select continuous sitting time...</option>
+                    <option value="low">Less than 4 hours (Frequent movement breaks)</option>
+                    <option value="moderate">4 to 7 hours</option>
+                    <option value="high">8+ hours with few movement breaks</option>
+                </select>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="d-flex justify-content-between align-items-center mt-5">
+                <a href="3-questions-4.html" class="btn btn-back">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+                <button type="submit" class="btn btn-complete">
+                    <i class="fa-solid fa-circle-check me-2"></i> Complete &amp; Save Vitals
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
