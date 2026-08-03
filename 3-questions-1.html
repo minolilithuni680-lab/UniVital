@@ -4,91 +4,363 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniVital - Phase 1: Hydration Assessment</title>
+
+    <!-- Google Fonts & Bootstrap 5 -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        body { background-color: #eef7f2; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px 15px; }
-        .card-custom { max-width: 750px; margin: auto; background: #ffffff; border-radius: 16px; padding: 35px; box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
-        .info-box { background-color: #e3f2fd; border-left: 4px solid #0d6efd; padding: 12px 16px; border-radius: 6px; font-size: 0.88rem; margin-bottom: 25px; }
-        .step-badge { font-size: 0.75rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase; }
-        .btn-next { background-color: #198754; color: white; font-weight: 700; padding: 12px 24px; border-radius: 8px; border: none; }
-        .btn-next:hover { background-color: #146c43; color: white; }
+        :root {
+            --primary-emerald: #10b981;
+            --dark-emerald: #059669;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #d8ece1;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Side Cartoon Floating Containers */
+        .decor-side {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .decor-left {
+            left: 2%;
+        }
+
+        .decor-right {
+            right: 2%;
+        }
+
+        /* Float Animation */
+        .mascot-container {
+            width: 180px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.12));
+            animation: floatSlow 4s ease-in-out infinite alternate;
+        }
+
+        .mascot-container-reverse {
+            width: 170px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            animation: floatSlow 4.5s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatSlow {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-12px) rotate(3deg); }
+        }
+
+        /* Question Form Card */
+        .question-card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 40px 45px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+            max-width: 800px;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Badge Phase */
+        .phase-badge {
+            background-color: #14532d;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .category-title {
+            color: #0284c7;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        /* Biological Insight Callout Box */
+        .insight-box {
+            background-color: #e0f2fe;
+            border-left: 4px solid #0284c7;
+            border-radius: 8px;
+            padding: 16px 20px;
+            color: #0369a1;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 35px;
+        }
+
+        /* Form Controls */
+        .form-label-custom {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            color: #334155;
+            background-color: #f8fafc;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: #ffffff;
+            border-color: var(--primary-emerald);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-emerald);
+            border-color: var(--primary-emerald);
+        }
+
+        .form-check-label {
+            color: #64748b;
+            font-size: 0.93rem;
+        }
+
+        /* Submit Button */
+        .btn-continue {
+            background-color: #0d9488;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 10px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-continue:hover {
+            background-color: #0f766e;
+            color: #ffffff;
+        }
+
+        /* Hide side illustrations on screen width below 1200px */
+        @media (max-width: 1200px) {
+            .decor-side {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="card-custom">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <span class="badge bg-success step-badge">Phase 1 of 3</span>
-        <span class="text-muted small"><i class="fa-solid fa-droplet text-primary me-1"></i> Cellular Fluid Balance</span>
+    <!-- LEFT SIDE: Cartoon Water Bottle Mascot & Water Drop with Speech Bubble -->
+    <div class="decor-side decor-left">
+        <!-- Cartoon Bottle Mascot waving & smiling -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+                <!-- Cap -->
+                <rect x="80" y="10" width="40" height="18" rx="4" fill="#0284c7" stroke="#1e293b" stroke-width="4"/>
+                <line x1="85" y1="16" x2="115" y2="16" stroke="#ffffff" stroke-width="2"/>
+                <!-- Neck -->
+                <rect x="86" y="28" width="28" height="12" fill="#bae6fd" stroke="#1e293b" stroke-width="4"/>
+                <!-- Body -->
+                <path d="M60 50 C60 40, 140 40, 140 50 L145 190 C145 205, 55 205, 55 190 Z" fill="#e0f2fe" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Water Line inside -->
+                <path d="M 57 110 Q 100 120 143 110 L 145 190 C145 205, 55 205, 55 190 Z" fill="#38bdf8"/>
+                <!-- Label -->
+                <rect x="62" y="75" width="76" height="30" rx="5" fill="#ffffff" stroke="#1e293b" stroke-width="3"/>
+                <text x="100" y="95" font-size="14" font-weight="bold" fill="#0284c7" text-anchor="middle" font-family="sans-serif">WATER</text>
+                <!-- Eyes -->
+                <circle cx="82" cy="135" r="7" fill="#1e293b"/>
+                <circle cx="118" cy="135" r="7" fill="#1e293b"/>
+                <circle cx="80" cy="133" r="2.5" fill="#ffffff"/>
+                <circle cx="116" cy="133" r="2.5" fill="#ffffff"/>
+                <!-- Cheeks -->
+                <ellipse cx="75" cy="144" rx="5" ry="3" fill="#f43f5e" opacity="0.6"/>
+                <ellipse cx="125" cy="144" rx="5" ry="3" fill="#f43f5e" opacity="0.6"/>
+                <!-- Mouth (Big Smile) -->
+                <path d="M 88 145 Q 100 162 112 145" fill="#1e293b" stroke="#1e293b" stroke-width="2"/>
+                <!-- Left Arm Waving -->
+                <path d="M 58 120 C 35 110, 25 80, 20 70" fill="none" stroke="#1e293b" stroke-width="5" stroke-linecap="round"/>
+                <circle cx="20" cy="68" r="6" fill="#1e293b"/>
+                <!-- Right Arm on Hip -->
+                <path d="M 142 120 C 160 125, 165 140, 144 150" fill="none" stroke="#1e293b" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <!-- Cartoon Drop Buddy -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Speech Bubble -->
+                <path d="M 110 10 L 180 10 C 190 10, 195 18, 195 28 L 195 45 C 195 55, 190 60, 180 60 L 140 60 L 125 75 L 130 60 L 110 60 C 100 60, 95 55, 95 45 L 95 28 C 95 18, 100 10, 110 10 Z" fill="#ffffff" stroke="#1e293b" stroke-width="3"/>
+                <text x="145" y="38" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle" font-family="sans-serif">DRINK WATER!</text>
+                <!-- Water Drop Body -->
+                <path d="M 65 30 C 65 30, 15 100, 15 130 C 15 160, 40 175, 65 175 C 90 175, 115 160, 115 130 C 115 100, 65 30, 65 30 Z" fill="#0ea5e9" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Highlight -->
+                <path d="M 35 115 C 30 130, 35 145, 40 150" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+                <!-- Cute Face -->
+                <circle cx="50" cy="125" r="5" fill="#1e293b"/>
+                <circle cx="80" cy="125" r="5" fill="#1e293b"/>
+                <path d="M 58 135 Q 65 145 72 135" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <!-- Thumbs Up Hand -->
+                <path d="M 112 135 L 130 130 C 135 125, 138 115, 133 110 C 128 105, 122 112, 122 112" fill="none" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+        </div>
     </div>
 
-    <h3 class="fw-bold text-dark mb-1">Hydration & Electrolytes</h3>
-    <p class="text-muted small mb-4">Evaluate your daily fluid intake, timing distribution, and plasma volume markers.</p>
+    <!-- RIGHT SIDE: Cute Girl Drinking Water Cartoon & Cool Bottle Mascot -->
+    <div class="decor-side decor-right">
+        <!-- Cute Character Drinking Water -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Character Head -->
+                <circle cx="100" cy="90" r="45" fill="#fde047" opacity="0.2"/> <!-- Background Glow -->
+                <path d="M 60 70 C 60 30, 140 30, 140 70 C 140 85, 135 120, 100 120 C 65 120, 60 85, 60 70 Z" fill="#fcd34d" stroke="#1e293b" stroke-width="4"/> <!-- Hair/Head -->
+                <circle cx="100" cy="95" r="32" fill="#ffedd5"/> <!-- Face -->
+                <!-- Happy Wink Eyes -->
+                <path d="M 82 92 Q 88 85 94 92" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 106 92 Q 112 85 118 92" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <!-- Cheeks -->
+                <circle cx="78" cy="98" r="4" fill="#fb7185"/>
+                <circle cx="122" cy="98" r="4" fill="#fb7185"/>
+                <!-- Glass of Water in Hand -->
+                <path d="M 90 100 L 110 100 L 107 125 L 93 125 Z" fill="#7dd3fc" stroke="#1e293b" stroke-width="3"/>
+                <!-- Arms holding glass -->
+                <path d="M 68 125 C 75 110, 88 112, 92 112" fill="none" stroke="#1e293b" stroke-width="4"/>
+                <path d="M 132 125 C 125 110, 112 112, 108 112" fill="none" stroke="#1e293b" stroke-width="4"/>
+                <!-- Shirt Body -->
+                <path d="M 70 128 L 130 128 L 140 180 L 60 180 Z" fill="#38bdf8" stroke="#1e293b" stroke-width="4"/>
+            </svg>
+        </div>
 
-    <div class="info-box">
-        <i class="fa-solid fa-circle-info text-primary me-1"></i>
-        <strong>Biological Insight:</strong> Dehydration directly impacts cognitive performance, motor coordination, and thermoregulation by decreasing total blood plasma volume.
+        <!-- Cool Water Bottle with Sunglasses -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Bottle Body -->
+                <rect x="70" y="20" width="60" height="15" rx="3" fill="#0284c7" stroke="#1e293b" stroke-width="4"/>
+                <path d="M 55 50 C 55 40, 145 40, 145 50 L 140 180 C 140 190, 60 190, 60 180 Z" fill="#bae6fd" stroke="#1e293b" stroke-width="4.5"/>
+                <path d="M 61 100 Q 100 110 139 100 L 140 180 C 140 190, 60 190, 60 180 Z" fill="#0284c7"/>
+                <!-- Cool Sunglasses -->
+                <polygon points="65,80 98,80 93,98 70,98" fill="#1e293b"/>
+                <polygon points="102,80 135,80 130,98 107,98" fill="#1e293b"/>
+                <line x1="95" y1="84" x2="105" y2="84" stroke="#1e293b" stroke-width="4"/>
+                <!-- Glare on Sunglasses -->
+                <line x1="70" y1="84" x2="82" y2="94" stroke="#ffffff" stroke-width="2"/>
+                <line x1="107" y1="84" x2="119" y2="94" stroke="#ffffff" stroke-width="2"/>
+                <!-- Cool Smirk -->
+                <path d="M 90 120 Q 105 125 115 115" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+                <!-- Thumbs up arm -->
+                <path d="M 140 110 L 165 100 L 168 85" fill="none" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="168" cy="82" r="5" fill="#1e293b"/>
+            </svg>
+        </div>
     </div>
 
-    <form id="phase1Form" onsubmit="savePhase1(event)">
-        <!-- Q1: Daily Water Intake -->
-        <div class="mb-4">
-            <label for="waterAmount" class="form-label fw-bold text-dark">1. What is your estimated total water consumption today? (Liters)</label>
-            <input type="number" step="0.1" min="0" max="10" class="form-control" id="waterAmount" placeholder="e.g. 2.5" required>
+    <!-- Main Assessment Card -->
+    <div class="question-card">
+        <!-- Header Row -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="phase-badge text-uppercase">PHASE 1 OF 3</span>
+            <span class="category-title"><i class="fa-solid fa-droplet me-1"></i> Cellular Fluid Balance</span>
         </div>
 
-        <!-- Q2: Water Intake Timing -->
-        <div class="mb-4">
-            <label for="waterTiming" class="form-label fw-bold text-dark">2. How is your water intake distributed throughout the day?</label>
-            <select class="form-select" id="waterTiming" required>
-                <option value="" disabled selected>Select intake pattern...</option>
-                <option value="Spread evenly throughout the day">Evenly distributed from morning to night</option>
-                <option value="Concentrated mostly in the morning">Mainly consumed in the morning</option>
-                <option value="Concentrated mostly in the evening">Mainly consumed in the evening</option>
-                <option value="Irregular / Chugged in large quantities at once">Irregular (infrequent large gulps)</option>
-            </select>
-        </div>
+        <!-- Main Title -->
+        <h1 class="page-title">Hydration &amp; Electrolytes</h1>
+        <p class="page-subtitle">Evaluate your daily fluid intake, timing distribution, and plasma volume markers.</p>
 
-        <!-- Q3: Physical Dehydration Symptoms -->
-        <div class="mb-4">
-            <label class="form-label fw-bold text-dark">3. Are you currently experiencing any of the following symptoms? (Select all that apply)</label>
-            <div class="form-check mb-1">
-                <input class="form-check-input symptom-check" type="checkbox" value="Dry Mouth / Thirst" id="sym1">
-                <label class="form-check-label small text-secondary" for="sym1">Persistent dry mouth or intense thirst</label>
-            </div>
-            <div class="form-check mb-1">
-                <input class="form-check-input symptom-check" type="checkbox" value="Mild Headache / Brain Fog" id="sym2">
-                <label class="form-check-label small text-secondary" for="sym2">Mild tension headache or brain fog</label>
-            </div>
-            <div class="form-check mb-1">
-                <input class="form-check-input symptom-check" type="checkbox" value="Dark Urine Color" id="sym3">
-                <label class="form-check-label small text-secondary" for="sym3">Concentrated or dark urine color</label>
+        <!-- Biological Insight Box -->
+        <div class="insight-box d-flex align-items-start">
+            <i class="fa-solid fa-circle-info me-2 mt-1 fs-6"></i>
+            <div>
+                <strong>Biological Insight:</strong> Dehydration directly impacts cognitive performance, motor coordination, and thermoregulation by decreasing total blood plasma volume.
             </div>
         </div>
 
-        <div class="d-flex justify-content-end mt-4">
-            <button type="submit" class="btn btn-next">Continue to Phase 2 <i class="fa-solid fa-arrow-right ms-2"></i></button>
-        </div>
-    </form>
-</div>
+        <!-- Question Form -->
+        <form action="3-questions-2.html" method="GET">
+            
+            <!-- Question 1 -->
+            <div class="mb-4">
+                <label for="waterIntake" class="form-label-custom">1. What is your estimated total water consumption today? (Liters)</label>
+                <input type="number" step="0.1" class="form-control" id="waterIntake" placeholder="e.g. 2.5" required>
+            </div>
 
-<script>
-    function savePhase1(e) {
-        e.preventDefault();
-        
-        // Collect symptom checkboxes
-        const selectedSymptoms = Array.from(document.querySelectorAll('.symptom-check:checked')).map(cb => cb.value);
+            <!-- Question 2 -->
+            <div class="mb-4">
+                <label for="intakePattern" class="form-label-custom">2. How is your water intake distributed throughout the day?</label>
+                <select class="form-select" id="intakePattern" required>
+                    <option value="" selected disabled>Select intake pattern...</option>
+                    <option value="even">Evenly spread throughout the day</option>
+                    <option value="morning">Mostly in the morning</option>
+                    <option value="evening">Mostly in the evening / night</option>
+                    <option value="irregular">Irregular / Only when thirsty</option>
+                </select>
+            </div>
 
-        const phase1Data = {
-            waterAmount: document.getElementById('waterAmount').value,
-            waterTiming: document.getElementById('waterTiming').value,
-            symptoms: selectedSymptoms
-        };
+            <!-- Question 3 -->
+            <div class="mb-4">
+                <label class="form-label-custom">3. Are you currently experiencing any of the following symptoms? (Select all that apply)</label>
+                
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="symptom1" value="dry_mouth">
+                    <label class="form-check-label" for="symptom1">Persistent dry mouth or intense thirst</label>
+                </div>
+                
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="symptom2" value="headache">
+                    <label class="form-check-label" for="symptom2">Mild tension headache or brain fog</label>
+                </div>
 
-        localStorage.setItem('uniVital_Phase1', JSON.stringify(phase1Data));
-        window.location.href = "3-questions-2.html";
-    }
-</script>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="symptom3" value="dark_urine">
+                    <label class="form-check-label" for="symptom3">Concentrated or dark urine color</label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-flex justify-content-end mt-5">
+                <button type="submit" class="btn btn-continue">
+                    Continue to Phase 2 <i class="fa-solid fa-arrow-right ms-2"></i>
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
