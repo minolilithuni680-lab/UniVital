@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="MJsf-RjVNdScDAE4-LOZzVTtITjnt4RRxQYyen0ebWU" />
-    <title>UniVital - Welcome to Biological Optimization</title>
+    <title>UniVital - Biological Optimization & Vitals Tracker</title>
 
     <!-- Google Fonts & Bootstrap 5 -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -28,12 +28,53 @@
             padding: 0;
         }
 
+        /* Navbar */
+        .navbar {
+            background-color: #090d16;
+            padding: 15px 30px;
+        }
+
+        /* Red Circle: ENHANCED LOGO SIZE */
+        .navbar-brand {
+            font-family: 'Fredoka', cursive;
+            font-size: 2.8rem; /* Significantly enlarged */
+            color: var(--primary-emerald) !important;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: #94a3b8 !important;
+            font-weight: 500;
+            margin: 0 8px;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #ffffff !important;
+        }
+
+        .btn-login-nav {
+            background-color: var(--primary-emerald);
+            color: #ffffff !important;
+            font-weight: 600;
+            padding: 8px 24px;
+            border-radius: 20px;
+            border: none;
+            text-decoration: none;
+            transition: background 0.2s ease;
+        }
+
+        .btn-login-nav:hover {
+            background-color: #059669;
+        }
+
         /* Hero Header Section */
         .hero-section {
             background: linear-gradient(135deg, #090d16 0%, #0f172a 100%);
             color: #ffffff;
-            padding: 80px 20px;
-            text-align: center;
+            padding: 70px 20px;
             position: relative;
             overflow: hidden;
         }
@@ -51,29 +92,41 @@
             border-radius: 50%;
         }
 
+        /* Yellow Circle: DECREASED TITLE SIZE */
         .hero-title {
             font-family: 'Fredoka', cursive;
-            font-size: 3.5rem;
+            font-size: 2.8rem; /* Scaled down slightly for balance */
             color: var(--primary-emerald);
-            margin-bottom: 15px;
+            line-height: 1.25;
+            margin-bottom: 20px;
         }
 
         .hero-subtitle {
-            font-size: 1.25rem;
+            font-size: 1.05rem;
             color: #94a3b8;
-            max-width: 700px;
-            margin: 0 auto 30px auto;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .hero-img {
+            width: 100%;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            max-height: 380px;
         }
 
         /* Feature Cards */
         .feature-card {
             background: #ffffff;
             border-radius: 20px;
-            padding: 30px;
+            overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             border: 1px solid #e2e8f0;
             transition: all 0.3s ease;
             height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .feature-card:hover {
@@ -82,40 +135,43 @@
             border-color: var(--primary-emerald);
         }
 
-        .icon-box {
-            width: 65px;
-            height: 65px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
+        .card-img-top {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
         }
 
-        .bg-caffeine { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
-        .bg-nutrition { background: rgba(16, 185, 129, 0.15); color: #10b981; }
-        .bg-hydration { background: rgba(6, 182, 212, 0.15); color: #06b6d4; }
+        .card-body {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
 
         .card-title {
             font-family: 'Fredoka', cursive;
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             margin-bottom: 12px;
             color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* Action Buttons */
+        /* Green Circle Buttons */
         .btn-custom-primary {
             background-color: var(--primary-emerald);
             color: white;
             font-weight: 600;
-            padding: 14px 36px;
+            padding: 14px 34px;
             border-radius: 30px;
             border: none;
             text-decoration: none;
             display: inline-block;
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+            cursor: pointer;
         }
 
         .btn-custom-primary:hover {
@@ -125,10 +181,10 @@
         }
 
         .btn-custom-outline {
-            border: 2px solid #cbd5e1;
-            color: #475569;
+            border: 2px solid #334155;
+            color: #ffffff;
             font-weight: 600;
-            padding: 12px 30px;
+            padding: 12px 28px;
             border-radius: 30px;
             text-decoration: none;
             display: inline-block;
@@ -139,94 +195,266 @@
             border-color: var(--primary-emerald);
             color: var(--primary-emerald);
         }
+
+        /* Science Feature Pills */
+        .science-pill {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s ease;
+            height: 100%;
+        }
+
+        .science-pill:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-emerald);
+        }
+
+        .science-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background-color: #090d16;
+            color: #64748b;
+            text-align: center;
+            padding: 25px;
+            font-size: 0.85rem;
+            border-top: 1px solid #1e293b;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Hero Header -->
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <!-- Red Circle: Enlarged Brand Logo -->
+            <a class="navbar-brand" href="index.html"><i class="fa-solid fa-dna me-2"></i>UniVital</a>
+            <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center gap-2">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#science">Science</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="checkAuthAccess('3-questions-1.html')">Tracker</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="checkAuthAccess('4-dashboard.html')">Dashboard</a></li>
+                    <li class="nav-item ms-2"><a class="btn-login-nav" href="2-login.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Header Section -->
     <header class="hero-section">
         <div class="container position-relative">
-            <h1 class="hero-title"><i class="fa-solid fa-dna me-2"></i>UniVital</h1>
-            <p class="hero-subtitle">Optimize your academic focus, sleep hygiene, and daily biological energy with evidence-based health tracking.</p>
-            <div class="d-flex justify-content-center gap-3">
-                <a href="2-login.html" class="btn-custom-primary">Get Started / Sign In ➔</a>
-                <a href="#science" class="btn-custom-outline text-white border-secondary">Learn The Science</a>
+            <div class="row align-items-center g-4">
+                <div class="col-lg-6 text-start">
+                    <!-- Yellow Circle: Slightly Decreased Font Size -->
+                    <h1 class="hero-title">Optimize Your UniVital Health</h1>
+                    <p class="hero-subtitle">
+                        Balance study pressure, physiological energy, nutrition, sleep quality, and fitness in one unified biological portal.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <!-- Green Circle 1: Redirects to Login Page -->
+                        <a href="2-login.html" class="btn-custom-primary">Get Started Free</a>
+                        <a href="#science" class="btn-custom-outline">Learn The Science</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80" alt="Students studying together on campus" class="hero-img">
+                </div>
             </div>
         </div>
     </header>
 
     <!-- Main Content Section -->
     <section id="science" class="container my-5 py-4">
-        <div class="text-center mb-5">
-            <span class="badge bg-success mb-2">EVIDENCE-BASED PHYSIOLOGY</span>
-            <h2 class="fw-bold" style="font-family: 'Fredoka', cursive;">How Daily Habits Impact Your Brain & Sleep</h2>
-            <p class="text-muted">Data insights powered by recent research from the Sleep Foundation.</p>
+        
+        <!-- Intro Header -->
+        <div class="mb-5 text-start">
+            <h3 class="fw-bold mb-3" style="font-family: 'Fredoka', cursive; font-size: 2rem;">Why Healthy Habits Matter for Students</h3>
+            <p class="text-secondary" style="font-size: 1.05rem; line-height: 1.6;">
+                Academic performance is directly linked to your physical and mental well-being. Regular sleep patterns, proper hydration, and stress management drastically improve focus, memory retention, and energy levels during exams.
+            </p>
         </div>
 
-        <div class="row g-4">
-            
-            <!-- Card 1: Caffeine -->
+        <!-- PORTAL FEATURES SECTION -->
+        <h2 class="fw-bold mb-4 text-start" style="font-family: 'Fredoka', cursive; font-size: 1.8rem;">Portal Features</h2>
+
+        <div class="row g-4 mb-5">
+            <!-- Card 1: Water & Diet Tracker -->
             <div class="col-md-4">
                 <div class="feature-card">
-                    <div class="icon-box bg-caffeine">
-                        <i class="fa-solid fa-mug-hot"></i>
+                    <img src="https://images.unsplash.com/photo-1543362906-acfc16c67564?w=600&auto=format&fit=crop&q=80" alt="Water & Diet Tracker" class="card-img-top">
+                    <div class="card-body">
+                        <div>
+                            <h3 class="card-title text-success">
+                                <i class="fa-solid fa-droplet text-info"></i> Water & Diet Tracker
+                            </h3>
+                            <p class="text-muted small">
+                                Keep precise track of daily water consumption and balanced meals during intense study sessions.
+                            </p>
+                        </div>
                     </div>
-                    <h3 class="card-title">Caffeine & Adenosine</h3>
-                    <p class="text-muted small">
-                        Caffeine doesn't eliminate tiredness—it blocks <strong>adenosine receptors</strong> in your brain. 
-                        Consuming coffee within 6 hours of bedtime reduces deep slow-wave sleep and disrupts nighttime clearance of neural waste.
-                    </p>
-                    <ul class="list-unstyled small text-secondary mt-3">
-                        <li><i class="fa-solid fa-check text-success me-2"></i>Stop caffeine intake 6 hours before bed</li>
-                        <li><i class="fa-solid fa-check text-success me-2"></i>Prevents afternoon fatigue crashes</li>
-                    </ul>
                 </div>
             </div>
 
-            <!-- Card 2: Food & Nutrition -->
+            <!-- Card 2: Sleep & Stress Guide -->
             <div class="col-md-4">
                 <div class="feature-card">
-                    <div class="icon-box bg-nutrition">
-                        <i class="fa-solid fa-bowl-food"></i>
+                    <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=600&auto=format&fit=crop&q=80" alt="Sleep & Stress Guide" class="card-img-top">
+                    <div class="card-body">
+                        <div>
+                            <h3 class="card-title text-warning">
+                                <i class="fa-solid fa-moon text-warning"></i> Sleep & Stress Guide
+                            </h3>
+                            <p class="text-muted small">
+                                Monitor your sleep duration and leverage guided breathing exercises to alleviate exam anxieties.
+                            </p>
+                        </div>
                     </div>
-                    <h3 class="card-title">Nutrition & Metabolism</h3>
-                    <p class="text-muted small">
-                        Foods rich in <strong>tryptophan</strong> (oats, seeds, poultry) encourage melatonin synthesis. 
-                        Avoid heavy, high-fat, or spicy meals 2 hours before bed to prevent elevated core body temperature and nocturnal acid reflux.
-                    </p>
-                    <ul class="list-unstyled small text-secondary mt-3">
-                        <li><i class="fa-solid fa-check text-success me-2"></i>Opt for high-fiber, balanced evening meals</li>
-                        <li><i class="fa-solid fa-check text-success me-2"></i>Enhances uninterrupted sleep continuity</li>
-                    </ul>
                 </div>
             </div>
 
-            <!-- Card 3: Hydration -->
+            <!-- Card 3: Activity & Fitness -->
             <div class="col-md-4">
                 <div class="feature-card">
-                    <div class="icon-box bg-hydration">
-                        <i class="fa-solid fa-glass-water"></i>
+                    <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop&q=80" alt="Activity & Fitness" class="card-img-top">
+                    <div class="card-body">
+                        <div>
+                            <h3 class="card-title text-success">
+                                <i class="fa-solid fa-person-walking text-warning"></i> Activity & Fitness
+                            </h3>
+                            <p class="text-muted small">
+                                Log daily steps and campus activities to build long-term wellness habits effortlessly.
+                            </p>
+                        </div>
                     </div>
-                    <h3 class="card-title">Hydration & Vasopressin</h3>
-                    <p class="text-muted small">
-                        During deep sleep, the brain releases <strong>vasopressin</strong> to retain water. Dehydration during sleep causes muscle cramps and morning headaches. Taper fluid intake 2 hours before bed to minimize awakenings.
-                    </p>
-                    <ul class="list-unstyled small text-secondary mt-3">
-                        <li><i class="fa-solid fa-check text-success me-2"></i>Drink 2 Liters of water evenly throughout the day</li>
-                        <li><i class="fa-solid fa-check text-success me-2"></i>Saves your bladder for restful sleep</li>
-                    </ul>
                 </div>
             </div>
-
         </div>
 
-        <!-- Call to Action Footer Box -->
+        <!-- 5-DIMENSION PHYSIOLOGY SCIENCE EXPLANATION -->
+        <div class="p-4 p-md-5 bg-light rounded-4 border">
+            <div class="text-center mb-5">
+                <span class="badge bg-success mb-2 px-3 py-2 fs-6">EVIDENCE-BASED PHYSIOLOGY</span>
+                <h2 class="fw-bold" style="font-family: 'Fredoka', cursive; font-size: 2.2rem;">How UniVital Calculates Your Health Suggestions</h2>
+                <p class="text-muted max-width-700 mx-auto">Our diagnostic engine analyzes 5 core vital domains to generate custom, student-focused optimization tips.</p>
+            </div>
+
+            <div class="row g-4">
+                
+                <!-- 1. Hydration & Electrolytes -->
+                <div class="col-md-4">
+                    <div class="science-pill">
+                        <div class="science-icon bg-info bg-opacity-10 text-info">
+                            <i class="fa-solid fa-droplet"></i>
+                        </div>
+                        <h4 class="fw-bold fs-5 mb-2">1. Hydration & Electrolytes</h4>
+                        <p class="text-muted small m-0">
+                            Dehydration reduces total blood plasma volume, lowering oxygen transport to brain cells and impairing concentration. We calculate fluid intake distribution to optimize cellular hydration without disrupting sleep.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 2. Caffeine & Stimulants -->
+                <div class="col-md-4">
+                    <div class="science-pill">
+                        <div class="science-icon bg-warning bg-opacity-10 text-warning">
+                            <i class="fa-solid fa-mug-hot"></i>
+                        </div>
+                        <h4 class="fw-bold fs-5 mb-2">2. Caffeine & Stimulants</h4>
+                        <p class="text-muted small m-0">
+                            Caffeine blocks <strong>adenosine receptors</strong> in your brain to mask fatigue. We measure timing cutoffs to prevent coffee consumed late in the day from destroying deep, slow-wave sleep.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 3. Sleep & Rest Quality -->
+                <div class="col-md-4">
+                    <div class="science-pill">
+                        <div class="science-icon bg-primary bg-opacity-10 text-primary">
+                            <i class="fa-solid fa-bed"></i>
+                        </div>
+                        <h4 class="fw-bold fs-5 mb-2">3. Sleep & Rest Quality</h4>
+                        <p class="text-muted small m-0">
+                            During REM and slow-wave sleep, your brain consolidates memory and clears neurotoxic waste. Tracking sleep cycles allows us to recommend optimal bedtime windows for exam recall.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 4. Diet & Nutrition Tracker -->
+                <div class="col-md-6">
+                    <div class="science-pill">
+                        <div class="science-icon bg-success bg-opacity-10 text-success">
+                            <i class="fa-solid fa-utensils"></i>
+                        </div>
+                        <h4 class="fw-bold fs-5 mb-2">4. Diet & Nutrition Tracker</h4>
+                        <p class="text-muted small m-0">
+                            Nutrient timing dictates blood glucose stability. Balanced protein and tryptophan-rich meals encourage natural melatonin synthesis, preventing late-night energy spikes and brain fog.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 5. Activity & Fitness -->
+                <div class="col-md-6">
+                    <div class="science-pill">
+                        <div class="science-icon bg-danger bg-opacity-10 text-danger">
+                            <i class="fa-solid fa-person-running"></i>
+                        </div>
+                        <h4 class="fw-bold fs-5 mb-2">5. Activity & Fitness</h4>
+                        <p class="text-muted small m-0">
+                            Regular aerobic activity stimulates Brain-Derived Neurotrophic Factor (BDNF) for neuroplasticity and flushes excess cortisol out of your nervous system to ease exam stress.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Call to Action Box -->
         <div class="text-center mt-5 p-5 bg-white rounded-4 border shadow-sm">
-            <h3 class="fw-bold mb-2" style="font-family: 'Fredoka', cursive;">Ready to analyze your daily vitals?</h3>
-            <p class="text-muted mb-4">Track your hydration, coffee intake, and sleep quality with UniVital.</p>
-            <a href="2-login.html" class="btn-custom-primary">Launch Sign In Panel ➔</a>
+            <h3 class="fw-bold mb-2" style="font-family: 'Fredoka', cursive; font-size: 2rem;">Ready to analyze your daily vitals?</h3>
+            <p class="text-muted mb-4">Track your hydration, caffeine intake, nutrition, sleep quality, and fitness with UniVital.</p>
+            <!-- Green Circle 2: Redirects to Login Page -->
+            <a href="2-login.html" class="btn-custom-primary">Launch Daily Health Vitals ➔</a>
         </div>
     </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="m-0">&copy; 2026 UniVital Portal - University Web Development Project.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Authentication Access Guard -->
+    <script>
+        function checkAuthAccess(targetPage) {
+            // Checks if user is logged in via localStorage
+            const isLoggedIn = localStorage.getItem('univital_logged_in') === 'true';
+
+            if (isLoggedIn) {
+                window.location.href = targetPage;
+            } else {
+                alert("Please sign in first to access the health tracking portal.");
+                window.location.href = "2-login.html";
+            }
+        }
+    </script>
 
 </body>
 </html>
