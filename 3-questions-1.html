@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniVital - Phase 1: Hydration Assessment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #eef7f2; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px 15px; }
+        .card-custom { max-width: 750px; margin: auto; background: #ffffff; border-radius: 16px; padding: 35px; box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
+        .info-box { background-color: #e3f2fd; border-left: 4px solid #0d6efd; padding: 12px 16px; border-radius: 6px; font-size: 0.88rem; margin-bottom: 25px; }
+        .step-badge { font-size: 0.75rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase; }
+        .btn-next { background-color: #198754; color: white; font-weight: 700; padding: 12px 24px; border-radius: 8px; border: none; }
+        .btn-next:hover { background-color: #146c43; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="card-custom">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="badge bg-success step-badge">Phase 1 of 3</span>
+        <span class="text-muted small"><i class="fa-solid fa-droplet text-primary me-1"></i> Cellular Fluid Balance</span>
+    </div>
+
+    <h3 class="fw-bold text-dark mb-1">Hydration & Electrolytes</h3>
+    <p class="text-muted small mb-4">Evaluate your daily fluid intake, timing distribution, and plasma volume markers.</p>
+
+    <div class="info-box">
+        <i class="fa-solid fa-circle-info text-primary me-1"></i>
+        <strong>Biological Insight:</strong> Dehydration directly impacts cognitive performance, motor coordination, and thermoregulation by decreasing total blood plasma volume.
+    </div>
+
+    <form id="phase1Form" onsubmit="savePhase1(event)">
+        <!-- Q1: Daily Water Intake -->
+        <div class="mb-4">
+            <label for="waterAmount" class="form-label fw-bold text-dark">1. What is your estimated total water consumption today? (Liters)</label>
+            <input type="number" step="0.1" min="0" max="10" class="form-control" id="waterAmount" placeholder="e.g. 2.5" required>
+        </div>
+
+        <!-- Q2: Water Intake Timing -->
+        <div class="mb-4">
+            <label for="waterTiming" class="form-label fw-bold text-dark">2. How is your water intake distributed throughout the day?</label>
+            <select class="form-select" id="waterTiming" required>
+                <option value="" disabled selected>Select intake pattern...</option>
+                <option value="Spread evenly throughout the day">Evenly distributed from morning to night</option>
+                <option value="Concentrated mostly in the morning">Mainly consumed in the morning</option>
+                <option value="Concentrated mostly in the evening">Mainly consumed in the evening</option>
+                <option value="Irregular / Chugged in large quantities at once">Irregular (infrequent large gulps)</option>
+            </select>
+        </div>
+
+        <!-- Q3: Physical Dehydration Symptoms -->
+        <div class="mb-4">
+            <label class="form-label fw-bold text-dark">3. Are you currently experiencing any of the following symptoms? (Select all that apply)</label>
+            <div class="form-check mb-1">
+                <input class="form-check-input symptom-check" type="checkbox" value="Dry Mouth / Thirst" id="sym1">
+                <label class="form-check-label small text-secondary" for="sym1">Persistent dry mouth or intense thirst</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input symptom-check" type="checkbox" value="Mild Headache / Brain Fog" id="sym2">
+                <label class="form-check-label small text-secondary" for="sym2">Mild tension headache or brain fog</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input symptom-check" type="checkbox" value="Dark Urine Color" id="sym3">
+                <label class="form-check-label small text-secondary" for="sym3">Concentrated or dark urine color</label>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end mt-4">
+            <button type="submit" class="btn btn-next">Continue to Phase 2 <i class="fa-solid fa-arrow-right ms-2"></i></button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function savePhase1(e) {
+        e.preventDefault();
+        
+        // Collect symptom checkboxes
+        const selectedSymptoms = Array.from(document.querySelectorAll('.symptom-check:checked')).map(cb => cb.value);
+
+        const phase1Data = {
+            waterAmount: document.getElementById('waterAmount').value,
+            waterTiming: document.getElementById('waterTiming').value,
+            symptoms: selectedSymptoms
+        };
+
+        localStorage.setItem('uniVital_Phase1', JSON.stringify(phase1Data));
+        window.location.href = "3-questions-2.html";
+    }
+</script>
+</body>
+</html>
