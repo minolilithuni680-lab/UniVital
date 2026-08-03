@@ -4,85 +4,347 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniVital - Phase 2: Caffeine Dynamics</title>
+
+    <!-- Google Fonts & Bootstrap 5 -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        body { background-color: #eef7f2; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px 15px; }
-        .card-custom { max-width: 750px; margin: auto; background: #ffffff; border-radius: 16px; padding: 35px; box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
-        .info-box { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 12px 16px; border-radius: 6px; font-size: 0.88rem; margin-bottom: 25px; }
-        .step-badge { font-size: 0.75rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase; }
-        .btn-next { background-color: #198754; color: white; font-weight: 700; padding: 12px 24px; border-radius: 8px; border: none; }
-        .btn-next:hover { background-color: #146c43; color: white; }
+        :root {
+            --primary-emerald: #10b981;
+            --dark-emerald: #059669;
+            --amber-accent: #d97706;
+            --amber-bg: #fef3c7;
+            --amber-border: #f59e0b;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #d8ece1;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Side Cartoon Floating Containers */
+        .decor-side {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .decor-left {
+            left: 2%;
+        }
+
+        .decor-right {
+            right: 2%;
+        }
+
+        /* Floating Animation */
+        .mascot-container {
+            width: 180px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.12));
+            animation: floatSlow 4s ease-in-out infinite alternate;
+        }
+
+        .mascot-container-reverse {
+            width: 170px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            animation: floatSlow 4.5s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatSlow {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-12px) rotate(3deg); }
+        }
+
+        /* Question Form Card */
+        .question-card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 40px 45px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+            max-width: 800px;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Badge Phase */
+        .phase-badge {
+            background-color: #d97706;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .category-title {
+            color: #d97706;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        /* Biological Insight Callout Box */
+        .insight-box {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            border-radius: 8px;
+            padding: 16px 20px;
+            color: #92400e;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 35px;
+        }
+
+        /* Form Controls */
+        .form-label-custom {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            color: #334155;
+            background-color: #f8fafc;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: #ffffff;
+            border-color: var(--amber-accent);
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+        }
+
+        /* Buttons */
+        .btn-back {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background-color: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .btn-continue {
+            background-color: #0d9488;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 10px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-continue:hover {
+            background-color: #0f766e;
+            color: #ffffff;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 1200px) {
+            .decor-side {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="card-custom">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <span class="badge bg-warning text-dark step-badge">Phase 2 of 3</span>
-        <span class="text-muted small"><i class="fa-solid fa-bolt text-warning me-1"></i> Adenosine Dynamics</span>
+    <!-- LEFT SIDE: Cartoon Coffee Cup Mascot & Energy Coffee Mug -->
+    <div class="decor-side decor-left">
+        <!-- Cartoon Coffee Cup Waving -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Steam Floating -->
+                <path d="M 75 35 Q 65 20 75 5" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+                <path d="M 100 35 Q 110 20 100 5" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+                <path d="M 125 35 Q 115 20 125 5" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+                <!-- Cup Body -->
+                <path d="M 50 60 L 150 60 L 140 180 C 140 195, 60 195, 60 180 Z" fill="#fff7ed" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Coffee Sleeve -->
+                <path d="M 53 95 L 147 95 L 144 145 L 56 145 Z" fill="#d97706" stroke="#1e293b" stroke-width="3.5"/>
+                <!-- Sleeve Logo/Text -->
+                <circle cx="100" cy="120" r="14" fill="#ffffff"/>
+                <path d="M 95 120 L 105 113 L 100 120 L 105 127 Z" fill="#d97706"/> <!-- Coffee bean detail -->
+                <!-- Eyes -->
+                <circle cx="80" cy="78" r="5" fill="#1e293b"/>
+                <circle cx="120" cy="78" r="5" fill="#1e293b"/>
+                <!-- Smile -->
+                <path d="M 92 84 Q 100 92 108 84" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Cheeks -->
+                <circle cx="72" cy="83" r="4" fill="#fb7185" opacity="0.7"/>
+                <circle cx="128" cy="83" r="4" fill="#fb7185" opacity="0.7"/>
+                <!-- Handle -->
+                <path d="M 148 75 C 175 75, 175 140, 143 140" fill="none" stroke="#1e293b" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <!-- Speech Bubble Coffee Droplet -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Speech Bubble -->
+                <path d="M 110 10 L 185 10 C 193 10, 198 18, 198 28 L 198 45 C 198 55, 193 60, 185 60 L 140 60 L 125 75 L 130 60 L 110 60 C 102 60, 97 55, 97 45 L 97 28 C 97 18, 102 10, 110 10 Z" fill="#ffffff" stroke="#1e293b" stroke-width="3"/>
+                <text x="148" y="38" font-size="11" font-weight="bold" fill="#d97706" text-anchor="middle" font-family="sans-serif">BOOST ENERGY!</text>
+                <!-- Coffee Drop Mascot -->
+                <path d="M 65 30 C 65 30, 15 100, 15 130 C 15 160, 40 175, 65 175 C 90 175, 115 160, 115 130 C 115 100, 65 30, 65 30 Z" fill="#78350f" stroke="#1e293b" stroke-width="4.5"/>
+                <circle cx="50" cy="125" r="5" fill="#ffffff"/>
+                <circle cx="80" cy="125" r="5" fill="#ffffff"/>
+                <path d="M 58 138 Q 65 146 72 138" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
     </div>
 
-    <h3 class="fw-bold text-dark mb-1">Caffeine & Stimulants</h3>
-    <p class="text-muted small mb-4">Track daily stimulant intake and timing relative to your adenosine pressure curve.</p>
+    <!-- RIGHT SIDE: Cute Teacup Mascot & Energetic Coffee Bean -->
+    <div class="decor-side decor-right">
+        <!-- Cute Teacup Friend -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Teacup Body -->
+                <path d="M 40 70 L 160 70 C 160 140, 130 160, 100 160 C 70 160, 40 140, 40 70 Z" fill="#fef3c7" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Saucer -->
+                <ellipse cx="100" cy="165" rx="75" ry="12" fill="#fcd34d" stroke="#1e293b" stroke-width="4"/>
+                <!-- Tea Bag Label hanging -->
+                <path d="M 70 70 Q 60 90 50 110" fill="none" stroke="#94a3b8" stroke-width="2"/>
+                <rect x="42" y="110" width="16" height="20" fill="#f43f5e" rx="3"/>
+                <!-- Happy Face -->
+                <circle cx="80" cy="105" r="5" fill="#1e293b"/>
+                <circle cx="120" cy="105" r="5" fill="#1e293b"/>
+                <path d="M 92 118 Q 100 128 108 118" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <!-- Handle -->
+                <path d="M 158 85 C 185 85, 185 135, 150 135" fill="none" stroke="#1e293b" stroke-width="4.5"/>
+            </svg>
+        </div>
 
-    <div class="info-box text-dark">
-        <i class="fa-solid fa-lightbulb text-warning me-1"></i>
-        <strong>Biological Insight:</strong> Caffeine has an average half-life of 5 to 7 hours. Consuming caffeine late in the afternoon blocks adenosine receptors and delays deep sleep architecture.
+        <!-- Cool Coffee Bean Buddy with Glasses -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Coffee Bean Oval -->
+                <ellipse cx="100" cy="100" rx="55" ry="75" fill="#92400e" stroke="#1e293b" stroke-width="4.5" transform="rotate(-15 100 100)"/>
+                <!-- Center Wave Line -->
+                <path d="M 105 30 Q 80 100 100 170" fill="none" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+                <!-- Cool Glasses -->
+                <rect x="65" y="75" width="28" height="20" rx="4" fill="#1e293b"/>
+                <rect x="105" y="75" width="28" height="20" rx="4" fill="#1e293b"/>
+                <line x1="93" y1="83" x2="105" y2="83" stroke="#1e293b" stroke-width="3"/>
+                <!-- Smile -->
+                <path d="M 88 120 Q 100 130 112 120" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
     </div>
 
-    <form id="phase2Form" onsubmit="savePhase2(event)">
-        <!-- Q1: Cups of Caffeine -->
-        <div class="mb-4">
-            <label for="caffeineCups" class="form-label fw-bold text-dark">1. How many caffeinated beverages (coffee, tea, energy drinks) have you had today?</label>
-            <input type="number" min="0" max="15" class="form-control" id="caffeineCups" placeholder="e.g. 2" required>
+    <!-- Main Assessment Card -->
+    <div class="question-card">
+        <!-- Header Row -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="phase-badge text-uppercase">PHASE 2 OF 3</span>
+            <span class="category-title"><i class="fa-solid fa-bolt me-1"></i> Adenosine Dynamics</span>
         </div>
 
-        <!-- Q2: Last Caffeine Consumption Time -->
-        <div class="mb-4">
-            <label for="caffeineTime" class="form-label fw-bold text-dark">2. When did you have your last caffeinated drink?</label>
-            <select class="form-select" id="caffeineTime" required>
-                <option value="" disabled selected>Select timing...</option>
-                <option value="None consumed today">None consumed today</option>
-                <option value="Before 12:00 PM">Morning (Before 12:00 PM)</option>
-                <option value="12:00 PM - 5:00 PM">Early Afternoon (12:00 PM - 5:00 PM)</option>
-                <option value="After 5:00 PM">Late Evening (After 5:00 PM)</option>
-            </select>
+        <!-- Main Title -->
+        <h1 class="page-title">Caffeine &amp; Stimulants</h1>
+        <p class="page-subtitle">Track daily stimulant intake and timing relative to your adenosine pressure curve.</p>
+
+        <!-- Biological Insight Box -->
+        <div class="insight-box d-flex align-items-start">
+            <i class="fa-solid fa-lightbulb me-2 mt-1 fs-6"></i>
+            <div>
+                <strong>Biological Insight:</strong> Caffeine has an average half-life of 5 to 7 hours. Consuming caffeine late in the afternoon blocks adenosine receptors and delays deep sleep architecture.
+            </div>
         </div>
 
-        <!-- Q3: Primary Source of Caffeine -->
-        <div class="mb-4">
-            <label for="caffeineSource" class="form-label fw-bold text-dark">3. What is your primary source of caffeine?</label>
-            <select class="form-select" id="caffeineSource" required>
-                <option value="" disabled selected>Select primary source...</option>
-                <option value="None">None</option>
-                <option value="Espresso / Black Coffee">Espresso / Black Coffee</option>
-                <option value="Milk Tea / Black Tea">Black / Green / Milk Tea</option>
-                <option value="Energy Drinks / Pre-Workout">Energy Drinks / Pre-workout supplements</option>
-                <option value="Soda / Soft Drinks">Caffeinated Soda</option>
-            </select>
-        </div>
+        <!-- Question Form -->
+        <form action="3-questions-3.html" method="GET">
+            
+            <!-- Question 1 -->
+            <div class="mb-4">
+                <label for="caffeineCount" class="form-label-custom">1. How many caffeinated beverages (coffee, tea, energy drinks) have you had today?</label>
+                <input type="number" class="form-control" id="caffeineCount" placeholder="e.g. 2" min="0" required>
+            </div>
 
-        <div class="d-flex justify-content-between mt-4">
-            <a href="3-questions-1.html" class="btn btn-outline-secondary fw-bold">Back</a>
-            <button type="submit" class="btn btn-next">Continue to Phase 3 <i class="fa-solid fa-arrow-right ms-2"></i></button>
-        </div>
-    </form>
-</div>
+            <!-- Question 2 -->
+            <div class="mb-4">
+                <label for="lastTiming" class="form-label-custom">2. When did you have your last caffeinated drink?</label>
+                <select class="form-select" id="lastTiming" required>
+                    <option value="" selected disabled>Select timing...</option>
+                    <option value="none">Did not consume caffeine today</option>
+                    <option value="morning">Morning (Before 12 PM)</option>
+                    <option value="afternoon">Early Afternoon (12 PM - 4 PM)</option>
+                    <option value="evening">Late Afternoon / Evening (After 4 PM)</option>
+                </select>
+            </div>
 
-<script>
-    function savePhase2(e) {
-        e.preventDefault();
+            <!-- Question 3 -->
+            <div class="mb-4">
+                <label for="primarySource" class="form-label-custom">3. What is your primary source of caffeine?</label>
+                <select class="form-select" id="primarySource" required>
+                    <option value="" selected disabled>Select primary source...</option>
+                    <option value="coffee">Coffee (Espresso, Filter, Brewed)</option>
+                    <option value="tea">Black or Green Tea</option>
+                    <option value="energy">Energy Drinks / Pre-workout</option>
+                    <option value="soda">Caffeinated Soft Drinks</option>
+                    <option value="none">None / Non-caffeinated</option>
+                </select>
+            </div>
 
-        const phase2Data = {
-            caffeineCups: document.getElementById('caffeineCups').value,
-            caffeineTime: document.getElementById('caffeineTime').value,
-            caffeineSource: document.getElementById('caffeineSource').value
-        };
+            <!-- Navigation Buttons -->
+            <div class="d-flex justify-content-between align-items-center mt-5">
+                <a href="3-questions-1.html" class="btn btn-back">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+                <button type="submit" class="btn btn-continue">
+                    Continue to Phase 3 <i class="fa-solid fa-arrow-right ms-2"></i>
+                </button>
+            </div>
 
-        localStorage.setItem('uniVital_Phase2', JSON.stringify(phase2Data));
-        window.location.href = "3-questions-3.html";
-    }
-</script>
+        </form>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
