@@ -1,175 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script>
-    // Check if the user has signed in
-    const currentUser = localStorage.getItem('uniVitalUserEmail');
-    
-    // If no email is stored, kick them back to the login page
-    if (!currentUser) {
-        alert("Please sign in first to access UniVital tools!");
-        window.location.href = "2-login.html"; // Replace with your actual login file name
-    }
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniVital - Real-Time Weekly Analytics</title>
 
     <!-- Google Fonts & Bootstrap 5 -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome Icons & Chart.js -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js Library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
-            --primary-emerald: #10b981;
-            --dark-navy: #0f172a;
+            --primary-emerald: #0d9488;
+            --dark-emerald: #0f766e;
+            --bg-mint: #d8ece1;
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+            background-color: var(--bg-mint);
+            color: var(--text-dark);
             min-height: 100vh;
-            padding-bottom: 50px;
-            color: #334155;
+            margin: 0;
+            padding-bottom: 60px;
         }
 
+        /* Top Navbar */
         .navbar-custom {
-            background: #ffffff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background-color: #ffffff;
             border-bottom: 1px solid #e2e8f0;
+            padding: 12px 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
 
         .navbar-brand {
-            font-family: 'Fredoka', cursive;
-            color: var(--dark-navy) !important;
-            font-size: 1.5rem;
+            font-weight: 700;
+            font-size: 1.35rem;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar-brand i {
+            color: #10b981;
         }
 
         .nav-link {
             font-weight: 500;
-            color: #64748b !important;
+            color: #475569;
+            font-size: 0.92rem;
+            margin: 0 8px;
             transition: color 0.2s;
         }
 
         .nav-link:hover, .nav-link.active {
-            color: var(--primary-emerald) !important;
+            color: var(--primary-emerald);
             font-weight: 600;
         }
 
-        .dashboard-container { max-width: 1100px; margin: 0 auto; }
-
-        .chart-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-            border: 1px solid #e2e8f0;
-            height: 100%;
+        /* Container & Main Layout */
+        .analytics-container {
+            max-width: 1050px;
+            margin: 30px auto;
+            padding: 0 15px;
         }
 
-        .report-banner {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            border-radius: 20px;
-            padding: 30px;
+        .page-badge {
+            background-color: #065f46;
             color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 12px;
+            letter-spacing: 0.5px;
         }
 
-        .btn-download {
-            background-color: var(--primary-emerald);
-            color: white; font-weight: 600;
-            border-radius: 25px; padding: 10px 24px; border: none;
+        .page-title {
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Top Action Buttons */
+        .btn-reset {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            padding: 6px 16px;
             transition: all 0.2s;
         }
 
-        .btn-download:hover {
+        .btn-reset:hover {
+            background-color: #fca5a5;
+            color: #7f1d1d;
+        }
+
+        .btn-log {
+            background-color: #10b981;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            padding: 6px 18px;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-log:hover {
             background-color: #059669;
-            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        /* Hero Summary Card */
+        .hero-summary-box {
+            background-color: #0f172a;
+            border-radius: 18px;
+            padding: 28px 32px;
+            color: #ffffff;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .summary-tag {
+            background-color: #10b981;
+            color: #ffffff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-title {
+            font-size: 1.45rem;
+            font-weight: 700;
+            margin-top: 8px;
+            margin-bottom: 6px;
+        }
+
+        .summary-metrics {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .btn-download-weekly {
+            background-color: #10b981;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            padding: 10px 22px;
+            border: none;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-download-weekly:hover {
+            background-color: #059669;
+            color: #ffffff;
+        }
+
+        /* Charts Grid Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .chart-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 22px 24px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            position: relative;
+        }
+
+        .chart-card-full {
+            grid-column: span 2;
+        }
+
+        .chart-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 230px;
+            width: 100%;
+        }
+
+        /* Stat Tile Card (Week Days Logged) */
+        .stat-tile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100%;
+            min-height: 230px;
+        }
+
+        .stat-number {
+            font-size: 3.8rem;
+            font-weight: 800;
+            color: #10b981;
+            line-height: 1;
+            margin: 10px 0;
+        }
+
+        .stat-subtext {
+            color: #64748b;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 850px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            .chart-card-full {
+                grid-column: span 1;
+            }
+            .hero-summary-box {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- TOP NAVIGATION NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-custom mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="index.html"><i class="fa-solid fa-heart-pulse text-success me-2"></i>UniVital</a>
-            <div class="d-flex gap-3">
-                <a href="index.html" class="nav-link"><i class="fa-solid fa-house me-1"></i> Home</a>
-                <a href="3-questions.html" class="nav-link"><i class="fa-solid fa-clipboard-question me-1"></i> Assessment</a>
-                <a href="4-result.html" class="nav-link"><i class="fa-solid fa-chart-line me-1"></i> Result</a>
-                <a href="5-chart.html" class="nav-link active"><i class="fa-solid fa-chart-pie me-1"></i> Analytics Hub</a>
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fa-solid fa-heart-pulse"></i> UniVital
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <a class="nav-link" href="index.html"><i class="fa-solid fa-house me-1"></i> Home</a>
+                <a class="nav-link" href="3-questions.html"><i class="fa-solid fa-clipboard-list me-1"></i> Assessment</a>
+                <a class="nav-link" href="4-result.html"><i class="fa-solid fa-chart-line me-1"></i> Result</a>
+                <a class="nav-link active" href="5-chart.html"><i class="fa-solid fa-pie-chart me-1"></i> Analytics Hub</a>
             </div>
         </div>
     </nav>
 
-    <div class="dashboard-container">
-        
-        <!-- Header -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Main Analytics Container -->
+    <div class="analytics-container">
+
+        <!-- Top Control Bar -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
-                <span class="badge bg-success mb-1">LIVE DATA ANALYTICS</span>
-                <h2 class="fw-bold m-0" style="font-family: 'Fredoka', cursive; color: #0f172a;">Your Real Weekly Vitals</h2>
+                <span class="page-badge text-uppercase">LIVE DATA ANALYTICS</span>
+                <h1 class="page-title">Your Real Weekly Vitals</h1>
             </div>
-            <div>
-                <button class="btn btn-outline-danger btn-sm rounded-pill me-2" onclick="resetData()"><i class="fa-solid fa-trash me-1"></i> Reset Week</button>
-                <a href="3-questions.html" class="btn btn-success btn-sm rounded-pill"><i class="fa-solid fa-plus me-1"></i> Log Vitals</a>
+            <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-reset"><i class="fa-solid fa-trash me-1"></i> Reset Week</button>
+                <a href="3-questions.html" class="btn btn-log"><i class="fa-solid fa-plus me-1"></i> Log Vitals</a>
             </div>
         </div>
 
-        <!-- WEEKLY DYNAMIC REPORT BANNER -->
-        <div class="report-banner mb-5">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <span class="badge bg-emerald text-white px-3 py-1 rounded-pill mb-2" style="background-color: #10b981;">REAL-TIME SUMMARY</span>
-                    <h3 class="fw-bold" style="font-family: 'Fredoka', cursive;" id="reportGrade">Weekly Grade: Computing...</h3>
-                    <p class="text-light opacity-75 small mb-0" id="reportDetails">
-                        Log your daily vitals to build your personal physiological report.
-                    </p>
-                </div>
-                <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                    <button class="btn-download" onclick="downloadWeeklyReport()">
-                        <i class="fa-solid fa-file-arrow-down me-2"></i>Download Weekly Report
-                    </button>
-                </div>
+        <!-- Weekly Summary Hero Banner -->
+        <div class="hero-summary-box">
+            <div>
+                <span class="summary-tag text-uppercase">REAL-TIME SUMMARY</span>
+                <h2 class="summary-title">Weekly Grade: Grade B (Good Progress)</h2>
+                <p class="summary-metrics">Logged 5 day(s) | Avg water: 1.85L | Avg sleep: 5.2 hrs | Activity: 28 mins/day</p>
+            </div>
+            <div>
+                <a href="#" class="btn btn-download-weekly">
+                    <i class="fa-solid fa-file-arrow-down"></i> Download Weekly Report
+                </a>
             </div>
         </div>
 
-        <!-- CHARTS GRID -->
-        <div class="row g-4">
-            
-            <!-- WATER CHART -->
-            <div class="col-md-6">
-                <div class="chart-card">
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-droplet text-info me-2"></i>Water Intake (Liters)</h5>
-                    <canvas id="hydrationChart" height="200"></canvas>
+        <!-- 5 Core Vitals Charts Grid -->
+        <div class="charts-grid">
+
+            <!-- Chart 1: Water Intake (Liters) -->
+            <div class="chart-card">
+                <div class="chart-title">
+                    <i class="fa-solid fa-droplet text-primary"></i> Water Intake (Liters)
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="waterChart"></canvas>
                 </div>
             </div>
 
-            <!-- CAFFEINE CHART -->
-            <div class="col-md-6">
-                <div class="chart-card">
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-mug-hot text-warning me-2"></i>Caffeine Intake (mg)</h5>
-                    <canvas id="caffeineChart" height="200"></canvas>
+            <!-- Chart 2: Caffeine Intake (mg) -->
+            <div class="chart-card">
+                <div class="chart-title">
+                    <i class="fa-solid fa-mug-hot text-warning"></i> Caffeine Intake (mg)
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="caffeineChart"></canvas>
                 </div>
             </div>
 
-            <!-- SLEEP CHART -->
-            <div class="col-md-6">
-                <div class="chart-card">
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-moon text-primary me-2"></i>Sleep Duration (Hours)</h5>
-                    <canvas id="sleepChart" height="200"></canvas>
+            <!-- Chart 3: Sleep Duration (Hours) -->
+            <div class="chart-card">
+                <div class="chart-title">
+                    <i class="fa-solid fa-moon text-info"></i> Sleep Duration (Hours)
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="sleepChart"></canvas>
                 </div>
             </div>
 
-            <!-- WEEKLY COMPLETION PROGRESS -->
-            <div class="col-md-6">
-                <div class="chart-card text-center d-flex flex-column justify-content-center align-items-center">
-                    <h5 class="fw-bold mb-2"><i class="fa-solid fa-calendar-check text-success me-2"></i>Week Days Logged</h5>
-                    <h1 class="display-3 fw-bold text-success m-0" id="daysLoggedCount">0/7</h1>
-                    <p class="text-muted small mt-2">Days completed with real entries</p>
+            <!-- Tile 4: Week Days Logged -->
+            <div class="chart-card">
+                <div class="stat-tile">
+                    <div class="chart-title" style="margin-bottom: 0;">
+                        <i class="fa-solid fa-calendar-check text-success"></i> Week Days Logged
+                    </div>
+                    <div class="stat-number">5/7</div>
+                    <div class="stat-subtext">Days completed with real entries</div>
+                </div>
+            </div>
+
+            <!-- NEW Chart 5: Diet & Meal Balance Score -->
+            <div class="chart-card">
+                <div class="chart-title">
+                    <i class="fa-solid fa-utensils text-success"></i> Diet &amp; Nutrition Quality
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="dietChart"></canvas>
+                </div>
+            </div>
+
+            <!-- NEW Chart 6: Physical Activity & Fitness (Minutes) -->
+            <div class="chart-card">
+                <div class="chart-title">
+                    <i class="fa-solid fa-person-running text-danger"></i> Active Physical Exercise (Mins)
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="activityChart"></canvas>
                 </div>
             </div>
 
@@ -177,86 +371,120 @@
 
     </div>
 
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Chart Render Scripts -->
     <script>
-        const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        const daysLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-        const defaultData = {
-            Mon: { water: 0, caffeine: 0, sleep: 0 },
-            Tue: { water: 0, caffeine: 0, sleep: 0 },
-            Wed: { water: 0, caffeine: 0, sleep: 0 },
-            Thu: { water: 0, caffeine: 0, sleep: 0 },
-            Fri: { water: 0, caffeine: 0, sleep: 0 },
-            Sat: { water: 0, caffeine: 0, sleep: 0 },
-            Sun: { water: 0, caffeine: 0, sleep: 0 }
-        };
-
-        const storedData = JSON.parse(localStorage.getItem('uniVitalData')) || defaultData;
-
-        const waterArray = days.map(day => storedData[day].water);
-        const caffeineArray = days.map(day => storedData[day].caffeine);
-        const sleepArray = days.map(day => storedData[day].sleep);
-
-        let loggedDays = 0;
-        days.forEach(day => {
-            if (storedData[day].water > 0 || storedData[day].caffeine > 0 || storedData[day].sleep > 0) {
-                loggedDays++;
+        // 1. Water Intake Chart (Bar)
+        new Chart(document.getElementById('waterChart'), {
+            type: 'bar',
+            data: {
+                labels: daysLabels,
+                datasets: [{
+                    label: 'Liters',
+                    data: [0, 1.1, 0, 1.3, 3.25, 1.1, 0],
+                    backgroundColor: '#0284c7',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, max: 4 } }
             }
         });
-        document.getElementById('daysLoggedCount').innerText = `${loggedDays}/7`;
 
-        const avgWater = (waterArray.reduce((a,b) => a+b, 0) / (loggedDays || 1)).toFixed(1);
-        const avgSleep = (sleepArray.reduce((a,b) => a+b, 0) / (loggedDays || 1)).toFixed(1);
-
-        if (loggedDays === 0) {
-            document.getElementById('reportGrade').innerText = "Weekly Grade: Pending Log Entries";
-            document.getElementById('reportDetails').innerText = "You have not entered any data for this week yet. Click 'Log Vitals' to start!";
-        } else {
-            document.getElementById('reportGrade').innerText = `Weekly Grade: ${avgWater >= 2.0 && avgSleep >= 7 ? 'Grade A (Optimal)' : 'Grade B (Good Progress)'}`;
-            document.getElementById('reportDetails').innerText = `Logged ${loggedDays} day(s). Average daily water: ${avgWater}L | Average sleep: ${avgSleep} hrs.`;
-        }
-
-        // Render Chart.js
-        new Chart(document.getElementById('hydrationChart'), {
-            type: 'bar',
-            data: { labels: days, datasets: [{ label: 'Liters', data: waterArray, backgroundColor: '#0ea5e9', borderRadius: 8 }] }
-        });
-
+        // 2. Caffeine Intake Chart (Smooth Area Line)
         new Chart(document.getElementById('caffeineChart'), {
             type: 'line',
-            data: { labels: days, datasets: [{ label: 'mg', data: caffeineArray, borderColor: '#f59e0b', backgroundColor: 'rgba(245, 158, 11, 0.1)', fill: true, tension: 0.3 }] }
+            data: {
+                labels: daysLabels,
+                datasets: [{
+                    label: 'mg',
+                    data: [0, 250, 0, 0, 760, 350, 0],
+                    borderColor: '#d97706',
+                    backgroundColor: 'rgba(217, 119, 6, 0.15)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#d97706'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, max: 800 } }
+            }
         });
 
+        // 3. Sleep Duration Chart (Bar)
         new Chart(document.getElementById('sleepChart'), {
             type: 'bar',
-            data: { labels: days, datasets: [{ label: 'Hours', data: sleepArray, backgroundColor: '#6366f1', borderRadius: 8 }] }
+            data: {
+                labels: daysLabels,
+                datasets: [{
+                    label: 'Hours',
+                    data: [6.0, 5.8, 0, 5.5, 4.0, 3.2, 0],
+                    backgroundColor: '#3b82f6',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, max: 8 } }
+            }
         });
 
-        function resetData() {
-            if (confirm("Are you sure you want to reset all logged data for this week?")) {
-                localStorage.removeItem('uniVitalData');
-                location.reload();
+        // 4. Diet & Nutrition Quality Chart (Bar)
+        new Chart(document.getElementById('dietChart'), {
+            type: 'bar',
+            data: {
+                labels: daysLabels,
+                datasets: [{
+                    label: 'Score (out of 100)',
+                    data: [70, 85, 0, 60, 80, 75, 0],
+                    backgroundColor: '#22c55e',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, max: 100 } }
             }
-        }
+        });
 
-        function downloadWeeklyReport() {
-            const reportText = `
-=========================================
-UNIVITAL - WEEKLY PHYSIOLOGICAL SUMMARY
-=========================================
-Days Logged: ${loggedDays} / 7
-Average Daily Water: ${avgWater} L
-Average Daily Sleep: ${avgSleep} Hours
-=========================================
-Status: Successfully exported from UniVital.
-=========================================`;
-
-            const blob = new Blob([reportText], { type: 'text/plain' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'UniVital_Weekly_Report.txt';
-            link.click();
-            alert("SUCCESS! Your UniVital Weekly Report has been generated and downloaded.");
-        }
+        // 5. Activity & Exercise Chart (Line/Area)
+        new Chart(document.getElementById('activityChart'), {
+            type: 'line',
+            data: {
+                labels: daysLabels,
+                datasets: [{
+                    label: 'Minutes',
+                    data: [20, 45, 0, 15, 30, 40, 0],
+                    borderColor: '#f43f5e',
+                    backgroundColor: 'rgba(244, 63, 94, 0.15)',
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#f43f5e'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, max: 60 } }
+            }
+        });
     </script>
 </body>
 </html>
