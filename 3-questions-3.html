@@ -3,199 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniVital - Phase 3: Sleep & Rest Quality</title>
+    <title>UniVital - Phase 3: Sleep Architecture</title>
 
     <!-- Google Fonts & Bootstrap 5 -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary-emerald: #0d9488;
-            --dark-emerald: #0f766e;
-            --bg-mint: #d8ece1;
-            --card-bg: #ffffff;
-            --text-dark: #0f172a;
-            --text-muted: #64748b;
+            --primary-emerald: #10b981;
+            --dark-emerald: #059669;
+            --indigo-accent: #4338ca;
+            --indigo-bg: #e0e7ff;
+            --indigo-border: #6366f1;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-mint);
-            color: var(--text-dark);
+            background-color: #d8ece1;
+            color: #1e293b;
             min-height: 100vh;
-            margin: 0;
-            padding-bottom: 60px;
-        }
-
-        /* Top Navbar */
-        .navbar-custom {
-            background-color: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 12px 5%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-        }
-
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.35rem;
-            color: #0f172a;
             display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .navbar-brand i {
-            color: #10b981;
-        }
-
-        .nav-link {
-            font-weight: 500;
-            color: #475569;
-            font-size: 0.92rem;
-            margin: 0 8px;
-            transition: color 0.2s;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--primary-emerald);
-            font-weight: 600;
-        }
-
-        /* Form Layout Container */
-        .assessment-container {
-            max-width: 1180px;
-            margin: 40px auto;
-            padding: 0 15px;
-        }
-
-        /* Left & Right Side Decorative Columns */
-        .illustration-col {
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 10px;
-        }
-
-        .moon-illustration {
-            width: 150px;
-            max-width: 100%;
-            height: auto;
-            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.06));
-        }
-
-        .speech-bubble {
-            background-color: #ffffff;
-            border: 2px solid #0f172a;
-            border-radius: 12px;
-            padding: 6px 14px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-top: 15px;
+            padding: 40px 15px;
+            margin: 0;
             position: relative;
-            text-transform: uppercase;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            overflow-x: hidden;
         }
 
-        .speech-bubble::after {
-            content: '';
+        /* Side Cartoon Floating Containers */
+        .decor-side {
             position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 0 6px 8px 6px;
-            border-style: solid;
-            border-color: transparent transparent #0f172a transparent;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        /* Center Main Card */
-        .form-card {
+        .decor-left {
+            left: 2%;
+        }
+
+        .decor-right {
+            right: 2%;
+        }
+
+        /* Floating Animation */
+        .mascot-container {
+            width: 180px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.12));
+            animation: floatSlow 4s ease-in-out infinite alternate;
+        }
+
+        .mascot-container-reverse {
+            width: 170px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            animation: floatSlow 4.5s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatSlow {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-12px) rotate(3deg); }
+        }
+
+        /* Question Form Card */
+        .question-card {
             background-color: #ffffff;
             border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.05);
+            padding: 40px 45px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+            max-width: 800px;
+            width: 100%;
             border: 1px solid #e2e8f0;
+            position: relative;
+            z-index: 2;
         }
 
+        /* Badge Phase */
         .phase-badge {
-            background-color: #0f766e;
+            background-color: #2563eb;
             color: #ffffff;
-            font-size: 0.72rem;
             font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 12px;
+            font-size: 0.75rem;
+            padding: 6px 14px;
+            border-radius: 20px;
             letter-spacing: 0.5px;
         }
 
-        .category-subtitle {
-            color: #0f766e;
+        .category-title {
+            color: #1d4ed8;
             font-weight: 600;
-            font-size: 0.88rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            font-size: 0.9rem;
         }
 
         .page-title {
-            font-size: 1.85rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #0f172a;
             margin-top: 10px;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
-        .page-desc {
+        .page-subtitle {
             color: #64748b;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin-bottom: 25px;
         }
 
-        /* Biological Insight Banner */
+        /* Biological Insight Callout Box */
         .insight-box {
-            background-color: #e0f2fe;
-            border-left: 4px solid #0284c7;
+            background-color: #dbeafe;
+            border-left: 4px solid #2563eb;
             border-radius: 8px;
-            padding: 14px 18px;
-            margin-bottom: 30px;
-            color: #0369a1;
-            font-size: 0.88rem;
+            padding: 16px 20px;
+            color: #1e40af;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 35px;
         }
 
-        /* Input Controls */
-        .form-label {
+        /* Form Controls */
+        .form-label-custom {
             font-weight: 600;
-            font-size: 0.93rem;
             color: #1e293b;
-            margin-bottom: 8px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: block;
         }
 
         .form-control, .form-select {
             border-radius: 10px;
-            padding: 12px 16px;
             border: 1px solid #cbd5e1;
-            font-size: 0.92rem;
-            margin-bottom: 22px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            color: #334155;
+            background-color: #f8fafc;
         }
 
         .form-control:focus, .form-select:focus {
-            border-color: var(--primary-emerald);
-            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+            background-color: #ffffff;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
 
-        /* Bottom Buttons */
+        /* Buttons */
         .btn-back {
             background-color: #f1f5f9;
             color: #475569;
             font-weight: 600;
-            padding: 10px 22px;
+            padding: 12px 24px;
             border-radius: 10px;
             border: 1px solid #cbd5e1;
-            text-decoration: none;
             transition: all 0.2s;
+            text-decoration: none;
         }
 
         .btn-back:hover {
@@ -203,30 +170,24 @@
             color: #1e293b;
         }
 
-        /* Continue to Phase 4 Button */
-        .btn-continue-phase4 {
+        .btn-continue {
             background-color: #0d9488;
             color: #ffffff;
             font-weight: 600;
-            padding: 12px 26px;
+            padding: 12px 28px;
             border-radius: 10px;
             border: none;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+            transition: all 0.3s ease;
         }
 
-        .btn-continue-phase4:hover {
+        .btn-continue:hover {
             background-color: #0f766e;
             color: #ffffff;
-            box-shadow: 0 6px 16px rgba(15, 118, 110, 0.35);
         }
 
-        @media (max-width: 991px) {
-            .illustration-col {
+        /* Responsiveness */
+        @media (max-width: 1200px) {
+            .decor-side {
                 display: none;
             }
         }
@@ -234,123 +195,151 @@
 </head>
 <body>
 
-    <!-- Header Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">
-                <i class="fa-solid fa-heart-pulse"></i> UniVital
-            </a>
-            <div class="ms-auto d-flex align-items-center">
-                <a class="nav-link" href="index.html"><i class="fa-solid fa-house me-1"></i> Home</a>
-                <a class="nav-link active" href="3-questions.html"><i class="fa-solid fa-clipboard-list me-1"></i> Assessment</a>
-                <a class="nav-link" href="4-result.html"><i class="fa-solid fa-chart-line me-1"></i> Result</a>
-                <a class="nav-link" href="5-chart.html"><i class="fa-solid fa-pie-chart me-1"></i> Analytics Hub</a>
+    <!-- LEFT SIDE: Cartoon Sleeping Moon Mascot & Bedtime Pillow Buddy -->
+    <div class="decor-side decor-left">
+        <!-- Crescent Moon with Nightcap sleeping -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Moon Body -->
+                <path d="M 120 20 C 60 20 20 70 20 130 C 20 180 60 205 110 205 C 80 180 70 130 90 80 C 105 50 130 35 150 30 C 140 23 130 20 120 20 Z" fill="#fde047" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Nightcap Hat -->
+                <path d="M 115 22 C 140 10, 160 30, 175 60 C 160 55, 140 45, 128 36 Z" fill="#3b82f6" stroke="#1e293b" stroke-width="3"/>
+                <circle cx="178" cy="62" r="8" fill="#ffffff" stroke="#1e293b" stroke-width="2.5"/> <!-- Pom-pom -->
+                <!-- Sleeping Eyes (Closed W-Shape) -->
+                <path d="M 60 115 Q 67 125 74 115" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <!-- Cheek -->
+                <ellipse cx="58" cy="125" rx="5" ry="3" fill="#fb7185"/>
+                <!-- Zzz Floating -->
+                <text x="140" y="100" font-size="20" font-weight="bold" fill="#6366f1" font-family="sans-serif">Z</text>
+                <text x="158" y="80" font-size="15" font-weight="bold" fill="#818cf8" font-family="sans-serif">z</text>
+                <text x="170" y="65" font-size="12" font-weight="bold" fill="#a5b4fc" font-family="sans-serif">z</text>
+            </svg>
+        </div>
+
+        <!-- Sleeping Pillow Buddy -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg">
+                <!-- Speech Bubble -->
+                <path d="M 105 10 L 180 10 C 188 10, 193 18, 193 25 L 193 42 C 193 50, 188 55, 180 55 L 135 55 L 120 70 L 125 55 L 105 55 C 97 55, 92 50, 92 42 L 92 25 C 92 18, 97 10, 105 10 Z" fill="#ffffff" stroke="#1e293b" stroke-width="3"/>
+                <text x="142" y="35" font-size="11" font-weight="bold" fill="#1d4ed8" text-anchor="middle" font-family="sans-serif">SWEET DREAMS!</text>
+                <!-- Pillow Body -->
+                <rect x="25" y="75" width="140" height="80" rx="20" fill="#e0e7ff" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Cheeks -->
+                <circle cx="65" cy="122" r="5" fill="#fb7185"/>
+                <circle cx="125" cy="122" r="5" fill="#fb7185"/>
+                <!-- Closed Eyes -->
+                <path d="M 70 110 Q 78 118 86 110" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 104 110 Q 112 118 120 110" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <!-- Smile -->
+                <path d="M 92 124 Q 95 129 98 124" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE: Cute Alarm Clock Mascot & Sleepy Star -->
+    <div class="decor-side decor-right">
+        <!-- Cute Alarm Clock Mascot -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Alarm Bells -->
+                <circle cx="50" cy="50" r="22" fill="#ef4444" stroke="#1e293b" stroke-width="4"/>
+                <circle cx="150" cy="50" r="22" fill="#ef4444" stroke="#1e293b" stroke-width="4"/>
+                <!-- Clock Body -->
+                <circle cx="100" cy="115" r="65" fill="#fef2f2" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Feet -->
+                <path d="M 55 170 L 45 190" stroke="#1e293b" stroke-width="5" stroke-linecap="round"/>
+                <path d="M 145 170 L 155 190" stroke="#1e293b" stroke-width="5" stroke-linecap="round"/>
+                <!-- Happy Face -->
+                <circle cx="80" cy="105" r="5" fill="#1e293b"/>
+                <circle cx="120" cy="105" r="5" fill="#1e293b"/>
+                <path d="M 90 125 Q 100 135 110 125" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <!-- Clock Hands -->
+                <line x1="100" y1="115" x2="100" y2="85" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="100" y1="115" x2="120" y2="115" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <!-- Sleepy Little Star Buddy -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Star Shape -->
+                <polygon points="100,20 123,75 182,75 134,110 152,168 100,132 48,168 66,110 18,75 77,75" fill="#fcd34d" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Sleeping Eyes -->
+                <path d="M 80 92 Q 86 98 92 92" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 108 92 Q 114 98 120 92" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <!-- Cute Cheeks -->
+                <circle cx="75" cy="98" r="4" fill="#fb7185"/>
+                <circle cx="125" cy="98" r="4" fill="#fb7185"/>
+                <!-- Small Mouth -->
+                <circle cx="100" cy="104" r="3" fill="#1e293b"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Main Assessment Card -->
+    <div class="question-card">
+        <!-- Header Row -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="phase-badge text-uppercase">PHASE 3 OF 5</span>
+            <span class="category-title"><i class="fa-solid fa-moon me-1"></i> Circadian Rhythm</span>
+        </div>
+
+        <!-- Main Title -->
+        <h1 class="page-title">Sleep &amp; Rest Quality</h1>
+        <p class="page-subtitle">Assess sleep duration, quality score, and wakefulness consistency.</p>
+
+        <!-- Biological Insight Box -->
+        <div class="insight-box d-flex align-items-start">
+            <i class="fa-solid fa-bed me-2 mt-1 fs-6"></i>
+            <div>
+                <strong>Biological Insight:</strong> Consistent sleep-wake cycles align your suprachiasmatic nucleus (SCN) to regulate hormonal secretion (cortisol and melatonin).
             </div>
         </div>
-    </nav>
 
-    <!-- Main Assessment Form Container -->
-    <div class="assessment-container">
-        <div class="row align-items-center">
+        <!-- Question Form -->
+        <form action="3-questions-4.html" method="GET">
             
-            <!-- 1. LEFT COLUMN ILLUSTRATION: Sleeping Moon -->
-            <div class="col-lg-2 illustration-col">
-                <svg class="moon-illustration" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M145 105C145 149.183 109.183 185 65 185C50.2 185 36.3 180.9 24.4 173.8C39.5 184.2 57.8 190.2 77.6 190.2C130.6 190.2 173.6 147.2 173.6 94.2C173.6 51.8 146.1 15.8 108 3.5C130.1 24.3 145 53.9 145 105Z" fill="#facc15" stroke="#0f172a" stroke-width="4"/>
-                    <path d="M125 95C125 95 120 100 115 95" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M100 95C100 95 95 100 90 95" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
-                    <text x="140" y="70" font-family="Poppins" font-weight="700" font-size="18" fill="#2563eb">z</text>
-                    <text x="155" y="52" font-family="Poppins" font-weight="700" font-size="22" fill="#2563eb">Z</text>
-                </svg>
-                <div class="speech-bubble">SWEET DREAMS!</div>
+            <!-- Question 1 -->
+            <div class="mb-4">
+                <label for="sleepHours" class="form-label-custom">1. How many total hours of sleep did you get last night?</label>
+                <input type="number" step="0.5" class="form-control" id="sleepHours" placeholder="e.g. 7.5" min="0" max="24" required>
             </div>
 
-            <!-- 2. CENTER COLUMN: Main Form Card -->
-            <div class="col-lg-8">
-                <div class="form-card">
-                    
-                    <!-- Phase Badge & Category Header -->
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="phase-badge text-uppercase">PHASE 3 OF 4</span>
-                        <span class="category-subtitle"><i class="fa-solid fa-moon"></i> Circadian Rhythm</span>
-                    </div>
-
-                    <h1 class="page-title">Sleep &amp; Rest Quality</h1>
-                    <p class="page-desc">Assess sleep duration, quality score, and wakefulness consistency.</p>
-
-                    <!-- Biological Insight Box -->
-                    <div class="insight-box d-flex align-items-start gap-2">
-                        <i class="fa-solid fa-bed mt-1"></i>
-                        <div>
-                            <strong>Biological Insight:</strong> Consistent sleep-wake cycles align your suprachiasmatic nucleus (SCN) to regulate hormonal secretion (cortisol and melatonin).
-                        </div>
-                    </div>
-
-                    <!-- Form Questions -->
-                    <form action="3-questions-4.html" method="GET">
-                        
-                        <!-- Question 1 -->
-                        <div class="mb-3">
-                            <label for="sleepHours" class="form-label">1. How many total hours of sleep did you get last night?</label>
-                            <input type="number" step="0.5" class="form-control" id="sleepHours" placeholder="e.g. 7.5" required>
-                        </div>
-
-                        <!-- Question 2 -->
-                        <div class="mb-3">
-                            <label for="sleepQuality" class="form-label">2. How would you rate the subjective quality of your sleep?</label>
-                            <select class="form-select" id="sleepQuality" required>
-                                <option value="" selected disabled>Select rating...</option>
-                                <option value="excellent">Excellent (Refreshed &amp; Rested)</option>
-                                <option value="fair">Fair (Mild Fatigue)</option>
-                                <option value="poor">Poor (Exhausted / Interrupted)</option>
-                            </select>
-                        </div>
-
-                        <!-- Question 3 -->
-                        <div class="mb-3">
-                            <label for="screenTime" class="form-label">3. Did you use electronic screens within 1 hour before sleeping?</label>
-                            <select class="form-select" id="screenTime" required>
-                                <option value="" selected disabled>Select option...</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                            </select>
-                        </div>
-
-                        <!-- Navigation Action Buttons -->
-                        <div class="d-flex justify-content-between align-items-center mt-4 pt-2">
-                            <a href="3-questions-2.html" class="btn btn-back">
-                                <i class="fa-solid fa-arrow-left me-1"></i> Back
-                            </a>
-
-                            <!-- Continue to Phase 4 Button -->
-                            <a href="3-questions-4.html" class="btn btn-continue-phase4">
-                                Continue to Phase 4 <i class="fa-solid fa-arrow-right ms-1"></i>
-                            </a>
-                        </div>
-
-                    </form>
-
-                </div>
+            <!-- Question 2 -->
+            <div class="mb-4">
+                <label for="sleepQuality" class="form-label-custom">2. How would you rate the subjective quality of your sleep?</label>
+                <select class="form-select" id="sleepQuality" required>
+                    <option value="" selected disabled>Select rating...</option>
+                    <option value="5">Excellent - Rested &amp; Refreshing</option>
+                    <option value="4">Good - Fairly Rested</option>
+                    <option value="3">Average - Tossed &amp; Turned slightly</option>
+                    <option value="2">Poor - Disrupted / Frequent waking</option>
+                    <option value="1">Very Poor - Exhausted upon waking</option>
+                </select>
             </div>
 
-            <!-- 3. RIGHT COLUMN ILLUSTRATION: Night Cloud & Alarm Clock -->
-            <div class="col-lg-2 illustration-col">
-                <svg class="moon-illustration" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Cloud -->
-                    <path d="M50 140 C30 140, 20 120, 35 105 C25 90, 45 70, 65 80 C80 60, 120 60, 135 80 C155 70, 175 90, 165 105 C180 120, 170 140, 150 140 Z" fill="#60a5fa" opacity="0.3" stroke="#1d4ed8" stroke-width="3"/>
-                    <!-- Alarm Clock -->
-                    <circle cx="100" cy="110" r="35" fill="#38bdf8" stroke="#0f172a" stroke-width="4"/>
-                    <!-- Clock Hands -->
-                    <path d="M100 110 L100 92 M100 110 L115 110" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
-                    <!-- Bells -->
-                    <path d="M72 80 L62 70 M128 80 L138 70" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
-                    <!-- Stars -->
-                    <path d="M150 50 L154 60 L165 60 L156 67 L159 77 L150 70 L141 77 L144 67 L135 60 L146 60 Z" fill="#facc15"/>
-                </svg>
-                <div class="speech-bubble">REST &amp; RECOVER!</div>
+            <!-- Question 3 -->
+            <div class="mb-4">
+                <label for="screenTime" class="form-label-custom">3. Did you use electronic screens within 1 hour before sleeping?</label>
+                <select class="form-select" id="screenTime" required>
+                    <option value="" selected disabled>Select option...</option>
+                    <option value="no">No - Avoided blue light before bed</option>
+                    <option value="yes_filter">Yes - With Blue Light Filter / Night Mode</option>
+                    <option value="yes_direct">Yes - Direct screen exposure right before sleep</option>
+                </select>
             </div>
 
-        </div>
+            <!-- Navigation Buttons -->
+            <div class="d-flex justify-content-between align-items-center mt-5">
+                <a href="3-questions-2.html" class="btn btn-back">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+                <button type="submit" class="btn btn-continue">
+                    Continue to Phase 4 <i class="fa-solid fa-arrow-right ms-2"></i>
+                </button>
+            </div>
+
+        </form>
     </div>
 
     <!-- Bootstrap 5 JS -->
