@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniVital - Phase 4: Diet & Nutrition</title>
+
+    <!-- Google Fonts & Bootstrap 5 -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-emerald: #10b981;
+            --dark-emerald: #059669;
+            --green-accent: #16a34a;
+            --green-bg: #dcfce7;
+            --green-border: #22c55e;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #d8ece1;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Side Cartoon Floating Containers */
+        .decor-side {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .decor-left { left: 2%; }
+        .decor-right { right: 2%; }
+
+        /* Floating Animation */
+        .mascot-container {
+            width: 180px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.12));
+            animation: floatSlow 4s ease-in-out infinite alternate;
+        }
+
+        .mascot-container-reverse {
+            width: 170px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            animation: floatSlow 4.5s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatSlow {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-12px) rotate(3deg); }
+        }
+
+        /* Question Form Card */
+        .question-card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 40px 45px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+            max-width: 800px;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Badge Phase */
+        .phase-badge {
+            background-color: #16a34a;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .category-title {
+            color: #15803d;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .page-subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        /* Biological Insight Callout Box */
+        .insight-box {
+            background-color: #dcfce7;
+            border-left: 4px solid #16a34a;
+            border-radius: 8px;
+            padding: 16px 20px;
+            color: #14532d;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 35px;
+        }
+
+        /* Form Controls */
+        .form-label-custom {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            color: #334155;
+            background-color: #f8fafc;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: #ffffff;
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+        }
+
+        /* Buttons */
+        .btn-back {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background-color: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .btn-continue {
+            background-color: #0d9488;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 10px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-continue:hover {
+            background-color: #0f766e;
+            color: #ffffff;
+        }
+
+        @media (max-width: 1200px) {
+            .decor-side { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LEFT SIDE: Apple & Avocado Mascots -->
+    <div class="decor-side decor-left">
+        <!-- Happy Apple Mascot -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Leaf & Stem -->
+                <path d="M 100 40 Q 110 20 125 25 Q 115 40 100 40 Z" fill="#22c55e" stroke="#1e293b" stroke-width="2.5"/>
+                <path d="M 100 50 Q 102 35 98 25" fill="none" stroke="#78350f" stroke-width="4.5" stroke-linecap="round"/>
+                <!-- Apple Body -->
+                <path d="M 100 55 C 60 40 25 70 30 120 C 35 165 75 185 100 170 C 125 185 165 165 170 120 C 175 70 140 40 100 55 Z" fill="#ef4444" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Face -->
+                <circle cx="75" cy="105" r="5" fill="#1e293b"/>
+                <circle cx="125" cy="105" r="5" fill="#1e293b"/>
+                <path d="M 90 120 Q 100 130 110 120" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="65" cy="112" r="4" fill="#fca5a5"/>
+                <circle cx="135" cy="112" r="4" fill="#fca5a5"/>
+            </svg>
+        </div>
+
+        <!-- Cute Avocado Buddy -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Outer Peel -->
+                <path d="M 100 25 C 65 25 40 70 30 125 C 20 180 60 205 100 205 C 140 205 180 180 170 125 C 160 70 135 25 100 25 Z" fill="#15803d" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Flesh -->
+                <path d="M 100 38 C 72 38 52 75 44 122 C 36 170 68 192 100 192 C 132 192 164 170 156 122 C 148 75 128 38 100 38 Z" fill="#bbf7d0"/>
+                <!-- Seed (Pit) -->
+                <circle cx="100" cy="140" r="28" fill="#78350f" stroke="#1e293b" stroke-width="3.5"/>
+                <!-- Eyes & Smile -->
+                <circle cx="82" cy="85" r="4.5" fill="#1e293b"/>
+                <circle cx="118" cy="85" r="4.5" fill="#1e293b"/>
+                <path d="M 93 95 Q 100 102 107 95" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE: Broccoli & Healthy Bowl -->
+    <div class="decor-side decor-right">
+        <!-- Broccoli Friend -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Florets -->
+                <circle cx="100" cy="60" r="35" fill="#22c55e" stroke="#1e293b" stroke-width="4"/>
+                <circle cx="65" cy="80" r="28" fill="#16a34a" stroke="#1e293b" stroke-width="4"/>
+                <circle cx="135" cy="80" r="28" fill="#16a34a" stroke="#1e293b" stroke-width="4"/>
+                <!-- Stem -->
+                <path d="M 80 100 L 75 165 C 75 175, 125 175, 125 165 L 120 100 Z" fill="#86efac" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Face -->
+                <circle cx="88" cy="125" r="4" fill="#1e293b"/>
+                <circle cx="112" cy="125" r="4" fill="#1e293b"/>
+                <path d="M 94 135 Q 100 142 106 135" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <!-- Salad Bowl Buddy -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Bowl -->
+                <path d="M 30 80 L 170 80 L 150 155 C 150 170, 50 170, 50 155 Z" fill="#38bdf8" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Greens inside -->
+                <path d="M 35 80 Q 60 55 90 75 Q 120 50 165 80 Z" fill="#4ade80" stroke="#1e293b" stroke-width="3"/>
+                <!-- Carrot Slice / Tomato detail -->
+                <circle cx="80" cy="65" r="10" fill="#f97316"/>
+                <circle cx="120" cy="62" r="8" fill="#ef4444"/>
+                <!-- Eyes & Smile on Bowl -->
+                <circle cx="80" cy="115" r="4.5" fill="#1e293b"/>
+                <circle cx="120" cy="115" r="4.5" fill="#1e293b"/>
+                <path d="M 92 128 Q 100 136 108 128" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Main Assessment Card -->
+    <div class="question-card">
+        <!-- Header Row -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="phase-badge text-uppercase">PHASE 4 OF 5</span>
+            <span class="category-title"><i class="fa-solid fa-utensils me-1"></i> Metabolic Balance</span>
+        </div>
+
+        <!-- Main Title -->
+        <h1 class="page-title">Diet &amp; Nutrition Tracker</h1>
+        <p class="page-subtitle">Nutrient timing dictates blood glucose stability and natural melatonin synthesis.</p>
+
+        <!-- Biological Insight Box -->
+        <div class="insight-box d-flex align-items-start">
+            <i class="fa-solid fa-apple-whole me-2 mt-1 fs-6"></i>
+            <div>
+                <strong>Biological Insight:</strong> Nutrient timing dictates blood glucose stability. Balanced protein and tryptophan-rich meals encourage natural melatonin synthesis, preventing late-night energy spikes and brain fog.
+            </div>
+        </div>
+
+        <!-- Question Form -->
+        <form action="3-questions-5.html" method="GET">
+            
+            <!-- Question 1 -->
+            <div class="mb-4">
+                <label for="mealFrequency" class="form-label-custom">1. How many main meals did you eat today?</label>
+                <select class="form-select" id="mealFrequency" required>
+                    <option value="" selected disabled>Select meal count...</option>
+                    <option value="1">1 meal</option>
+                    <option value="2">2 meals</option>
+                    <option value="3">3 balanced meals</option>
+                    <option value="4+">4+ meals / regular snacking</option>
+                </select>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="mb-4">
+                <label for="proteinIntake" class="form-label-custom">2. Did your meals include a rich protein source (eggs, fish, meat, tofu, legumes)?</label>
+                <select class="form-select" id="proteinIntake" required>
+                    <option value="" selected disabled>Select option...</option>
+                    <option value="yes_all">Yes, with every main meal</option>
+                    <option value="yes_some">Yes, with at least one meal</option>
+                    <option value="no">No / Mostly refined carbs or light snacks</option>
+                </select>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="mb-4">
+                <label for="lateMeal" class="form-label-custom">3. How many hours before sleeping was your last heavy meal?</label>
+                <select class="form-select" id="lateMeal" required>
+                    <option value="" selected disabled>Select timing...</option>
+                    <option value="3+">More than 3 hours before bed (Optimal)</option>
+                    <option value="1-2">1 to 2 hours before bed</option>
+                    <option value="0">Ate immediately before bed</option>
+                </select>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="d-flex justify-content-between align-items-center mt-5">
+                <a href="3-questions-3.html" class="btn btn-back">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+                <button type="submit" class="btn btn-continue">
+                    Continue to Phase 5 <i class="fa-solid fa-arrow-right ms-2"></i>
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
