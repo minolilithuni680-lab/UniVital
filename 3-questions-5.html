@@ -3,383 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniVital - Phase 4: Final Wellness Assessment</title>
+    <title>UniVital - Phase 5: Activity & Fitness</title>
 
     <!-- Google Fonts & Bootstrap 5 -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary-emerald: #0d9488;
-            --dark-emerald: #0f766e;
-            --bg-mint: #d8ece1;
-            --card-bg: #ffffff;
-            --text-dark: #0f172a;
-            --text-muted: #64748b;
+            --primary-emerald: #10b981;
+            --dark-emerald: #059669;
+            --rose-accent: #e11d48;
+            --rose-bg: #ffe4e6;
+            --rose-border: #f43f5e;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-mint);
-            color: var(--text-dark);
+            background-color: #d8ece1;
+            color: #1e293b;
             min-height: 100vh;
-            margin: 0;
-            padding-bottom: 60px;
-        }
-
-        /* Top Navbar */
-        .navbar-custom {
-            background-color: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 12px 5%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-        }
-
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.35rem;
-            color: #0f172a;
             display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .navbar-brand i {
-            color: #10b981;
-        }
-
-        .nav-link {
-            font-weight: 500;
-            color: #475569;
-            font-size: 0.92rem;
-            margin: 0 8px;
-            transition: color 0.2s;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--primary-emerald);
-            font-weight: 600;
-        }
-
-        /* Form Layout Container */
-        .assessment-container {
-            max-width: 1180px;
-            margin: 40px auto;
-            padding: 0 15px;
-        }
-
-        /* Left & Right Side Decorative Columns */
-        .illustration-col {
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 10px;
-        }
-
-        .side-illustration {
-            width: 150px;
-            max-width: 100%;
-            height: auto;
-            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.06));
-        }
-
-        .speech-bubble {
-            background-color: #ffffff;
-            border: 2px solid #0f172a;
-            border-radius: 12px;
-            padding: 6px 14px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-top: 15px;
+            padding: 40px 15px;
+            margin: 0;
             position: relative;
-            text-transform: uppercase;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            overflow-x: hidden;
         }
 
-        .speech-bubble::after {
-            content: '';
+        /* Side Cartoon Floating Containers */
+        .decor-side {
             position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 0 6px 8px 6px;
-            border-style: solid;
-            border-color: transparent transparent #0f172a transparent;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        /* Center Main Card */
-        .form-card {
+        .decor-left { left: 2%; }
+        .decor-right { right: 2%; }
+
+        /* Floating Animation */
+        .mascot-container {
+            width: 180px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.12));
+            animation: floatSlow 4s ease-in-out infinite alternate;
+        }
+
+        .mascot-container-reverse {
+            width: 170px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            animation: floatSlow 4.5s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatSlow {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-12px) rotate(3deg); }
+        }
+
+        /* Question Form Card */
+        .question-card {
             background-color: #ffffff;
             border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.05);
+            padding: 40px 45px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+            max-width: 800px;
+            width: 100%;
             border: 1px solid #e2e8f0;
+            position: relative;
+            z-index: 2;
         }
 
+        /* Badge Phase */
         .phase-badge {
-            background-color: #0f766e;
+            background-color: #e11d48;
             color: #ffffff;
-            font-size: 0.72rem;
             font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 12px;
+            font-size: 0.75rem;
+            padding: 6px 14px;
+            border-radius: 20px;
             letter-spacing: 0.5px;
         }
 
-        .category-subtitle {
-            color: #0f766e;
+        .category-title {
+            color: #be123c;
             font-weight: 600;
-            font-size: 0.88rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            font-size: 0.9rem;
         }
 
         .page-title {
-            font-size: 1.85rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #0f172a;
             margin-top: 10px;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
-        .page-desc {
+        .page-subtitle {
             color: #64748b;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin-bottom: 25px;
         }
 
-        /* Biological Insight Banner */
+        /* Biological Insight Callout Box */
         .insight-box {
-            background-color: #e0f2fe;
-            border-left: 4px solid #0284c7;
+            background-color: #ffe4e6;
+            border-left: 4px solid #e11d48;
             border-radius: 8px;
-            padding: 14px 18px;
-            margin-bottom: 30px;
-            color: #0369a1;
-            font-size: 0.88rem;
+            padding: 16px 20px;
+            color: #881337;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 35px;
         }
 
-        /* Input Controls */
-        .form-label {
+        /* Form Controls */
+        .form-label-custom {
             font-weight: 600;
-            font-size: 0.93rem;
             color: #1e293b;
-            margin-bottom: 8px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: block;
         }
 
         .form-control, .form-select {
             border-radius: 10px;
-            padding: 12px 16px;
             border: 1px solid #cbd5e1;
-            font-size: 0.92rem;Yes, correct. I see this exact file name mentioned in other threads and I have that ready for you.
-
-Here is the full, complete code for **`3-questions-5.html`**. Make sure this file name matches **exactly** in your project so it loads properly.
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniVital - Phase 4: Final Wellness Assessment</title>
-
-    <!-- Google Fonts & Bootstrap 5 -->
-    <link href="[https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap)" rel="stylesheet">
-    <link href="[https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css](https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css)" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
-
-    <style>
-        :root {
-            --primary-emerald: #0d9488;
-            --dark-emerald: #0f766e;
-            --bg-mint: #d8ece1;
-            --card-bg: #ffffff;
-            --text-dark: #0f172a;
-            --text-muted: #64748b;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-mint);
-            color: var(--text-dark);
-            min-height: 100vh;
-            margin: 0;
-            padding-bottom: 60px;
-        }
-
-        /* Top Navbar */
-        .navbar-custom {
-            background-color: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 12px 5%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-        }
-
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.35rem;
-            color: #0f172a;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .navbar-brand i {
-            color: #10b981;
-        }
-
-        .nav-link {
-            font-weight: 500;
-            color: #475569;
-            font-size: 0.92rem;
-            margin: 0 8px;
-            transition: color 0.2s;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--primary-emerald);
-            font-weight: 600;
-        }
-
-        /* Form Layout Container */
-        .assessment-container {
-            max-width: 1180px;
-            margin: 40px auto;
-            padding: 0 15px;
-        }
-
-        /* Left & Right Side Decorative Columns */
-        .illustration-col {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-        }
-
-        .side-illustration {
-            width: 150px;
-            max-width: 100%;
-            height: auto;
-            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.06));
-        }
-
-        .speech-bubble {
-            background-color: #ffffff;
-            border: 2px solid #0f172a;
-            border-radius: 12px;
-            padding: 6px 14px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-top: 15px;
-            position: relative;
-            text-transform: uppercase;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        .speech-bubble::after {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 0 6px 8px 6px;
-            border-style: solid;
-            border-color: transparent transparent #0f172a transparent;
-        }
-
-        /* Center Main Card */
-        .form-card {
-            background-color: #ffffff;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-        }
-
-        .phase-badge {
-            background-color: #0f766e;
-            color: #ffffff;
-            font-size: 0.72rem;
-            font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 12px;
-            letter-spacing: 0.5px;
-        }
-
-        .category-subtitle {
-            color: #0f766e;
-            font-weight: 600;
-            font-size: 0.88rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .page-title {
-            font-size: 1.85rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-top: 10px;
-            margin-bottom: 4px;
-        }
-
-        .page-desc {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-        }
-
-        /* Biological Insight Banner */
-        .insight-box {
-            background-color: #e0f2fe;
-            border-left: 4px solid #0284c7;
-            border-radius: 8px;
-            padding: 14px 18px;
-            margin-bottom: 30px;
-            color: #0369a1;
-            font-size: 0.88rem;
-        }
-
-        /* Input Controls */
-        .form-label {
-            font-weight: 600;
-            font-size: 0.93rem;
-            color: #1e293b;
-            margin-bottom: 8px;
-        }
-
-        .form-control, .form-select {
-            border-radius: 10px;
             padding: 12px 16px;
-            border: 1px solid #cbd5e1;
-            font-size: 0.92rem;
-            margin-bottom: 22px;
+            font-size: 0.95rem;
+            color: #334155;
+            background-color: #f8fafc;
         }
 
         .form-control:focus, .form-select:focus {
-            border-color: var(--primary-emerald);
-            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+            background-color: #ffffff;
+            border-color: #e11d48;
+            box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
         }
 
-        /* Bottom Buttons */
+        /* Buttons */
         .btn-back {
             background-color: #f1f5f9;
             color: #475569;
             font-weight: 600;
-            padding: 10px 22px;
+            padding: 12px 24px;
             border-radius: 10px;
             border: 1px solid #cbd5e1;
-            text-decoration: none;
             transition: all 0.2s;
+            text-decoration: none;
         }
 
         .btn-back:hover {
@@ -387,157 +165,216 @@ Here is the full, complete code for **`3-questions-5.html`**. Make sure this fil
             color: #1e293b;
         }
 
-        /* Final Action Button: Complete & Save Vitals */
-        .btn-complete-vitals {
+        .btn-complete {
             background-color: #0d9488;
             color: #ffffff;
             font-weight: 600;
-            padding: 12px 26px;
+            padding: 12px 28px;
             border-radius: 10px;
             border: none;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+            transition: all 0.3s ease;
         }
 
-        .btn-complete-vitals:hover {
+        .btn-complete:hover {
             background-color: #0f766e;
             color: #ffffff;
-            box-shadow: 0 6px 16px rgba(15, 118, 110, 0.35);
         }
 
-        @media (max-width: 991px) {
-            .illustration-col {
-                display: none;
-            }
+        /* Error Box Banner */
+        .error-banner {
+            display: none;
+            background-color: #fef2f2;
+            border: 1px solid #fca5a5;
+            border-left: 5px solid #ef4444;
+            color: #991b1b;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 25px;
+            font-size: 0.92rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 1200px) {
+            .decor-side { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">
-                <i class="fa-solid fa-heart-pulse"></i> UniVital
-            </a>
-            <div class="ms-auto d-flex align-items-center">
-                <a class="nav-link" href="index.html"><i class="fa-solid fa-house me-1"></i> Home</a>
-                <a class="nav-link active" href="3-questions.html"><i class="fa-solid fa-clipboard-list me-1"></i> Assessment</a>
-                <a class="nav-link" href="4-result.html"><i class="fa-solid fa-chart-line me-1"></i> Result</a>
-                <a class="nav-link" href="5-chart.html"><i class="fa-solid fa-pie-chart me-1"></i> Analytics Hub</a>
-            </div>
+    <!-- LEFT SIDE: Running Shoe & Dumbbell Mascots -->
+    <div class="decor-side decor-left">
+        <!-- Running Sneaker Mascot -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Shoe Body -->
+                <path d="M 25 110 C 25 110, 30 75, 75 75 L 120 75 C 145 75, 175 110, 180 125 C 185 140, 160 145, 130 145 L 35 145 C 25 145, 25 110, 25 110 Z" fill="#f43f5e" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Sole -->
+                <rect x="20" y="145" width="165" height="18" rx="8" fill="#ffffff" stroke="#1e293b" stroke-width="3.5"/>
+                <!-- Laces -->
+                <line x1="75" y1="85" x2="95" y2="85" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="80" y1="95" x2="100" y2="95" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="85" y1="105" x2="105" y2="105" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- Face on Shoe -->
+                <circle cx="125" cy="110" r="4" fill="#ffffff"/>
+                <circle cx="145" cy="110" r="4" fill="#ffffff"/>
+                <path d="M 130 122 Q 135 128 140 122" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
         </div>
-    </nav>
 
-    <!-- Main Assessment Form Container -->
-    <div class="assessment-container">
-        <div class="row align-items-center">
-            
-            <!-- 1. LEFT COLUMN ILLUSTRATION: Fitness / Heart Balance -->
-            <div class="col-lg-2 illustration-col">
-                <svg class="side-illustration" viewBox="0 0 200 200" fill="none" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)">
-                    <circle cx="100" cy="100" r="70" fill="#34d399" opacity="0.2"/>
-                    <path d="M100 150 C60 110, 40 80, 60 55 C75 35, 100 50, 100 65 C100 50, 125 35, 140 55 C160 80, 140 110, 100 150 Z" fill="#10b981" stroke="#0f172a" stroke-width="4"/>
-                    <path d="M70 100 L90 100 L95 85 L105 115 L110 95 L115 100 L130 100" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <div class="speech-bubble">STAY VITAL!</div>
-            </div>
-
-            <!-- 2. CENTER COLUMN: Main Form Card -->
-            <div class="col-lg-8">
-                <div class="form-card">
-                    
-                    <!-- Phase Badge & Category Header -->
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="phase-badge text-uppercase">PHASE 4 OF 4</span>
-                        <span class="category-subtitle"><i class="fa-solid fa-dumbbell"></i> Activity &amp; Physical Balance</span>
-                    </div>
-
-                    <h1 class="page-title">Physical Activity &amp; Wellness</h1>
-                    <p class="page-desc">Finalize your weekly vitals by assessing daily physical exercise and overall balance.</p>
-
-                    <!-- Biological Insight Box -->
-                    <div class="insight-box d-flex align-items-start gap-2">
-                        <i class="fa-solid fa-person-running mt-1"></i>
-                        <div>
-                            <strong>Biological Insight:</strong> Regular movement stimulates endorphin synthesis and improves insulin sensitivity, enhancing overall physiological metabolism.
-                        </div>
-                    </div>
-
-                    <!-- Form Questions (Directs to 4-result.html upon submission) -->
-                    <form action="4-result.html" method="GET">
-                        
-                        <!-- Question 1 -->
-                        <div class="mb-3">
-                            <label for="activeMins" class="form-label">1. How many minutes of active physical exercise did you complete today?</label>
-                            <input type="number" class="form-control" id="activeMins" placeholder="e.g. 30" required>
-                        </div>
-
-                        <!-- Question 2 -->
-                        <div class="mb-3">
-                            <label for="activityType" class="form-label">2. What was the primary intensity level of your activity?</label>
-                            <select class="form-select" id="activityType" required>
-                                <option value="" selected disabled>Select intensity...</option>
-                                <option value="light">Light (Walking, Stretching)</option>
-                                <option value="moderate">Moderate (Jogging, Cycling, Swimming)</option>
-                                <option value="vigorous">Vigorous (HIIT, Heavy Resistance, Sports)</option>
-                            </select>
-                        </div>
-
-                        <!-- Question 3 -->
-                        <div class="mb-3">
-                            <label for="overallScore" class="form-label">3. How energized do you feel overall on a scale of 1 to 10?</label>
-                            <select class="form-select" id="overallScore" required>
-                                <option value="" selected disabled>Select energy level...</option>
-                                <option value="1-3">1 - 3 (Low Energy / Exhausted)</option>
-                                <option value="4-6">4 - 6 (Moderate / Neutral)</option>
-                                <option value="7-10">7 - 10 (High Energy / Peak Vitals)</option>
-                            </select>
-                        </div>
-
-                        <!-- Navigation Action Buttons -->
-                        <div class="d-flex justify-content-between align-items-center mt-4 pt-2">
-                            <a href="3-questions-3.html" class="btn btn-back">
-                                <i class="fa-solid fa-arrow-left me-1"></i> Back
-                            </a>
-
-                            <!-- FINAL SUBMIT BUTTON: Points to 4-result.html -->
-                            <button type="submit" class="btn btn-complete-vitals">
-                                <i class="fa-solid fa-circle-check me-1"></i> Complete &amp; Save Vitals
-                            </button>
-                        </div>
-
-                    </form>
-
-                </div>
-            </div>
-
-            <!-- 3. RIGHT COLUMN ILLUSTRATION: Trophy / Success -->
-            <div class="col-lg-2 illustration-col">
-                <svg class="side-illustration" viewBox="0 0 200 200" fill="none" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)">
-                    <circle cx="100" cy="100" r="70" fill="#fef08a" opacity="0.3"/>
-                    <!-- Trophy Base -->
-                    <path d="M70 160 L130 160 L120 145 L80 145 Z" fill="#0f172a"/>
-                    <path d="M93 145 L107 145 L107 125 L93 125 Z" fill="#0f172a"/>
-                    <!-- Cup -->
-                    <path d="M65 60 L135 60 C135 105, 115 125, 100 125 C85 125, 65 105, 65 60 Z" fill="#facc15" stroke="#0f172a" stroke-width="4"/>
-                    <!-- Handles -->
-                    <path d="M65 70 C45 70, 45 95, 67 100" stroke="#0f172a" stroke-width="4" fill="none"/>
-                    <path d="M135 70 C155 70, 155 95, 133 100" stroke="#0f172a" stroke-width="4" fill="none"/>
-                    <!-- Star -->
-                    <path d="M100 75 L103 84 L112 84 L105 89 L107 98 L100 92 L93 98 L95 89 L88 84 L97 84 Z" fill="#ffffff"/>
-                </svg>
-                <div class="speech-bubble">WELL DONE!</div>
-            </div>
-
+        <!-- Dumbbell Buddy -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Bar -->
+                <rect x="50" y="82" width="100" height="16" rx="4" fill="#94a3b8" stroke="#1e293b" stroke-width="3.5"/>
+                <!-- Left Weight -->
+                <rect x="25" y="50" width="30" height="80" rx="8" fill="#e11d48" stroke="#1e293b" stroke-width="4"/>
+                <!-- Right Weight -->
+                <rect x="145" y="50" width="30" height="80" rx="8" fill="#e11d48" stroke="#1e293b" stroke-width="4"/>
+                <!-- Face on Bar center -->
+                <circle cx="90" cy="90" r="3.5" fill="#1e293b"/>
+                <circle cx="110" cy="90" r="3.5" fill="#1e293b"/>
+                <path d="M 96 97 Q 100 102 104 97" fill="none" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+            </svg>
         </div>
     </div>
 
+    <!-- RIGHT SIDE: Heart Pulse & Kettlebell Mascots -->
+    <div class="decor-side decor-right">
+        <!-- Cute Kettlebell -->
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Handle -->
+                <path d="M 65 80 C 65 30, 135 30, 135 80" fill="none" stroke="#1e293b" stroke-width="14" stroke-linecap="round"/>
+                <path d="M 65 80 C 65 30, 135 30, 135 80" fill="none" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>
+                <!-- Body -->
+                <circle cx="100" cy="125" r="55" fill="#334155" stroke="#1e293b" stroke-width="4.5"/>
+                <!-- Eyes & Mouth -->
+                <circle cx="82" cy="115" r="5" fill="#ffffff"/>
+                <circle cx="118" cy="115" r="5" fill="#ffffff"/>
+                <path d="M 92 132 Q 100 142 108 132" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <!-- Energetic Star/Pulse Buddy -->
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Flame / Energy Symbol -->
+                <path d="M 100 20 C 120 60, 160 80, 150 120 C 140 160, 60 160, 50 120 C 40 80, 80 60, 100 20 Z" fill="#fbbf24" stroke="#1e293b" stroke-width="4.5"/>
+                <path d="M 100 60 C 112 85, 135 100, 128 125 C 122 150, 78 150, 72 125 C 65 100, 88 85, 100 60 Z" fill="#f59e0b"/>
+                <!-- Eyes & Wink -->
+                <circle cx="88" cy="105" r="4" fill="#1e293b"/>
+                <path d="M 108 105 L 118 105" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 94 118 Q 100 125 106 118" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Main Assessment Card -->
+    <div class="question-card">
+        <!-- Error Alert Container (Triggers on submission) -->
+        <div id="errorAlert" class="error-banner">
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <i class="fa-solid fa-triangle-exclamation fs-5"></i>
+                <strong>500 Internal Server Error / Data Sync Failed</strong>
+            </div>
+            <div>Unable to calculate result metrics for <code>summary.html</code>. Session token invalid or database write timed out. Please try again.</div>
+        </div>
+
+        <!-- Header Row -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="phase-badge text-uppercase">PHASE 5 OF 5</span>
+            <span class="category-title"><i class="fa-solid fa-person-running me-1"></i> Neuroplasticity &amp; Stress</span>
+        </div>
+
+        <!-- Main Title -->
+        <h1 class="page-title">Activity &amp; Fitness</h1>
+        <p class="page-subtitle">Regular physical activity stimulates BDNF for focus and flushes excess cortisol.</p>
+
+        <!-- Biological Insight Box -->
+        <div class="insight-box d-flex align-items-start">
+            <i class="fa-solid fa-heart-pulse me-2 mt-1 fs-6"></i>
+            <div>
+                <strong>Biological Insight:</strong> Regular aerobic activity stimulates Brain-Derived Neurotrophic Factor (BDNF) for neuroplasticity and flushes excess cortisol out of your nervous system to ease exam stress.
+            </div>
+        </div>
+
+        <!-- Question Form -->
+        <form id="vitalsForm" action="summary.html" method="GET">
+            
+            <!-- Question 1 -->
+            <div class="mb-4">
+                <label for="activeMinutes" class="form-label-custom">1. How many minutes of moderate-to-vigorous physical activity did you do today?</label>
+                <input type="number" class="form-control" id="activeMinutes" placeholder="e.g. 30" min="0" required>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="mb-4">
+                <label for="activityType" class="form-label-custom">2. What type of physical activity did you perform?</label>
+                <select class="form-select" id="activityType" required>
+                    <option value="" selected disabled>Select activity type...</option>
+                    <option value="aerobic">Aerobic Cardio (Walking, Running, Cycling, Swimming)</option>
+                    <option value="strength">Resistance Training / Gym Workouts</option>
+                    <option value="flexibility">Yoga / Stretching / Mobility</option>
+                    <option value="sports">Recreational Sports / Dancing</option>
+                    <option value="sedentary">Mostly Sedentary Today</option>
+                </select>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="mb-4">
+                <label for="sittingTime" class="form-label-custom">3. Approximately how many continuous hours did you spend sitting or studying today?</label>
+                <select class="form-select" id="sittingTime" required>
+                    <option value="" selected disabled>Select continuous sitting time...</option>
+                    <option value="low">Less than 4 hours (Frequent movement breaks)</option>
+                    <option value="moderate">4 to 7 hours</option>
+                    <option value="high">8+ hours with few movement breaks</option>
+                </select>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="d-flex justify-content-between align-items-center mt-5">
+                <a href="3-questions-4.html" class="btn btn-back">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+                <button type="submit" id="submitBtn" class="btn btn-complete">
+                    <i class="fa-solid fa-circle-check me-2"></i> Complete &amp; Save Vitals
+                </button>
+            </div>
+
+        </form>
+    </div>
+
     <!-- Bootstrap 5 JS -->
-    <script src="[https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js](https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js)"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Error Simulation Script -->
+    <script>
+        document.getElementById('vitalsForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Stop redirection to summary.html
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const errorAlert = document.getElementById('errorAlert');
+
+            // Show loading state on button
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Syncing Vitals...';
+
+            // Simulate server network delay then fail
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.className = "btn btn-danger font-weight-bold";
+                submitBtn.innerHTML = '<i class="fa-solid fa-rotate-right me-2"></i> Retry Submission';
+                
+                // Display error banner at the top of the card
+                errorAlert.style.display = 'block';
+                errorAlert.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 800);
+        });
+    </script>
 </body>
 </html>
