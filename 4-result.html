@@ -3,495 +3,440 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniVital - Daily Physiological Analysis</title>
+    <title>UniVital - Daily Assessment Results</title>
 
     <!-- Google Fonts & Bootstrap 5 -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary-emerald: #0d9488;
-            --dark-emerald: #0f766e;
+            --primary-emerald: #10b981;
+            --dark-emerald: #059669;
+            --teal-accent: #0d9488;
+            --teal-dark: #0f766e;
             --bg-mint: #d8ece1;
-            --card-bg: #ffffff;
-            --text-dark: #0f172a;
-            --text-muted: #64748b;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-mint);
-            color: var(--text-dark);
+            color: #1e293b;
             min-height: 100vh;
-            margin: 0;
-            padding-bottom: 60px;
-        }
-
-        /* Top Navbar */
-        .navbar-custom {
-            background-color: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 12px 5%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-        }
-
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.35rem;
-            color: #0f172a;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .navbar-brand i {
-            color: #10b981;
-        }
-
-        .nav-link {
-            font-weight: 500;
-            color: #475569;
-            font-size: 0.92rem;
-            margin: 0 8px;
-            transition: color 0.2s;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--primary-emerald);
-            font-weight: 600;
-        }
-
-        /* Container & Main Card */
-        .result-container {
-            max-width: 900px;
-            margin: 35px auto;
-            padding: 0 15px;
-        }
-
-        .main-card {
-            background-color: #ffffff;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-        }
-
-        /* Top Header */
-        .result-badge {
-            background-color: #065f46;
-            color: #ffffff;
-            font-size: 0.72rem;
-            font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 12px;
-            letter-spacing: 0.5px;
-        }
-
-        .page-title {
-            font-size: 1.85rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-top: 12px;
-            margin-bottom: 25px;
-        }
-
-        /* YELLOW ROUNDED BUTTON (Previous Page Link) */
-        .btn-retake-yellow {
-            background-color: #f59e0b;
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 0.88rem;
-            border-radius: 25px;
-            padding: 8px 20px;
-            text-decoration: none;
-            border: none;
-            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.25);
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .btn-retake-yellow:hover {
-            background-color: #d97706;
-            color: #ffffff;
-            box-shadow: 0 6px 14px rgba(217, 119, 6, 0.35);
-        }
-
-        /* Hero Banner Score Box */
-        .hero-score-box {
-            background-color: #0f172a;
-            border-radius: 16px;
-            padding: 35px 25px;
-            text-align: center;
-            color: #ffffff;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .score-circle {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 6px solid #10b981;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 18px auto;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #ffffff;
+            padding: 40px 15px;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        .score-status-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .score-status-desc {
-            color: #94a3b8;
-            font-size: 0.92rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Warning Alerts */
-        .alert-custom {
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-bottom: 16px;
+        /* Side Mascot Animations */
+        .decor-side {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            border: none;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        .alert-warning-custom {
-            background-color: #fef9c3;
-            color: #713f12;
+        .decor-left { left: 2%; }
+        .decor-right { right: 2%; }
+
+        .mascot-container {
+            width: 170px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.12));
+            animation: floatSlow 4s ease-in-out infinite alternate;
         }
 
-        .alert-danger-custom {
-            background-color: #ffe4e6;
-            color: #881337;
+        .mascot-container-reverse {
+            width: 160px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            animation: floatSlow 4.5s ease-in-out infinite alternate-reverse;
         }
 
-        .alert-icon {
-            font-size: 1.25rem;
-            margin-top: 2px;
+        @keyframes floatSlow {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-12px) rotate(3deg); }
         }
 
-        .alert-title {
+        /* Result Card Container */
+        .result-card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 45px 50px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+            max-width: 850px;
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .results-badge {
+            background-color: #dcfce7;
+            color: #166534;
             font-weight: 700;
-            font-size: 0.95rem;
-            margin-bottom: 2px;
+            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            display: inline-block;
         }
 
-        .alert-desc {
-            font-size: 0.88rem;
-            margin-bottom: 0;
-            opacity: 0.9;
-        }
-
-        /* Section Headings */
-        .section-heading {
-            font-size: 1.25rem;
+        .page-title {
+            font-size: 2.2rem;
             font-weight: 700;
             color: #0f172a;
-            margin-top: 35px;
-            margin-bottom: 20px;
+            margin-top: 12px;
+            margin-bottom: 4px;
         }
 
-        /* Vitals Cards Grid */
-        .vitals-grid {
+        .page-subtitle {
+            color: #64748b;
+            font-size: 0.98rem;
+            margin-bottom: 25px;
+        }
+
+        /* Overall Score Banner */
+        .score-banner {
+            background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+            border-radius: 16px;
+            padding: 24px 30px;
+            color: #ffffff;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(13, 148, 136, 0.2);
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .score-status {
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        /* Detailed Breakdown Cards */
+        .phase-result-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 18px;
             margin-bottom: 30px;
         }
 
-        .vital-card {
+        .phase-card {
             background-color: #f8fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 18px 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .vital-header {
+        .phase-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+        }
+
+        .phase-card-header {
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
-        .vital-title {
-            font-weight: 700;
-            font-size: 0.92rem;
-            color: #1e293b;
+        .phase-title {
+            font-weight: 600;
+            font-size: 0.98rem;
+            color: #0f172a;
+        }
+
+        .phase-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            font-size: 1rem;
         }
 
-        .vital-badge {
-            background-color: #e0f2fe;
-            color: #0369a1;
-            font-size: 0.75rem;
+        .icon-p1 { background-color: #e0f2fe; color: #0284c7; }
+        .icon-p2 { background-color: #fef3c7; color: #d97706; }
+        .icon-p3 { background-color: #e0e7ff; color: #4338ca; }
+        .icon-p4 { background-color: #fce7f3; color: #db2777; }
+        .icon-p5 { background-color: #ffe4e6; color: #e11d48; }
+
+        .phase-metric {
             font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 12px;
+            font-size: 1.1rem;
+            color: #1e293b;
+            margin-bottom: 4px;
         }
 
-        .vital-progress {
-            height: 6px;
-            border-radius: 3px;
-            background-color: #e2e8f0;
-            margin-bottom: 10px;
-            overflow: hidden;
-        }
-
-        .vital-progress-bar {
-            height: 100%;
-            border-radius: 3px;
-        }
-
-        .vital-desc {
-            font-size: 0.82rem;
+        .phase-insight {
+            font-size: 0.85rem;
             color: #64748b;
-            margin: 0;
             line-height: 1.4;
         }
 
-        /* Action Box */
-        .action-box {
-            background-color: #fefce8;
-            border-left: 4px solid #eab308;
-            border-radius: 8px;
-            padding: 16px 20px;
+        /* Recommendation Section */
+        .rec-box {
+            background-color: #f0fdf4;
+            border-left: 4px solid #10b981;
+            border-radius: 12px;
+            padding: 20px;
             margin-bottom: 35px;
         }
 
-        .action-title {
+        .rec-title {
             font-weight: 700;
-            font-size: 0.95rem;
-            color: #854d0e;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: #14532d;
+            font-size: 1rem;
+            margin-bottom: 8px;
         }
 
-        .action-desc {
-            font-size: 0.88rem;
-            color: #713f12;
+        .rec-list {
             margin: 0;
+            padding-left: 20px;
+            font-size: 0.9rem;
+            color: #166534;
         }
 
-        /* RED ROUNDED BUTTON (Download PDF) */
-        .btn-pdf-red {
-            background-color: #ef4444;
+        .rec-list li {
+            margin-bottom: 6px;
+        }
+
+        /* Buttons */
+        .btn-back {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            padding: 12px 22px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background-color: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .btn-download {
+            background-color: #0284c7;
             color: #ffffff;
             font-weight: 600;
             padding: 12px 24px;
-            border-radius: 25px;
+            border-radius: 10px;
             border: none;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
-            display: inline-flex;
-            align-items: center;
+            transition: all 0.3s ease;
         }
 
-        .btn-pdf-red:hover {
-            background-color: #dc2626;
+        .btn-download:hover {
+            background-color: #0369a1;
             color: #ffffff;
-            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.35);
         }
 
-        /* GREEN ROUNDED BUTTON (Next Page 5-chart.html) */
-        .btn-analytics-green {
-            background-color: #10b981;
+        .btn-next {
+            background-color: var(--teal-accent);
             color: #ffffff;
             font-weight: 600;
-            padding: 12px 26px;
-            border-radius: 25px;
+            padding: 12px 28px;
+            border-radius: 10px;
             border: none;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             text-decoration: none;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
-            display: inline-flex;
-            align-items: center;
+            display: inline-block;
         }
 
-        .btn-analytics-green:hover {
-            background-color: #059669;
+        .btn-next:hover {
+            background-color: var(--teal-dark);
             color: #ffffff;
-            box-shadow: 0 6px 16px rgba(5, 150, 105, 0.35);
         }
 
-        @media (max-width: 768px) {
-            .vitals-grid {
-                grid-template-columns: 1fr;
+        @media (max-width: 1200px) {
+            .decor-side { display: none; }
+        }
+
+        /* Clean Print Formatting for Downloadable Report */
+        @media print {
+            body {
+                background-color: #ffffff;
+                padding: 0;
             }
-            .vital-card[style*="span 2"] {
-                grid-column: span 1 !important;
+
+            .decor-side, .btn-back, .btn-download, .btn-next, .no-print {
+                display: none !important;
             }
-            .main-card {
-                padding: 25px 20px;
+
+            .result-card {
+                box-shadow: none;
+                border: none;
+                max-width: 100%;
+                padding: 0;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">
-                <i class="fa-solid fa-heart-pulse"></i> UniVital
-            </a>
-            <div class="ms-auto d-flex align-items-center">
-                <a class="nav-link" href="index.html"><i class="fa-solid fa-house me-1"></i> Home</a>
-                <a class="nav-link" href="3-questions.html"><i class="fa-solid fa-clipboard-list me-1"></i> Assessment</a>
-                <a class="nav-link active" href="4-result.html"><i class="fa-solid fa-chart-line me-1"></i> Result</a>
-                <a class="nav-link" href="5-chart.html"><i class="fa-solid fa-pie-chart me-1"></i> Analytics Hub</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Results Container -->
-    <div class="result-container">
-        <div class="main-card">
-            
-            <!-- Top Header Row -->
-            <div class="d-flex justify-content-between align-items-center mb-1">
-                <div>
-                    <span class="result-badge text-uppercase">PHYSIOLOGICAL ASSESSMENT RESULT</span>
-                    <h1 class="page-title">Your UniVital Daily Insights</h1>
-                </div>
-                <!-- YELLOW ROUNDED BUTTON -> Links to 3-questions.html -->
-                <a href="3-questions.html" class="btn btn-retake-yellow">
-                    <i class="fa-solid fa-rotate-right me-2"></i> Retake Vitals
-                </a>
-            </div>
-
-            <!-- Overall Biological Balance Hero Box -->
-            <div class="hero-score-box">
-                <div class="score-circle">65%</div>
-                <h2 class="score-status-title">Moderate Biological Balance</h2>
-                <p class="score-status-desc">Good progress! A few small tweaks to sleep, hydration, and activity timing will unlock your full cognitive focus.</p>
-            </div>
-
-            <!-- Risk Warnings & Alerts -->
-            <div class="alert-custom alert-warning-custom">
-                <i class="fa-solid fa-triangle-exclamation alert-icon"></i>
-                <div>
-                    <div class="alert-title">Caffeine Sleep Disturbance Warning</div>
-                    <div class="alert-desc">Late or heavy caffeine intake blocks brain adenosine receptors, reducing deep non-REM sleep quality tonight.</div>
-                </div>
-            </div>
-
-            <div class="alert-custom alert-danger-custom">
-                <i class="fa-solid fa-circle-exclamation alert-icon"></i>
-                <div>
-                    <div class="alert-title">Sleep Deprivation &amp; Focus Alert</div>
-                    <div class="alert-desc">Sleep under 6 hours lowers reaction time and working memory performance. Avoid heavy exams/tasks without rest breaks.</div>
-                </div>
-            </div>
-
-            <!-- Core Vitals Breakdown Grid -->
-            <h3 class="section-heading">Core Vitals Breakdown</h3>
-            <div class="vitals-grid">
-                
-                <!-- Hydration Level -->
-                <div class="vital-card">
-                    <div class="vital-header">
-                        <span class="vital-title"><i class="fa-solid fa-droplet text-primary"></i> Hydration Level</span>
-                        <span class="vital-badge" style="background:#e0f2fe; color:#0284c7;">3.25 / 2.5 Liters</span>
-                    </div>
-                    <div class="vital-progress">
-                        <div class="vital-progress-bar" style="width: 100%; background-color: #0284c7;"></div>
-                    </div>
-                    <p class="vital-desc">Sufficient hydration supports brain cell volume and cognitive clarity.</p>
-                </div>
-
-                <!-- Adenosine / Caffeine -->
-                <div class="vital-card">
-                    <div class="vital-header">
-                        <span class="vital-title"><i class="fa-solid fa-mug-hot text-warning"></i> Adenosine / Caffeine</span>
-                        <span class="vital-badge" style="background:#fef3c7; color:#d97706;">760 mg</span>
-                    </div>
-                    <div class="vital-progress">
-                        <div class="vital-progress-bar" style="width: 85%; background-color: #d97706;"></div>
-                    </div>
-                    <p class="vital-desc">Observing a caffeine cutoff prevents sleep latency delays.</p>
-                </div>
-
-                <!-- Sleep Recovery -->
-                <div class="vital-card">
-                    <div class="vital-header">
-                        <span class="vital-title"><i class="fa-solid fa-moon text-info"></i> Sleep Recovery</span>
-                        <span class="vital-badge" style="background:#e0e7ff; color:#4338ca;">4 Hours</span>
-                    </div>
-                    <div class="vital-progress">
-                        <div class="vital-progress-bar" style="width: 45%; background-color: #6366f1;"></div>
-                    </div>
-                    <p class="vital-desc">Aim for 7–9 hours of sleep to consolidate study memory.</p>
-                </div>
-
-                <!-- Nutrient Profile -->
-                <div class="vital-card">
-                    <div class="vital-header">
-                        <span class="vital-title"><i class="fa-solid fa-utensils text-success"></i> Nutrient Profile</span>
-                        <span class="vital-badge" style="background:#dcfce7; color:#15803d;">Balanced</span>
-                    </div>
-                    <div class="vital-progress">
-                        <div class="vital-progress-bar" style="width: 80%; background-color: #22c55e;"></div>
-                    </div>
-                    <p class="vital-desc">Diet composition directly influences steady glucose supply for study focus.</p>
-                </div>
-
-                <!-- Activity & BDNF Stimulation -->
-                <div class="vital-card" style="grid-column: span 2;">
-                    <div class="vital-header">
-                        <span class="vital-title"><i class="fa-solid fa-person-running text-danger"></i> Activity &amp; BDNF Stimulation</span>
-                        <span class="vital-badge" style="background:#ffe4e6; color:#be123c;">30 Mins (Moderate)</span>
-                    </div>
-                    <div class="vital-progress">
-                        <div class="vital-progress-bar" style="width: 70%; background-color: #f43f5e;"></div>
-                    </div>
-                    <p class="vital-desc">Aerobic exercise stimulates BDNF for neuroplasticity and clears excess exam stress cortisol.</p>
-                </div>
-
-            </div>
-
-            <!-- Personalized Action Items -->
-            <h3 class="section-heading">Personalized Action Items</h3>
-            <div class="action-box">
-                <div class="action-title">
-                    <i class="fa-solid fa-utensils"></i> Late Night Acid Reflux &amp; Digestion Risk
-                </div>
-                <p class="action-desc">Spicy or heavy foods can raise core body temperature at night. Finish eating at least 3 hours before bed.</p>
-            </div>
-
-            <!-- Bottom Action Buttons Row -->
-            <div class="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-3">
-                <!-- RED ROUNDED BUTTON -> Daily PDF Report Download -->
-                <a href="#" class="btn btn-pdf-red">
-                    <i class="fa-solid fa-file-pdf me-2"></i> Download Daily PDF Report
-                </a>
-
-                <!-- GREEN ROUNDED BUTTON -> Path to 5-chart.html -->
-                <a href="5-chart.html" class="btn btn-analytics-green">
-                    View Analytics &amp; History <i class="fa-solid fa-arrow-right ms-2"></i>
-                </a>
-            </div>
-
+    <!-- LEFT SIDE: Mascot -->
+    <div class="decor-side decor-left">
+        <div class="mascot-container">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="70" fill="#0d9488" />
+                <path d="M 65 100 Q 100 130 135 100" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+                <circle cx="75" cy="80" r="8" fill="#ffffff"/>
+                <circle cx="125" cy="80" r="8" fill="#ffffff"/>
+            </svg>
         </div>
     </div>
+
+    <!-- RIGHT SIDE: Mascot -->
+    <div class="decor-side decor-right">
+        <div class="mascot-container-reverse">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <rect x="40" y="40" width="120" height="120" rx="25" fill="#f59e0b"/>
+                <circle cx="75" cy="85" r="7" fill="#ffffff"/>
+                <circle cx="125" cy="85" r="7" fill="#ffffff"/>
+                <path d="M 80 120 Q 100 135 120 120" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Main Results Card -->
+    <div class="result-card">
+        
+        <!-- Top Header Badge -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="results-badge text-uppercase"><i class="fa-solid fa-circle-check me-1"></i> ASSESSMENT COMPLETED</span>
+            <span class="text-muted small" id="reportDayText"><i class="fa-regular fa-calendar me-1"></i> Today's Entry</span>
+        </div>
+
+        <h1 class="page-title">Daily Vital Summary</h1>
+        <p class="page-subtitle">Comprehensive physiological & mental state overview based on your 5-phase assessment.</p>
+
+        <!-- Overall Vitality Score Banner -->
+        <div class="score-banner d-flex align-items-center justify-content-between">
+            <div>
+                <div class="score-status mb-1"><i class="fa-solid fa-bolt me-2"></i>Optimal Academic State</div>
+                <div class="small opacity-75">High cognitive stamina & balanced recovery indicators</div>
+            </div>
+            <div class="text-end">
+                <div class="score-number">88<span class="fs-5">/100</span></div>
+                <div class="small opacity-75 text-uppercase fw-semibold">Vitality Index</div>
+            </div>
+        </div>
+
+        <!-- Detailed 5-Phase Breakdown -->
+        <h2 class="h6 fw-bold text-uppercase text-muted mb-3" style="letter-spacing: 0.5px;">Phase Breakdown &amp; Analysis</h2>
+        
+        <div class="phase-result-grid">
+            
+            <!-- Phase 1: Hydration -->
+            <div class="phase-card">
+                <div class="phase-card-header">
+                    <span class="phase-title">1. Hydration &amp; Electrolytes</span>
+                    <div class="phase-icon icon-p1"><i class="fa-solid fa-droplet"></i></div>
+                </div>
+                <div class="phase-metric">2.4 Liters / Optimal</div>
+                <div class="phase-insight">Cellular fluid balance supports synaptic transmission and prevents mental fatigue during lectures.</div>
+            </div>
+
+            <!-- Phase 2: Nutrition -->
+            <div class="phase-card">
+                <div class="phase-card-header">
+                    <span class="phase-title">2. Nutrition &amp; Blood Sugar</span>
+                    <div class="phase-icon icon-p2"><i class="fa-solid fa-apple-whole"></i></div>
+                </div>
+                <div class="phase-metric">Stable Glycemic Index</div>
+                <div class="phase-insight">Balanced glucose delivery ensures steady brain energy without afternoon post-meal slumps.</div>
+            </div>
+
+            <!-- Phase 3: Sleep Architecture -->
+            <div class="phase-card">
+                <div class="phase-card-header">
+                    <span class="phase-title">3. Sleep Architecture</span>
+                    <div class="phase-icon icon-p3"><i class="fa-solid fa-moon"></i></div>
+                </div>
+                <div class="phase-metric">7.5 Hours (Restful)</div>
+                <div class="phase-insight">Adequate REM and deep sleep cycles facilitate long-term memory consolidation for study topics.</div>
+            </div>
+
+            <!-- Phase 4: Focus & Fatigue -->
+            <div class="phase-card">
+                <div class="phase-card-header">
+                    <span class="phase-title">4. Mental Fatigue &amp; Focus</span>
+                    <div class="phase-icon icon-p4"><i class="fa-solid fa-brain"></i></div>
+                </div>
+                <div class="phase-metric">Low Stress / High Focus</div>
+                <div class="phase-insight">Neuro-recovery status is strong. Minimal cognitive overwhelm detected.</div>
+            </div>
+
+            <!-- Phase 5: Activity & Fitness -->
+            <div class="phase-card">
+                <div class="phase-card-header">
+                    <span class="phase-title">5. Activity &amp; Fitness</span>
+                    <div class="phase-icon icon-p5"><i class="fa-solid fa-person-running"></i></div>
+                </div>
+                <div class="phase-metric">35 Mins Active (BDNF Boosted)</div>
+                <div class="phase-insight">Aerobic movement stimulated BDNF for enhanced neuroplasticity and flushed excess cortisol.</div>
+            </div>
+
+        </div>
+
+        <!-- Personalized Biological Action Plan -->
+        <div class="rec-box">
+            <div class="rec-title"><i class="fa-solid fa-lightbulb me-2"></i>Tailored Action Plan for Tomorrow:</div>
+            <ul class="rec-list">
+                <li>Maintain electrolyte balance by drinking a glass of water right after waking up.</li>
+                <li>Take a 5-minute movement break for every 50 minutes of continuous study or exam preparation.</li>
+                <li>Avoid high-sugar snacks during evening revision sessions to keep circadian rhythms stable.</li>
+            </ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-4 pt-2">
+            <a href="3-questions-5.html" class="btn btn-back">
+                <i class="fa-solid fa-arrow-left me-2"></i> Back to Questions
+            </a>
+
+            <div class="d-flex gap-2">
+                <!-- Download Daily Report Button -->
+                <button type="button" class="btn btn-download" onclick="window.print()">
+                    <i class="fa-solid fa-file-arrow-down me-2"></i> Download Daily Report
+                </button>
+
+                <!-- Next Page Button -->
+                <a href="5-chart.html" class="btn btn-next">
+                    View Analytics / Next <i class="fa-solid fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script to display day name if passed -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const entryDay = urlParams.get('entryDay');
+            if (entryDay) {
+                document.getElementById('reportDayText').innerHTML = `<i class="fa-regular fa-calendar me-1"></i> Assessment for ${entryDay}`;
+            }
+        });
+    </script>
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
