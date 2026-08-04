@@ -149,7 +149,7 @@
             display: block;
         }
 
-        .form-control {
+        .form-select {
             border-radius: 10px;
             border: 1px solid #cbd5e1;
             padding: 12px 16px;
@@ -158,7 +158,7 @@
             background-color: #ffffff;
         }
 
-        .form-control:focus {
+        .form-select:focus {
             border-color: #0d9488;
             box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
         }
@@ -237,12 +237,21 @@
         <!-- Start Form -->
         <form action="3-questions-1.html" method="GET">
             
-            <!-- Date Selection Input -->
+            <!-- Day Selection Dropdown -->
             <div class="mb-4">
-                <label for="entryDate" class="form-label-custom">
-                    <i class="fa-regular fa-calendar-check me-2 text-teal"></i>Select Assessment Date:
+                <label for="entryDay" class="form-label-custom">
+                    <i class="fa-regular fa-calendar-check me-2 text-teal"></i>Select Assessment Day:
                 </label>
-                <input type="date" class="form-control" id="entryDate" name="entryDate" required>
+                <select class="form-select" id="entryDay" name="entryDay" required>
+                    <option value="" disabled>Select day of the week...</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                </select>
             </div>
 
             <!-- Overview of Phases -->
@@ -283,13 +292,14 @@
         </form>
     </div>
 
-    <!-- Script to default date input to today -->
+    <!-- Script to automatically pre-select current day of the week -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const dateInput = document.getElementById('entryDate');
-            const today = new Date().toISOString().split('T')[0];
-            dateInput.value = today;
-            dateInput.max = today; // Prevents logging future dates
+            const daySelect = document.getElementById('entryDay');
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const todayName = days[new Date().getDay()];
+            
+            daySelect.value = todayName;
         });
     </script>
 
